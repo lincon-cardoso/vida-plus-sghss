@@ -31,6 +31,6 @@ export default function LoginHeader() {
     </div>
   );
 }
-        // <Stethoscope />
-        // <Shield />
-        // <Heart />
+// <Stethoscope />
+// <Shield />
+// <Heart />
