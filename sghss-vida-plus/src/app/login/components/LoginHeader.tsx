@@ -15,7 +15,7 @@ export default function LoginHeader() {
           <p className={styles.subtitle}>Cuidando de você com excelência</p>
         </div>
       </div>
-      <div aria-label={styles.taglineGroup}>
+      <div className={styles.taglineGroup}>
         <h2 className={styles.tagline}>
           <span className={styles.taglineMain}>
             Sistema de Gestão Hospitalar
@@ -27,6 +27,41 @@ export default function LoginHeader() {
           Plataforma moderna e segura para gestão de serviços de saúde,
           telemedicina e atendimento ao paciente.
         </p>
+      </div>
+      <div className={styles.information} aria-hidden="true">
+        <div className={styles.informationItem}>
+          <div className={styles.informationImage}>
+            <Stethoscope />
+          </div>
+          <div className={styles.informationText}>
+            <h3 className={styles.informationTitle}>Telemedicina Integrada</h3>
+            <p className={styles.informationDescription}>
+              Consultas online seguras e eficientes
+            </p>
+          </div>
+        </div>
+        <div className={styles.informationItem}>
+          <div className={styles.informationImage}>
+            <Stethoscope />
+          </div>
+          <div className={styles.informationText}>
+            <h3 className={styles.informationTitle}>Telemedicina Integrada</h3>
+            <p className={styles.informationDescription}>
+              Consultas online seguras e eficientes
+            </p>
+          </div>
+        </div>
+        <div className={styles.informationItem}>
+          <div className={styles.informationImage}>
+            <Stethoscope />
+          </div>
+          <div className={styles.informationText}>
+            <h3 className={styles.informationTitle}>Telemedicina Integrada</h3>
+            <p className={styles.informationDescription}>
+              Consultas online seguras e eficientes
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
