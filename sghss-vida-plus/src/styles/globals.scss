@@ -83,6 +83,11 @@ body {
     line-height: 1.35;
 }
 
+/* Improve mobile text sizing (prevent automatic font-size adjustments) */
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
 /* Remove list styles where useful */
 ul,
 ol {
@@ -132,7 +137,9 @@ h6 {
     padding: 0;
     margin: -1px;
     overflow: hidden;
+    /* clip is deprecated but kept for compatibility; keep it along with clip-path */
     clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
     border: 0;
 }
@@ -140,6 +147,19 @@ h6 {
 /* Minimal interactive styling */
 button {
     cursor: pointer;
+}
+
+/* Button and link resets for consistent baseline appearance */
+button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
 /* Forms base */
