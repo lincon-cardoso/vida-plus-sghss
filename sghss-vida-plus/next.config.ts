@@ -22,8 +22,11 @@ const nextConfig: NextConfig = {
   async headers() {
     // Build connect-src from environment if provided, otherwise default to self
     const defaultConnectSrc = ["'self'"];
-    const envConnect = process.env.NEXT_PUBLIC_CSP_CONNECT_SRC || process.env.CSP_CONNECT_SRC;
-    const extraConnect = envConnect ? envConnect.split(/\s*,\s*/).filter(Boolean) : [];
+    const envConnect =
+      process.env.NEXT_PUBLIC_CSP_CONNECT_SRC || process.env.CSP_CONNECT_SRC;
+    const extraConnect = envConnect
+      ? envConnect.split(/\s*,\s*/).filter(Boolean)
+      : [];
 
     const connectSrc = [...defaultConnectSrc, ...extraConnect];
 
@@ -34,7 +37,7 @@ const nextConfig: NextConfig = {
       `style-src 'self' https:`,
       `img-src 'self' data: https:`,
       `font-src 'self' data: https:`,
-      `connect-src ${connectSrc.join(' ')}`,
+      `connect-src ${connectSrc.join(" ")}`,
       `frame-ancestors 'self'`,
       `base-uri 'self'`,
       `form-action 'self'`,
@@ -42,13 +45,13 @@ const nextConfig: NextConfig = {
     ];
 
     // Optional isolation headers that can be enabled via env var
-    const enableCoopCoep = process.env.ENABLE_COOP_COEP === 'true';
+    const enableCoopCoep = process.env.ENABLE_COOP_COEP === "true";
 
     const baseHeaders = [
       {
         key: "Content-Security-Policy",
         // Use a joined string (no 'unsafe-inline') — prefer nonces or hashes for inline assets
-        value: cspDirectives.join('; '),
+        value: cspDirectives.join("; "),
       },
       {
         key: "X-Frame-Options",
@@ -68,8 +71,7 @@ const nextConfig: NextConfig = {
       },
       {
         key: "Permissions-Policy",
-        value:
-          "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+        value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
       },
       ...(isProd
         ? [
@@ -82,8 +84,14 @@ const nextConfig: NextConfig = {
     ];
 
     if (enableCoopCoep) {
-      baseHeaders.push({ key: 'Cross-Origin-Opener-Policy', value: 'same-origin' });
-      baseHeaders.push({ key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' });
+      baseHeaders.push({
+        key: "Cross-Origin-Opener-Policy",
+        value: "same-origin",
+      });
+      baseHeaders.push({
+        key: "Cross-Origin-Embedder-Policy",
+        value: "require-corp",
+      });
     }
 
     return [
