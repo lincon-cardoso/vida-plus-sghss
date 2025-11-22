@@ -7,9 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="app-root">
-        <main className="container">{children}</main>
-      </body>
+      <body className="app-root">{children}</body>
     </html>
   );
 }

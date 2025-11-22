@@ -1,0 +1,27 @@
+.estiloLogin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background-color: #f0f0f0;
+  /* diagonal gradient: topo-esquerdo -> meio -> baixo-direito */
+  background: linear-gradient(135deg, #1a73e8 0%, #1e88e5 50%, #34a853 100%);
+
+  .caixaLogin {
+    width: 1150px;
+    height: 650px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem; 
+    align-items: stretch; 
+  }
+  .textoLogin,
+  .formularioLogin {
+    flex: 1;
+    border: 2px solid red;
+  }
+ 
+}
