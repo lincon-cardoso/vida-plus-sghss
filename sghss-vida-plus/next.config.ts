@@ -30,18 +30,26 @@ const nextConfig: NextConfig = {
 
     const connectSrc = [...defaultConnectSrc, ...extraConnect];
 
-    // Common CSP directives (no 'unsafe-inline') — encourage nonces/hashes for inline code
+    // CSP directives - more relaxed in development for Next.js compatibility
+    const scriptSrc = isProd
+      ? `script-src 'self'`
+      : `script-src 'self' 'unsafe-eval' 'unsafe-inline'`;
+
+    const styleSrc = isProd
+      ? `style-src 'self' https:`
+      : `style-src 'self' 'unsafe-inline' https:`;
+
     const cspDirectives = [
       `default-src 'self'`,
-      `script-src 'self'`,
-      `style-src 'self' https:`,
+      scriptSrc,
+      styleSrc,
       `img-src 'self' data: https:`,
       `font-src 'self' data: https:`,
       `connect-src ${connectSrc.join(" ")}`,
       `frame-ancestors 'self'`,
       `base-uri 'self'`,
       `form-action 'self'`,
-      `block-all-mixed-content`,
+      ...(isProd ? [`upgrade-insecure-requests`] : []),
     ];
 
     // Optional isolation headers that can be enabled via env var
