@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
   gap: 1rem;
   .header {
@@ -12,19 +12,18 @@
       width: 4rem;
       height: 4rem;
       background-color: white;
-      border-radius: 0.75rem; /* arredondado como na imagem */
+      border-radius: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-      /* icon style: azul preenchido centralizado */
       svg {
         width: 4.2rem;
         height: 3.2rem;
-        color: #217aff; /* cor do coração */
-        fill: currentColor; /* torna o ícone preenchido usando currentColor */
-        stroke: none; /* remove traço caso o ícone seja outline */
+        color: #217aff;
+        fill: currentColor;
+        stroke: none;
       }
     }
     .text {
@@ -37,6 +36,58 @@
         font-size: 1rem;
         opacity: 0.8;
         margin: 0;
+      }
+    }
+  }
+  .taglineGroup {
+    .tagline {
+      color: white;
+      font-size: 2rem;
+      margin: 0;
+    }
+    .description {
+      color: white;
+      font-size: 1.1rem;
+      margin: 20px 0px;
+    }
+  }
+  .information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    .informationItem {
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      .informationImage {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          width: 2.2rem;
+          height: 2.3rem;
+          color: white;
+        }
+      }
+      .informationText {
+        .informationTitle {
+          font-size: 1.5rem;
+          color: #ffffff;
+          margin: 0;
+        }
+        .informationDescription {
+          font-size: 1.3rem;
+          opacity: 0.9;
+          margin: 0;
+        }
       }
     }
   }

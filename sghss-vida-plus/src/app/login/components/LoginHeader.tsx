@@ -42,7 +42,7 @@ export default function LoginHeader() {
         </div>
         <div className={styles.informationItem}>
           <div className={styles.informationImage}>
-            <Stethoscope />
+            <Shield />
           </div>
           <div className={styles.informationText}>
             <h3 className={styles.informationTitle}>Telemedicina Integrada</h3>
@@ -66,6 +66,3 @@ export default function LoginHeader() {
     </div>
   );
 }
-// <Stethoscope />
-// <Shield />
-// <Heart />
