@@ -1,6 +1,4 @@
 @use "sass:color";
-
-// Variáveis de cores
 $primary-color: #2563eb;
 $primary-dark: #1d4ed8;
 $primary-darker: #1e40af;
@@ -11,8 +9,12 @@ $border-color: #e5e7eb;
 $border-focus: #93c5fd;
 $bg-white: #ffffff;
 $bg-hover: #f0f9ff;
+// Variáveis de cores: paleta utilizada no formulário de login
+// Este arquivo contém os estilos do card do formulário (lado direito da tela):
+// container branco, inputs, botões, seletor de perfis e o rodapé adicional.
 
 .login-card {
+  // Estrutura do card de login — container principal e layout interno
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,11 +24,8 @@ $bg-hover: #f0f9ff;
   max-width: 450px;
   padding: 1rem;
 
-  // REMOVIDO: regras exclusivamente para `max-width: 480px` (mobile)
-  // as adaptações anteriores reduziam padding em telas pequenas:
-  // padding: 0.5rem;
-
   .login-card__container {
+    // Container interno (card branco) — contém header, formulário e footer do card
     flex: 1;
     width: 100%;
     height: 100%;
@@ -40,14 +39,10 @@ $bg-hover: #f0f9ff;
     padding: 2rem;
     gap: 1.5rem;
 
-    // REMOVIDO: regras exclusivamente para `max-width: 480px` (mobile)
-    // ajustes removidos (apenas referência):
-    // padding: 1.5rem 1rem;
-    // border-radius: 16px;
-
     .login-card__header,
     .login-card__form,
     .login-card__footer {
+      // Footer do card: informação e links relacionados ao cadastro/primeiro acesso
       width: 100%;
     }
 
@@ -62,10 +57,6 @@ $bg-hover: #f0f9ff;
         font-weight: 700;
         color: $text-primary;
         margin-bottom: 0.25rem;
-
-        /* REMOVIDO: ajuste de fonte para mobile (max-width: 480px)
-         * font-size: 20px;
-         */
       }
 
       .login-card__subtitle {
@@ -112,6 +103,8 @@ $bg-hover: #f0f9ff;
   }
 
   .login-card__additional {
+    // Conteúdo adicional abaixo do card (fora do card branco). Geralmente exibido
+    // sobre o fundo colorido da tela — por isso o texto é branco para contraste.
     margin-top: 1.5rem;
     text-align: center;
     width: 100%;
@@ -128,6 +121,14 @@ $bg-hover: #f0f9ff;
       color: #ffffff;
       font-weight: 600;
       margin-bottom: 0.5rem;
+      a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     .login-card__note {
@@ -136,225 +137,218 @@ $bg-hover: #f0f9ff;
       font-weight: 500;
     }
   }
-}
 
-/* Campo de formulário */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  // Campo de formulário
+  .field {
+    // Estilos para campos do formulário (label + input)
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 
-  .field__label {
-    font-size: 14px;
-    font-weight: 500;
-    color: $text-primary;
-  }
-}
-
-/* Seletor de perfil (Role Grid) */
-.role-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-top: 0.5rem;
-}
-
-.role-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 0.5rem;
-  border: 2px solid $border-color;
-  border-radius: 12px;
-  background-color: $bg-white;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  gap: 0.5rem;
-
-  &:hover {
-    border-color: $border-focus;
-    background-color: $bg-hover;
+    .field__label {
+      font-size: 14px;
+      font-weight: 500;
+      color: $text-primary;
+    }
   }
 
-  &:focus-visible {
-    outline: 2px solid $primary-color;
-    outline-offset: 2px;
+  .role-grid {
+    // Grade para seleção de perfis/roles (3 colunas)
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.5rem;
   }
 
-  &.is-active {
-    border-color: $primary-color;
-    background-color: $primary-color;
-  }
-
-  .role-btn__icon {
-    width: 28px;
-    height: 28px;
-    color: $text-secondary;
-  }
-
-  &.is-active .role-btn__icon {
-    color: $bg-white;
-  }
-
-  .role-btn__label {
-    font-size: 13px;
-    font-weight: 500;
-    color: $text-primary;
-  }
-
-  &.is-active .role-btn__label {
-    color: $bg-white;
-  }
-
-  // REMOVIDO: regras mobile para `.role-btn` (max-width: 480px)
-  // Exemplos de ajustes removidos:
-  // padding: 0.75rem 0.25rem;
-  // .role-btn__icon { width: 24px; height: 24px; }
-  // .role-btn__label { font-size: 12px; }
-}
-
-/* Input fields */
-.input {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  border: 1px solid color.adjust($border-color, $lightness: -5%);
-  border-radius: 10px;
-  font-size: 15px;
-  color: $text-primary;
-  background-color: $bg-white;
-  transition: all 0.2s ease;
-
-  &::placeholder {
-    color: $text-muted;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-  }
-
-  &:focus-visible {
-    outline: 2px solid $primary-color;
-    outline-offset: 1px;
-  }
-
-  // REMOVIDO: regras mobile para `.input` (max-width: 480px)
-  // (referência) padding: 0.75rem; font-size: 16px;
-}
-
-.input--email {
-  padding-right: 3rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 20px;
-}
-
-/* Form row (checkbox + link) */
-.form-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Checkbox */
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-
-  .checkbox__input {
-    width: 18px;
-    height: 18px;
-    accent-color: $primary-color;
+  .role-btn {
+    // Botão de seleção de perfil — possui estado `.is-active` que altera cor
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+    border: 2px solid $border-color;
+    border-radius: 12px;
+    background-color: $bg-white;
     cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 0.5rem;
+
+    &:hover {
+      border-color: $border-focus;
+      background-color: $bg-hover;
+    }
 
     &:focus-visible {
       outline: 2px solid $primary-color;
       outline-offset: 2px;
     }
+
+    &.is-active {
+      border-color: $primary-color;
+      background-color: $primary-color;
+    }
+
+    .role-btn__icon {
+      width: 28px;
+      height: 28px;
+      color: $text-secondary;
+    }
+
+    &.is-active .role-btn__icon {
+      color: $bg-white;
+    }
+
+    .role-btn__label {
+      font-size: 13px;
+      font-weight: 500;
+      color: $text-primary;
+    }
+
+    &.is-active .role-btn__label {
+      color: $bg-white;
+    }
   }
 
-  .checkbox__label {
-    font-size: 14px;
+  .input {
+    // Campos de input (estilos básicos e foco)
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid color.adjust($border-color, $lightness: -5%);
+    border-radius: 10px;
+    font-size: 15px;
     color: $text-primary;
-  }
-}
+    background-color: $bg-white;
+    transition: all 0.2s ease;
 
-/* Links */
-.link {
-  font-size: 14px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.2s ease;
+    &::placeholder {
+      color: $text-muted;
+    }
 
-  &:hover {
-    text-decoration: underline;
-  }
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
 
-  &:focus-visible {
-    outline: 2px solid $primary-color;
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-}
-
-.link--primary {
-  color: $primary-color;
-  font-weight: 500;
-}
-
-.link--muted {
-  color: $primary-color;
-}
-
-/* Botão principal */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:focus-visible {
-    outline: 2px solid $bg-white;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px $primary-color;
+    &:focus-visible {
+      outline: 2px solid $primary-color;
+      outline-offset: 1px;
+    }
   }
 
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}
-
-.btn--primary {
-  background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
-  color: $bg-white;
-
-  &:hover:not(:disabled) {
-    background: linear-gradient(135deg, $primary-dark 0%, $primary-darker 100%);
-    box-shadow: 0 4px 12px rgba($primary-color, 0.4);
+  .input--email {
+    // Modificador: input com ícone de e-mail alinhado à direita
+    padding-right: 3rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 20px;
   }
 
-  &:active:not(:disabled) {
-    transform: translateY(1px);
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-}
 
-.btn--large {
-  width: 100%;
-  padding: 1rem;
-  font-size: 16px;
-  margin-top: 0.5rem;
+  .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
 
-  /* REMOVIDO: ajuste mobile para `.btn--large` (max-width: 480px)
-   * padding: 0.875rem;
-   */
+    .checkbox__input {
+      width: 18px;
+      height: 18px;
+      accent-color: $primary-color;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid $primary-color;
+        outline-offset: 2px;
+      }
+    }
+
+    .checkbox__label {
+      font-size: 14px;
+      color: $text-primary;
+    }
+  }
+
+  .link {
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary-color;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  .link--primary {
+    color: $primary-color;
+    font-weight: 500;
+  }
+
+  .link--muted {
+    // Variante de link menos proeminente (usar quando precisar de tom alternativo)
+    color: $primary-color;
+  }
+
+  .btn {
+    // Estilos base para botões
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:focus-visible {
+      outline: 2px solid $bg-white;
+      outline-offset: 2px;
+      box-shadow: 0 0 0 4px $primary-color;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn--primary {
+    // Variante primária do botão — utilizado para ações principais (Acessar)
+    background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+    color: $bg-white;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(
+        135deg,
+        $primary-dark 0%,
+        $primary-darker 100%
+      );
+      box-shadow: 0 4px 12px rgba($primary-color, 0.4);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+    }
+  }
+
+  .btn--large {
+    width: 100%;
+    padding: 1rem;
+    font-size: 16px;
+    margin-top: 0.5rem;
+  }
 }
