@@ -14,16 +14,16 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="login-card">
-      <div className="login-card__container">
-        <header className="login-card__header">
-          <h2 className="login-card__title">Bem-vindo de volta</h2>
-          <p className="login-card__subtitle">
+    <div className={style["login-card"]}>
+      <div className={style["login-card__container"]}>
+        <header className={style["login-card__header"]}>
+          <h2 className={style["login-card__title"]}>Bem-vindo de volta</h2>
+          <p className={style["login-card__subtitle"]}>
             Entre com suas credenciais para acessar o sistema
           </p>
         </header>
 
-        <form onSubmit={handleSubmit} className="login-card__form">
+        <form onSubmit={handleSubmit} className={style["login-card__form"]} >
           {/* Seletor de perfil */}
           <div className="field field--role">
             <label className="field__label">Selecione seu perfil</label>
@@ -49,7 +49,7 @@ export default function LoginForm() {
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                   />
                 </svg>
-                <span className="role-btn__label">Paciente</span>
+                <span className={style["role-btn__label"]}>Paciente</span>
               </button>
 
               <button
@@ -107,8 +107,8 @@ export default function LoginForm() {
           </div>
 
           {/* E-mail */}
-          <div className="field">
-            <label htmlFor="email" className="field__label">
+          <div className={style["field"]}>
+            <label htmlFor="email" className={style["field__label"]}>
               E-mail corporativo
             </label>
             <input
@@ -118,14 +118,14 @@ export default function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu.nome@vidaplus.com.br"
-              className="input input--email"
+              className={style["input"] + " " + style["input--email"]}
               required
             />
           </div>
 
           {/* Senha */}
-          <div className="field">
-            <label htmlFor="senha" className="field__label">
+          <div className={style["field"]}>
+            <label htmlFor="senha" className={style["field__label"]}>
               Senha de acesso
             </label>
             <input
@@ -135,37 +135,46 @@ export default function LoginForm() {
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
               placeholder="Digite sua senha"
-              className="input input--password"
+              className={style["input"] + " " + style["input--password"]}
               required
             />
           </div>
 
           {/* Lembrar e recuperar */}
-          <div className="form-row">
-            <label className="checkbox">
-              <input type="checkbox" className="checkbox__input" />
-              <span className="checkbox__label">Manter-me conectado</span>
+          <div className={style["form-row"]}>
+            <label className={style["checkbox"]}>
+              <input type="checkbox" className={style["checkbox__input"]} />
+              <span className={style["checkbox__label"]}>Manter-me conectado</span>
             </label>
 
-            <a href="#" className="link link--muted">
+            <a href="#" className={style["link"] + " " + style["link--muted"]}>
               Recuperar senha
             </a>
           </div>
 
           {/* Botão enviar */}
-          <button type="submit" className="btn btn--primary btn--large">
+          <button type="submit" className={style["btn"] + " " + style["btn--primary"] + " " + style["btn--large"]}>
             Acessar Plataforma
           </button>
         </form>
 
-        <footer className="login-card__footer">
-          <p className="login-card__foottext">
+        <footer className={style["login-card__footer"]}>
+          <p className={style["login-card__foottext"]}>
             Primeiro acesso?{" "}
-            <a href="#" className="link link--primary">
+            <a href="#" className={style["link"] + " " + style["link--primary"]}>
               Solicite suas credenciais
             </a>
           </p>
         </footer>
+      </div>
+
+      {/* Conteúdo adicional (rodapé abaixo do card) — apenas estrutura TSX conforme solicitado */}
+      <div className={style["login-card__additional"]}>
+        <p className={style["login-card__copyright"]}>© 2024 VidaPlus - Sistema de Gestão Hospitalar</p>
+        <p className={style["login-card__links"]}>
+          <a href="#">Termos de Uso</a> • <a href="#">Privacidade</a> • LGPD
+        </p>
+        <p className={style["login-card__note"]}>Acesso seguro e criptografado • Dados protegidos pela LGPD</p>
       </div>
     </div>
   );
