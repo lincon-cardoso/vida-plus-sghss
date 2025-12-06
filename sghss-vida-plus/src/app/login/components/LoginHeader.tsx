@@ -1,5 +1,6 @@
+"use client";
 import styles from "./styles/loginStyle.module.scss";
-import { Heart, Stethoscope, Shield } from "lucide-react";
+import { Heart, Stethoscope, Shield, Calendar } from "lucide-react";
 
 export default function LoginHeader() {
   return (
@@ -28,9 +29,13 @@ export default function LoginHeader() {
           telemedicina e atendimento ao paciente.
         </p>
       </div>
-      <div className={styles.information} aria-hidden="true">
-        <div className={styles.informationItem}>
-          <div className={styles.informationImage}>
+      <div
+        className={styles.information}
+        role="list"
+        aria-label="Recursos do sistema"
+      >
+        <div className={styles.informationItem} role="listitem">
+          <div className={styles.informationImage} aria-hidden="true">
             <Stethoscope />
           </div>
           <div className={styles.informationText}>
@@ -40,25 +45,25 @@ export default function LoginHeader() {
             </p>
           </div>
         </div>
-        <div className={styles.informationItem}>
-          <div className={styles.informationImage}>
+        <div className={styles.informationItem} role="listitem">
+          <div className={styles.informationImage} aria-hidden="true">
             <Shield />
           </div>
           <div className={styles.informationText}>
-            <h3 className={styles.informationTitle}>Telemedicina Integrada</h3>
+            <h3 className={styles.informationTitle}>Segurança Avançada</h3>
             <p className={styles.informationDescription}>
-              Consultas online seguras e eficientes
+              Dados protegidos com criptografia LGPD
             </p>
           </div>
         </div>
-        <div className={styles.informationItem}>
-          <div className={styles.informationImage}>
-            <Stethoscope />
+        <div className={styles.informationItem} role="listitem">
+          <div className={styles.informationImage} aria-hidden="true">
+            <Calendar />
           </div>
           <div className={styles.informationText}>
-            <h3 className={styles.informationTitle}>Telemedicina Integrada</h3>
+            <h3 className={styles.informationTitle}>Agendamento Inteligente</h3>
             <p className={styles.informationDescription}>
-              Consultas online seguras e eficientes
+              Gestão completa de consultas e exames
             </p>
           </div>
         </div>

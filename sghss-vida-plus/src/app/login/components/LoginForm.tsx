@@ -23,21 +23,23 @@ export default function LoginForm() {
           </p>
         </header>
 
-        <form onSubmit={handleSubmit} className={style["login-card__form"]} >
+        <form onSubmit={handleSubmit} className={style["login-card__form"]}>
           {/* Seletor de perfil */}
-          <div className="field field--role">
-            <label className="field__label">Selecione seu perfil</label>
+          <div className={style["field"]}>
+            <label className={style["field__label"]}>
+              Selecione seu perfil
+            </label>
 
-            <div className="role-grid">
+            <div className={style["role-grid"]}>
               <button
                 type="button"
                 onClick={() => setRole("patient")}
-                className={`role-btn role-btn--patient ${
-                  role === "patient" ? "is-active" : ""
+                className={`${style["role-btn"]} ${
+                  role === "patient" ? style["is-active"] : ""
                 }`}
               >
                 <svg
-                  className="role-btn__icon"
+                  className={style["role-btn__icon"]}
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -55,41 +57,12 @@ export default function LoginForm() {
               <button
                 type="button"
                 onClick={() => setRole("doctor")}
-                className={`role-btn role-btn--doctor ${
-                  role === "doctor" ? "is-active" : ""
+                className={`${style["role-btn"]} ${
+                  role === "doctor" ? style["is-active"] : ""
                 }`}
               >
                 <svg
-                  className="role-btn__icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.6}
-                    d="M9 12l2 2 4-4"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.6}
-                    d="M18.5 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"
-                  />
-                </svg>
-                <span className="role-btn__label">Profissional</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRole("admin")}
-                className={`role-btn role-btn--admin ${
-                  role === "admin" ? "is-active" : ""
-                }`}
-              >
-                <svg
-                  className="role-btn__icon"
+                  className={style["role-btn__icon"]}
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -98,10 +71,40 @@ export default function LoginForm() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={1.8}
-                    d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z"
+                    d="M4.8 10.2a4.2 4.2 0 108.4 0 4.2 4.2 0 00-8.4 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.8}
+                    d="M9 14.4v3.6a3 3 0 003 3v0a3 3 0 003-3v-1.5"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.8}
+                    d="M15 13.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"
                   />
                 </svg>
-                <span className="role-btn__label">Gestor</span>
+                <span className={style["role-btn__label"]}>Profissional</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setRole("admin")}
+                className={`${style["role-btn"]} ${
+                  role === "admin" ? style["is-active"] : ""
+                }`}
+              >
+                <svg
+                  className={style["role-btn__icon"]}
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  stroke="none"
+                >
+                  <path d="M12 2l7 4v6c0 5-3.5 9.27-7 10.5-3.5-1.23-7-5.5-7-10.5V6l7-4z" />
+                </svg>
+                <span className={style["role-btn__label"]}>Gestor</span>
               </button>
             </div>
           </div>
@@ -144,7 +147,9 @@ export default function LoginForm() {
           <div className={style["form-row"]}>
             <label className={style["checkbox"]}>
               <input type="checkbox" className={style["checkbox__input"]} />
-              <span className={style["checkbox__label"]}>Manter-me conectado</span>
+              <span className={style["checkbox__label"]}>
+                Manter-me conectado
+              </span>
             </label>
 
             <a href="#" className={style["link"] + " " + style["link--muted"]}>
@@ -153,7 +158,16 @@ export default function LoginForm() {
           </div>
 
           {/* Botão enviar */}
-          <button type="submit" className={style["btn"] + " " + style["btn--primary"] + " " + style["btn--large"]}>
+          <button
+            type="submit"
+            className={
+              style["btn"] +
+              " " +
+              style["btn--primary"] +
+              " " +
+              style["btn--large"]
+            }
+          >
             Acessar Plataforma
           </button>
         </form>
@@ -161,20 +175,27 @@ export default function LoginForm() {
         <footer className={style["login-card__footer"]}>
           <p className={style["login-card__foottext"]}>
             Primeiro acesso?{" "}
-            <a href="#" className={style["link"] + " " + style["link--primary"]}>
+            <a
+              href="#"
+              className={style["link"] + " " + style["link--primary"]}
+            >
               Solicite suas credenciais
             </a>
           </p>
         </footer>
       </div>
 
-      {/* Conteúdo adicional (rodapé abaixo do card) — apenas estrutura TSX conforme solicitado */}
+      {/* Conteúdo adicional (rodapé abaixo do card) */}
       <div className={style["login-card__additional"]}>
-        <p className={style["login-card__copyright"]}>© 2024 VidaPlus - Sistema de Gestão Hospitalar</p>
+        <p className={style["login-card__copyright"]}>
+          © 2025 VidaPlus - Sistema de Gestão Hospitalar
+        </p>
         <p className={style["login-card__links"]}>
           <a href="#">Termos de Uso</a> • <a href="#">Privacidade</a> • LGPD
         </p>
-        <p className={style["login-card__note"]}>Acesso seguro e criptografado • Dados protegidos pela LGPD</p>
+        <p className={style["login-card__note"]}>
+          Acesso seguro e criptografado • Dados protegidos pela LGPD
+        </p>
       </div>
     </div>
   );
