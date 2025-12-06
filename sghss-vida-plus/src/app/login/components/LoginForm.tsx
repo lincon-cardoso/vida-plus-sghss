@@ -1,5 +1,5 @@
 "use client";
-
+import style from "./styles/FormStyle.module.scss";
 import { useState } from "react";
 
 export default function LoginForm() {
@@ -9,22 +9,22 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // envia para api
-    console.log("Enviando dados:", { email, senha, role });
+    // enviar para API/Server Action — não coloque segredos no client
+    console.log("enviar", { email, senha, role });
   };
 
   return (
     <div className="login-card">
       <div className="login-card__container">
         <header className="login-card__header">
-          <h2 className="login-card__title">Bem-vindo De volta</h2>
+          <h2 className="login-card__title">Bem-vindo de volta</h2>
           <p className="login-card__subtitle">
-            Entre com suas credenciais para acessar o sistema{" "}
+            Entre com suas credenciais para acessar o sistema
           </p>
         </header>
 
         <form onSubmit={handleSubmit} className="login-card__form">
-          {/* seletor de perfil */}
+          {/* Seletor de perfil */}
           <div className="field field--role">
             <label className="field__label">Selecione seu perfil</label>
 
@@ -34,7 +34,7 @@ export default function LoginForm() {
                 onClick={() => setRole("patient")}
                 className={`role-btn role-btn--patient ${
                   role === "patient" ? "is-active" : ""
-                } `}
+                }`}
               >
                 <svg
                   className="role-btn__icon"
@@ -57,7 +57,7 @@ export default function LoginForm() {
                 onClick={() => setRole("doctor")}
                 className={`role-btn role-btn--doctor ${
                   role === "doctor" ? "is-active" : ""
-                } `}
+                }`}
               >
                 <svg
                   className="role-btn__icon"
@@ -103,15 +103,69 @@ export default function LoginForm() {
                 </svg>
                 <span className="role-btn__label">Gestor</span>
               </button>
-
             </div>
-
-            {/* email */}
-
-            <div>teste</div>
-            
           </div>
+
+          {/* E-mail */}
+          <div className="field">
+            <label htmlFor="email" className="field__label">
+              E-mail corporativo
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="seu.nome@vidaplus.com.br"
+              className="input input--email"
+              required
+            />
+          </div>
+
+          {/* Senha */}
+          <div className="field">
+            <label htmlFor="senha" className="field__label">
+              Senha de acesso
+            </label>
+            <input
+              id="senha"
+              name="senha"
+              type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              placeholder="Digite sua senha"
+              className="input input--password"
+              required
+            />
+          </div>
+
+          {/* Lembrar e recuperar */}
+          <div className="form-row">
+            <label className="checkbox">
+              <input type="checkbox" className="checkbox__input" />
+              <span className="checkbox__label">Manter-me conectado</span>
+            </label>
+
+            <a href="#" className="link link--muted">
+              Recuperar senha
+            </a>
+          </div>
+
+          {/* Botão enviar */}
+          <button type="submit" className="btn btn--primary btn--large">
+            Acessar Plataforma
+          </button>
         </form>
+
+        <footer className="login-card__footer">
+          <p className="login-card__foottext">
+            Primeiro acesso?{" "}
+            <a href="#" className="link link--primary">
+              Solicite suas credenciais
+            </a>
+          </p>
+        </footer>
       </div>
     </div>
   );
