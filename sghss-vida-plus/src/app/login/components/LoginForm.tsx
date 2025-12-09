@@ -1,16 +1,56 @@
 "use client";
 import style from "./styles/FormStyle.module.scss";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useRef } from "react";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const errorRef = useRef<HTMLDivElement | null>(null);
+
   const [role, setRole] = useState<"patient" | "doctor" | "admin">("doctor");
+
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // enviar para API/Server Action — não coloque segredos no client
-    console.log("enviar", { email, senha, role });
+    setLoading(true);
+    setError("");
+
+    try {
+      // simula atraso na red
+      await sleep(1500);
+      // simula atendimento da requisição
+
+      const isValid =
+        email.trim() === "linkon789@gmail.com" &&
+        senha === "link2502" &&
+        role === "patient";
+
+      if (isValid) {
+        // garante loading desligado
+        setLoading(false);
+        // redireciona para dashboard
+        // router.push("/dashboard");
+        alert("Login bem-sucedido! Redirecionando para o dashboard...");
+        return;
+      }
+
+      // credenciais invalidas
+      setError("Credenciais inválidas. Por favor, tente novamente.");
+      // foca na mensagem de erro
+      errorRef.current?.focus();
+    } catch (err) {
+      // trata erro inesperado
+      setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
+      errorRef.current?.focus();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -155,7 +195,20 @@ export default function LoginForm() {
             <a href="#" className={style["link"] + " " + style["link--muted"]}>
               Recuperar senha
             </a>
+
           </div>
+          {/* Mensagem de erro */}
+            {error && (
+              <div
+                ref={errorRef}
+                tabIndex={-1}
+                role="alert"
+                aria-live="assertive"
+                className={style["form-error"]}
+              >
+                {error}
+              </div>
+            )}
 
           {/* Botão enviar */}
           <button
@@ -167,8 +220,10 @@ export default function LoginForm() {
               " " +
               style["btn--large"]
             }
+            disabled={loading}
+            aria-busy={loading}
           >
-            Acessar Plataforma
+            {loading ? "Carregando..." : "Acessar Plataforma"}
           </button>
         </form>
 
