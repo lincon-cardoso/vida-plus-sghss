@@ -9,46 +9,49 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const [success, setSuccess] = useState("");
   const errorRef = useRef<HTMLDivElement | null>(null);
 
-  const [role, setRole] = useState<"patient" | "doctor" | "admin">("doctor");
-
-  const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+  const [role, setRole] = useState<"patient" | "doctor" | "admin">("patient");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setSuccess("");
 
     try {
-      // simula atraso na red
-      await sleep(1500);
-      // simula atendimento da requisição
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email.trim(), senha, role }),
+      });
 
-      const isValid =
-        email.trim() === "linkon789@gmail.com" &&
-        senha === "link2502" &&
-        role === "patient";
+      const data = await res.json().catch(() => null);
 
-      if (isValid) {
-        // garante loading desligado
-        setLoading(false);
-        // redireciona para dashboard
-        // router.push("/dashboard");
-        alert("Login bem-sucedido! Redirecionando para o dashboard...");
+      if (!res.ok) {
+        setError(
+          data?.message || "Falha na autenticação. Verifique suas credenciais."
+        );
+        errorRef.current?.focus();
+        setLoading(false); // libera só no erro
         return;
       }
 
-      // credenciais invalidas
-      setError("Credenciais inválidas. Por favor, tente novamente.");
-      // foca na mensagem de erro
-      errorRef.current?.focus();
+      setSuccess("Login bem-sucedido! Redirecionando...");
+      setLoading(false);
+
+
+      setTimeout(() => {
+        router.push(`/${role}/dashboard`);
+      }, 2000);
+
+      
     } catch (err) {
-      // trata erro inesperado
       setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
       errorRef.current?.focus();
-    } finally {
       setLoading(false);
     }
   };
@@ -74,6 +77,8 @@ export default function LoginForm() {
               <button
                 type="button"
                 onClick={() => setRole("patient")}
+                disabled={loading}
+                aria-pressed={role === "patient"}
                 className={`${style["role-btn"]} ${
                   role === "patient" ? style["is-active"] : ""
                 }`}
@@ -97,6 +102,8 @@ export default function LoginForm() {
               <button
                 type="button"
                 onClick={() => setRole("doctor")}
+                disabled={loading}
+                aria-pressed={role === "doctor"}
                 className={`${style["role-btn"]} ${
                   role === "doctor" ? style["is-active"] : ""
                 }`}
@@ -132,6 +139,8 @@ export default function LoginForm() {
               <button
                 type="button"
                 onClick={() => setRole("admin")}
+                disabled={loading}
+                aria-pressed={role === "admin"}
                 className={`${style["role-btn"]} ${
                   role === "admin" ? style["is-active"] : ""
                 }`}
@@ -195,20 +204,30 @@ export default function LoginForm() {
             <a href="#" className={style["link"] + " " + style["link--muted"]}>
               Recuperar senha
             </a>
-
           </div>
           {/* Mensagem de erro */}
-            {error && (
-              <div
-                ref={errorRef}
-                tabIndex={-1}
-                role="alert"
-                aria-live="assertive"
-                className={style["form-error"]}
-              >
-                {error}
-              </div>
-            )}
+          {error && (
+            <div
+              ref={errorRef}
+              tabIndex={-1}
+              role="alert"
+              aria-live="assertive"
+              className={style["form-error"]}
+            >
+              {error}
+            </div>
+          )}
+          {/* Mensagem de sucesso */}
+          {success && (
+            <div
+              tabIndex={-1}
+              role="status"
+              aria-live="polite"
+              className={style["form-success"]}
+            >
+              {success}
+            </div>
+          )}
 
           {/* Botão enviar */}
           <button
