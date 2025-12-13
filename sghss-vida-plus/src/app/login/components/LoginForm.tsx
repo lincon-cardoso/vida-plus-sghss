@@ -44,7 +44,12 @@ export default function LoginForm() {
       setSuccess("Login bem-sucedido! Redirecionando...");          
       
       setTimeout(() => {
-        router.push(`/${role}`);
+        const serverRole = data?.role as "patient" | "doctor" | "admin" | undefined;
+        if (serverRole) {
+          router.replace(`/roles/${serverRole}/dashboard`);
+        } else {
+          router.replace(`/roles/${role}`);
+        }
       }, 5000);
       
       

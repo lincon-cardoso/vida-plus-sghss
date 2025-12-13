@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { signToken } from "@/lib/auth";
+
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -26,7 +28,27 @@ export async function POST(request: Request) {
       { status: 401 }
     );
   }
+  // Gerar token JWT
+  const token = signToken({ email, role });
+  
+  // retorn json e seta cooke com token
+    const response = NextResponse.json(
+      { message: "Autenticado", role, email },
+      { status: 200 }
+  );
+  
+  // use secure em pmroducao
 
-  // Retornar objeto útil; defina token/ cookie se for testar autenticação
-  return NextResponse.json({ message: "Autenticado", role }, { status: 200 });
+  const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax" as const,
+    path: "/",
+    maxAge: 60 * 60 * 24, // 1 dia
+  }
+
+  response.cookies.set("token", token, cookieOptions);
+  
+  return response;
+
 }
