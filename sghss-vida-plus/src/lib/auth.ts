@@ -1,7 +1,7 @@
 // src/lib/auth.ts
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
+const JWT_SECRET = process.env.JWT_SECRET!;
 const DEFAULT_EXPIRES_IN = "1d";
 
 export type TokenPayload = {

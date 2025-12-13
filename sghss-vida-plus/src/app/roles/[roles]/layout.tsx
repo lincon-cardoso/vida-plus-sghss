@@ -8,8 +8,9 @@ export default async function RoleLayout({
   params,
 }: {
   children: ReactNode;
-  params: { roles: string };
+  params: Promise<{ roles: string }>;
 }) {
+  const { roles } = await params;
   const token = (await cookies()).get("token")?.value;
   if (!token) redirect("/login");
 
@@ -23,7 +24,7 @@ export default async function RoleLayout({
 
   // impede acesso roles com token de paciente
 
-  if (payload.role !== params.roles) {
+  if (payload.role !== roles) {
     redirect(`/roles/${payload.role}/dashboard`);
   }
 

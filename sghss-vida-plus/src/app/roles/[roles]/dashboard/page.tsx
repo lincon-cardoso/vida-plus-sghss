@@ -5,8 +5,9 @@ import { redirect } from "next/navigation";
 export default async function DashboardPage({
   params,
 }: {
-  params: { roles: string };
+  params: Promise<{ roles: string }>;
 }) {
+  const { roles } = await params;
   // Com layout.tsx isso “já estaria protegido”.
   // Eu ainda leio o token aqui só pra conseguir pegar email/role e renderizar.
   const token = (await cookies()).get("token")?.value;
@@ -14,7 +15,7 @@ export default async function DashboardPage({
 
   const payload = verifyToken(token);
 
-  if (payload.role !== params.roles) {
+  if (payload.role !== roles) {
     redirect(`/roles/${payload.role}/dashboard`);
   }
 

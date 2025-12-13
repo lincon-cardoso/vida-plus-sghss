@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 export default async function RolesIndex({
   params,
 }: {
-  params: { roles: string };
+  params: Promise<{ roles: string }>;
 }) {
-  redirect(`/roles/${params.roles}/dashboard`);
+  const { roles } = await params;
+  redirect(`/roles/${roles}/dashboard`);
 }
