@@ -16,6 +16,7 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(loading) return; // previne múltiplos envios
     setLoading(true);
     setError("");
     setSuccess("");
@@ -40,14 +41,13 @@ export default function LoginForm() {
         return;
       }
 
-      setSuccess("Login bem-sucedido! Redirecionando...");
-      setLoading(false);
-
-
+      setSuccess("Login bem-sucedido! Redirecionando...");          
+      
       setTimeout(() => {
-        router.push(`/${role}/dashboard`);
-      }, 2000);
-
+        router.push(`/${role}`);
+      }, 5000);
+      
+      
       
     } catch (err) {
       setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
