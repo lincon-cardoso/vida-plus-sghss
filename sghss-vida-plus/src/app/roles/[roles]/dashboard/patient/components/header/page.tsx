@@ -1,7 +1,7 @@
 "use client";
 import type { TokenPayload } from "@/lib/auth";
 import { useState } from "react";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search, Bell } from "lucide-react";
 import styles from "@/app/roles/[roles]/dashboard/patient/components/header/styles/PatientHeader.module.scss";
 
 export default function BarraNavegacao({
@@ -9,7 +9,15 @@ export default function BarraNavegacao({
 }: {
   payload?: TokenPayload;
 }) {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([
+    "main",
+  ]);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
@@ -55,7 +63,20 @@ export default function BarraNavegacao({
             />
           </div>
         </div>
-        <div className={styles.actions}>Sino e informacoes do usuario</div>
+        <div className={styles.actions}>
+          <button aria-label="Notificações" className={styles.bellButton}>
+            <Bell />
+          </button>
+          <main className={styles.profile} aria-label="Perfil do usuário">
+            <div className={styles.profileText}>
+              <div className={styles.profileName}>{payload?.role}</div>
+              <div className={styles.profileRole}>Paciente</div>
+            </div>
+            <div className={styles.avatar} aria-hidden="true">
+              <span className={styles.avatarInitial}>P</span>
+            </div>
+          </main>
+        </div>
       </div>
     </header>
   );

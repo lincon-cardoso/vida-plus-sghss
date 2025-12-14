@@ -29,10 +29,10 @@
         background: transparent;
         border: 0;
         cursor: pointer;
-      }
 
-      .menuButton:hover {
-        background: #f1f3f4;
+        &:hover {
+          background: #f1f3f4;
+        }
       }
 
       .brand {
@@ -49,14 +49,14 @@
           align-items: center;
           justify-content: center;
           color: #ffffff;
-        }
 
-        .brandIcon {
-          width: 24px;
-          height: 24px;
-          stroke-width: 2;
-          stroke: currentColor;
-          fill: none;
+          .brandIcon {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+          }
         }
 
         .text {
@@ -87,62 +87,122 @@
       min-width: 160px;
       max-width: 720px;
       margin: 0 auto;
-    }
 
-    .searchBox {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      .searchBox {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
 
-      height: 44px;
-      padding: 0 14px;
+        height: 44px;
+        padding: 0 14px;
 
-      background: #ffffff;
-      border: 1px solid #d1d5db;
-      border-radius: 9999px;
-      box-sizing: border-box;
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 9999px;
+        box-sizing: border-box;
 
-      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
-    }
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
 
-    .searchBox:focus-within {
-      border-color: #94a3b8;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
-    }
+        &:focus-within {
+          border-color: #94a3b8;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+        }
 
-    .searchIcon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #6b7280;
-      flex: 0 0 auto;
+        .searchIcon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: #6b7280;
+          flex: 0 0 auto;
 
-      svg {
-        width: 18px;
-        height: 18px;
+          svg {
+            width: 18px;
+            height: 18px;
+          }
+        }
+
+        .searchInput {
+          width: 100%;
+          border: 0;
+          outline: none;
+          background: transparent;
+
+          font-size: 14px;
+          color: var(--text);
+
+          &::placeholder {
+            color: #9ca3af;
+          }
+        }
       }
-    }
-
-    .searchInput {
-      width: 100%;
-      border: 0;
-      outline: none;
-      background: transparent;
-
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    .searchInput::placeholder {
-      color: #9ca3af;
     }
 
     .actions {
       display: flex;
       align-items: center;
-      gap: 16px;
-      flex: 0 0 auto;
+      justify-content: space-around;
+      padding-left: 8px;
+      padding-right: 8px;
+      width: 220px;
+      min-height: 50px;
+
+      .profile {
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        gap: 10px;
+        border-left: 2px solid #dadce0;
+        
+        .profileText {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 2px;
+
+          .profileName {
+            color: var(--text);
+            font-weight: 600;
+          }
+
+          .profileRole {
+            color: var(--muted);
+            font-size: 12px;
+          }
+        }
+
+        .avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 9999px;
+          background: var(--primary-blue);
+          color: #ffffff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+
+          .avatarInitial {
+            line-height: 1;
+          }
+        }
+      }
+
+      .bellButton {        
+        padding: 8px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        color: var(--text);
+
+        &:hover {
+          background: #f1f3f4;
+        }
+      }
     }
   }
 }
