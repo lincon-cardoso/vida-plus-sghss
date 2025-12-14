@@ -5,7 +5,7 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* Remove default margins and paddings */
@@ -33,8 +33,8 @@ pre,
 button,
 input,
 select {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* Make images easier to work with */
@@ -43,9 +43,9 @@ picture,
 video,
 canvas,
 svg {
-    display: block;
-    max-width: 100%;
-    height: auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Inherit fonts for form elements */
@@ -53,45 +53,47 @@ input,
 button,
 textarea,
 select {
-    font: inherit;
+  font: inherit;
 }
 
 /* Base variables */
 :root {
-    --bg: #ffffff;
-    --text: #111827;
-    /* gray-900 */
-    --muted: #6b7280;
-    /* gray-500 */
-    --accent: #0ea5a6;
-    /* teal */
-    --max-width: 1200px;
-    --space-1: 0.5rem;
-    --space-2: 1rem;
-    --space-3: 1.5rem;
+  --bg: #ffffff;
+  --text: #111827;
+  /* gray-900 */
+  --muted: #6b7280;
+  /* gray-500 */
+  --accent: #0ea5a6;
+  --primary-blue: #1a73e8;
+  /* teal */
+  --max-width: 1200px;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
 }
 
 /* Default typography + body */
 html,
 body {
-    height: 100%;
-    background: var(--bg);
-    color: var(--text);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    line-height: 1.35;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
+  line-height: 1.35;
 }
 
 /* Improve mobile text sizing (prevent automatic font-size adjustments) */
 html {
-    -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* Remove list styles where useful */
 ul,
 ol {
-    list-style: none;
+  list-style: none;
 }
 
 /* Headings default weight */
@@ -101,73 +103,73 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 /* Accessibility focus styles */
 :focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* App root and container utilities */
 .app-root {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
-    width: 100%;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: var(--space-2);
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-2);
 }
 
 /* Small utility classes */
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    /* clip is deprecated but kept for compatibility; keep it along with clip-path */
-    clip: rect(0, 0, 0, 0);
-    clip-path: inset(50%);
-    white-space: nowrap;
-    border: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  /* clip is deprecated but kept for compatibility; keep it along with clip-path */
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Minimal interactive styling */
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Button and link resets for consistent baseline appearance */
 button {
-    background: transparent;
-    border: none;
-    padding: 0;
-    color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 /* Forms base */
 input,
 textarea,
 select {
-    border: 1px solid #e5e7eb;
-    /* gray-200 */
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  /* gray-200 */
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
 }
