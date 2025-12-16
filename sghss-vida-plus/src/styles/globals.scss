@@ -173,3 +173,19 @@ select {
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
 }
+
+/* Patient dashboard */
+.patient-dashboard {
+  &__page {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+}

@@ -2,6 +2,7 @@
 import type { TokenPayload } from "@/lib/auth";
 import { useState } from "react";
 import { Menu, Search, Bell } from "lucide-react";
+import { usePatientMenuStore } from "@/lib/stores";
 import styles from "@/app/roles/[roles]/dashboard/patient/components/header/styles/PatientHeader.module.scss";
 
 export default function BarraNavegacao({
@@ -9,20 +10,20 @@ export default function BarraNavegacao({
 }: {
   payload?: TokenPayload;
 }) {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([
-    "main",
-  ]);
-  const [showNotifications, setShowNotifications] = useState(false);
+  const toggleMenu = usePatientMenuStore((s) => s.toggleMenu);
+  const isMenuOpen = usePatientMenuStore((s) => s.isMenuOpen);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showSearchResults, setShowSearchResults] = useState(false);
 
   return (
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <div className={styles.menuToggle} aria-label="Menu lateral">
-          <button className={styles.menuButton}>
+          <button
+            className={styles.menuButton}
+            onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-controls="patient-menu"
+          >
             <Menu />
           </button>
           <div className={styles.brand}>
