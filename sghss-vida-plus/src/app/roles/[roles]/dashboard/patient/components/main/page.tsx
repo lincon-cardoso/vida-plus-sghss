@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { usePatientMenuStore } from "@/lib/stores";
+import * as Dialog from "@radix-ui/react-dialog";
 import styles from "./styles/PatientMenu.module.scss";
 
 export default function PatientDashboardMain() {
@@ -153,9 +154,34 @@ export default function PatientDashboardMain() {
               </ul>
 
               <div className={styles.appointmentFooter}>
-                <button type="button" className={styles.scheduleButton}>
-                  Agendar Nova Consulta
-                </button>
+                <Dialog.Root>
+                  <Dialog.Trigger asChild>
+                    <button type="button" className={styles.scheduleButton}>
+                      Agendar Nova Consulta
+                    </button>
+                  </Dialog.Trigger>
+                  {/* Cria potal */}
+
+                  <Dialog.Portal>
+                    <Dialog.Overlay className={styles.dialogOverlay} />
+                    <Dialog.Content className={styles.dialogContent}>
+                      <Dialog.Title className={styles.dialogTitle}>
+                        Agendar Nova Consultas
+                      </Dialog.Title>
+                      <Dialog.Close asChild>
+                        <button
+                          type="button"
+                          className={styles.dialogClose}
+                          aria-label="Fechar"
+                        >
+                          ×
+                        </button>
+                      </Dialog.Close>
+                      <div>Especialidade</div>
+                      <div>Proficional</div>
+                    </Dialog.Content>
+                  </Dialog.Portal>
+                </Dialog.Root>
               </div>
             </div>
           </div>
