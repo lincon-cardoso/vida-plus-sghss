@@ -1,5 +1,13 @@
 "use client";
-import { Home, Users, Calendar, Settings, LogOut } from "lucide-react";
+import {
+  Home,
+  Users,
+  Calendar,
+  Settings,
+  LogOut,
+  FileText,
+  Activity,
+} from "lucide-react";
 import { useEffect, useRef } from "react";
 import { usePatientMenuStore } from "@/lib/stores";
 import styles from "./styles/PatientMenu.module.scss";
@@ -68,11 +76,30 @@ export default function PatientDashboardMain() {
               Bem-vinda ao seu portal do paciente.
             </p>
           </div>
-          teste
+          <div className={styles.infoBoxes}>
+            <div className={styles.infoBox}>
+              <div className={styles.infoBoxTop}>
+                <Calendar className={styles.icon} />
+                <h2 className={styles.infoNumber}>2</h2>
+              </div>
+              <p className={styles.infoLabel}>Próximas Consultas</p>
+            </div>
+            <div className={styles.infoBox}>
+              <div className={styles.infoBoxTop}>
+                <FileText className={styles.icon} />
+                <h2 className={styles.infoNumber}>3</h2>
+              </div>
+              <p className={styles.infoLabel}>Resultados de Exames</p>
+            </div>
+            <div className={styles.infoBox}>
+              <div className={styles.infoBoxTop}>
+                <Activity className={styles.icon} />
+                <h2 className={styles.infoNumber}>1</h2>
+              </div>
+              <p className={styles.infoLabel}>Prescrição Ativa</p>
+            </div>
+          </div>
         </section>
-
-        
-        
       </div>
     </div>
   );
