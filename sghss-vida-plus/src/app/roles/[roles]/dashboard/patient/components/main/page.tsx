@@ -99,6 +99,66 @@ export default function PatientDashboardMain() {
               <p className={styles.infoLabel}>Prescrição Ativa</p>
             </div>
           </div>
+          <div className={styles.appointmentsRoot}>
+            {/* Consultas */}
+            <h2 className={styles.sectionTitle}>Próximas Consultas</h2>
+
+            <div
+              className={styles.appointmentsCard}
+              aria-label="Lista de próximas consultas"
+            >
+              <ul className={styles.appointmentList}>
+                {/* Exemplo de item de consulta */}
+                <li className={styles.appointmentItem}>
+                  <div className={styles.appointmentLeft}>
+                    <div className={styles.appointmentAvatar}>JS</div>
+                    <div className={styles.appointmentDetails}>
+                      <p className={styles.doctorName}>Dr. João Santos Silva</p>
+                      <p className={styles.specialty}>Cardiologia</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.appointmentRight}>
+                    <p className={styles.appointmentDate}>15/11/2024</p>
+                    <p className={styles.appointmentTime}>09:00</p>
+                    <p
+                      className={`${styles.appointmentStatus} ${styles.confirmed}`}
+                    >
+                      Confirmada
+                    </p>
+                  </div>
+                </li>
+
+                <li className={styles.appointmentItem}>
+                  <div className={styles.appointmentLeft}>
+                    <div className={styles.appointmentAvatar}>AC</div>
+                    <div className={styles.appointmentDetails}>
+                      <p className={styles.doctorName}>
+                        Dra. Ana Costa Pereira
+                      </p>
+                      <p className={styles.specialty}>Check-up Geral</p>
+                    </div>
+                  </div>
+
+                  <div className={styles.appointmentRight}>
+                    <p className={styles.appointmentDate}>22/11/2024</p>
+                    <p className={styles.appointmentTime}>14:30</p>
+                    <p
+                      className={`${styles.appointmentStatus} ${styles.pending}`}
+                    >
+                      Pendente
+                    </p>
+                  </div>
+                </li>
+              </ul>
+
+              <div className={styles.appointmentFooter}>
+                <button type="button" className={styles.scheduleButton}>
+                  Agendar Nova Consulta
+                </button>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </div>
