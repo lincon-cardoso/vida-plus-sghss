@@ -19,6 +19,10 @@ export default function ScheduleAppointmentDialog() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  // Sequência de seleção: especialidade -> médico -> data -> horário
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
+  const [selectedDoctor, setSelectedDoctor] = useState<string>("");
+
   // Gera lista de horários (08:00 a 17:30, passo 30min).
   // Mantido em useMemo para não recalcular a cada render.
   const times = useMemo<string[]>(() => {
@@ -102,6 +106,14 @@ export default function ScheduleAppointmentDialog() {
     }
   }, [open]);
 
+  // Evita renderizar o Portal em ambientes onde "document" não está disponível.
+  // O Portal só será montado após o componente estar no cliente.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       {/* Botão que abre o diálogo */}
@@ -110,137 +122,176 @@ export default function ScheduleAppointmentDialog() {
           Agendar Nova Consulta
         </button>
       </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay className={styles.dialogOverlay} />
-        <Dialog.Content className={styles.dialogContent}>
-          <div className={styles.dialogHeader}>
-            <div className={styles.dialogTitle}>Agendar Nova Consulta</div>
-            <p>
-              Selecione a especialidade, médico e horário de sua preferência.
-            </p>
-          </div>
-          <Dialog.Close asChild>
-            <button
-              type="button"
-              className={styles.dialogClose}
-              aria-label="Fechar"
-            >
-              ×
-            </button>
-          </Dialog.Close>
-          <div className={styles.editRow}>
-            {/* Campos: especialidade e médico (podem vir via props ou API no futuro) */}
-            <div className={styles.editField}>
-              <label htmlFor="specialty">Especialidade:</label>
-              <select
-                id="specialty"
-                name="specialty"
-                defaultValue={""}
-                required
-              >
-                <option value="" disabled>
-                  Selecione a especialidade
-                </option>
-                <option value="cardiology">Cardiologia</option>
-                <option value="dermatology">Dermatologia</option>
-                <option value="pediatrics">Pediatria</option>
-              </select>
+      {mounted && (
+        <Dialog.Portal>
+          <Dialog.Overlay className={styles.dialogOverlay} />
+          <Dialog.Content className={styles.dialogContent}>
+            <div className={styles.dialogHeader}>
+              <Dialog.Title className={styles.dialogTitle}>
+                Agendar Nova Consulta
+              </Dialog.Title>
+              <Dialog.Description className={styles.dialogDescription}>
+                Selecione a especialidade, médico e horário de sua preferência.
+              </Dialog.Description>
             </div>
-            <div className={styles.editField}>
-              <label htmlFor="doctor">Médico:</label>
-              <select id="doctor" name="doctor" defaultValue={""} required>
-                <option value="" disabled>
-                  Selecione o médico
-                </option>
-                <option value="dr-smith">Dr. Smith</option>
-                <option value="dr-jones">Dra. Jones</option>
-                <option value="dr-brown">Dr. Brown</option>
-              </select>
-            </div>
-          </div>
-          {/* Data e hora */}
-          <div className={styles.dateTimeRow}>
-            {/* Calendário: escolha uma data (poderia suportar restrições como fromDate/toDate) */}
-            <div className={styles.calendarWrap}>
-              <DayPicker
-                mode="single"
-                selected={selectedDate}
-                onSelect={(date) => {
-                  setSelectedDate(date);
-                  setSelectedTime(null);
-                }}
-                // pode adicionar "fromDate"/"toDate" ou dias desabilitados
-              />
-            </div>
-
-            {/* Lista de horários: botões desabilitados quando indisponíveis */}
-            <div className={styles.timeList} aria-label="Horários disponíveis">
-              {times.map((time: string) => {
-                const disabled = !isAvailable(selectedDate, time);
-                const isSelected = selectedTime === time;
-                return (
-                  <button
-                    key={time}
-                    className={`${styles.timeButton} ${
-                      isSelected ? styles.selected : ""
-                    }`}
-                    onClick={() => handleSelectTime(time)}
-                    disabled={disabled}
-                    aria-pressed={isSelected}
-                    aria-label={`Horário ${time} ${
-                      disabled
-                        ? "indisponível"
-                        : isSelected
-                        ? "selecionado"
-                        : ""
-                    }`}
-                  >
-                    <Clock className={styles.timeIcon} size={16} />
-                    <span className={styles.timeLabel}>{time}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>{" "}
-          {/* Resumo / feedback (aria-live para leitores de tela) */}{" "}
-          <div className={styles.summary} aria-live="polite" role="status">
-            {successMessage ? (
-              <strong>{successMessage}</strong>
-            ) : selectedDate && selectedTime ? (
-              <>
-                <span>Agendando para: </span>
-                <strong>
-                  {selectedDate.toLocaleDateString("pt-BR", {
-                    day: "numeric",
-                    month: "long",
-                  })}{" "}
-                  às {selectedTime}
-                </strong>
-              </>
-            ) : (
-              <span>Selecione data e horário</span>
-            )}
-          </div>
-          {/* Ações: cancelar fecha, confirmar envia (desabilitado até data+hora) */}
-          <div className={styles.dialogActions}>
             <Dialog.Close asChild>
-              <button type="button" className={styles.cancelButton}>
-                Cancelar
+              <button
+                type="button"
+                className={styles.dialogClose}
+                aria-label="Fechar"
+              >
+                ×
               </button>
             </Dialog.Close>
-            <button
-              type="button"
-              className={styles.confirmButton}
-              onClick={handleConfirm}
-              disabled={!selectedDate || !selectedTime || isSubmitting}
-              aria-busy={isSubmitting}
-              aria-disabled={!selectedDate || !selectedTime || isSubmitting}
-            >
-              {isSubmitting ? "Confirmando..." : "Confirmar"}
-            </button>
-          </div>
-        </Dialog.Content>
-      </Dialog.Portal>
+            <div className={styles.editRow}>
+              {/* Campos: especialidade e médico (podem vir via props ou API no futuro) */}
+              <div className={styles.editField}>
+                <label htmlFor="specialty">Especialidade:</label>
+                <select
+                  id="specialty"
+                  name="specialty"
+                  value={selectedSpecialty}
+                  onChange={(e) => {
+                    setSelectedSpecialty(e.target.value);
+                    // limpa seleção dependente quando a especialidade muda
+                    setSelectedDoctor("");
+                    setSelectedDate(undefined);
+                    setSelectedTime(null);
+                  }}
+                  required
+                >
+                  <option value="" disabled>
+                    Selecione a especialidade
+                  </option>
+                  <option value="cardiology">Cardiologia</option>
+                  <option value="dermatology">Dermatologia</option>
+                  <option value="pediatrics">Pediatria</option>
+                </select>
+              </div>
+              <div className={styles.editField}>
+                <label htmlFor="doctor">Médico:</label>
+                <select
+                  id="doctor"
+                  name="doctor"
+                  value={selectedDoctor}
+                  onChange={(e) => {
+                    setSelectedDoctor(e.target.value);
+                    setSelectedDate(undefined);
+                    setSelectedTime(null);
+                  }}
+                  disabled={!selectedSpecialty}
+                  aria-disabled={!selectedSpecialty}
+                  required
+                >
+                  <option value="" disabled>
+                    Selecione o médico
+                  </option>
+                  <option value="dr-smith">Dr. Smith</option>
+                  <option value="dr-jones">Dra. Jones</option>
+                  <option value="dr-brown">Dr. Brown</option>
+                </select>
+                {!selectedSpecialty && (
+                  <small className={styles.hint}>
+                    Selecione a especialidade antes de escolher o médico
+                  </small>
+                )}
+              </div>
+            </div>
+            {/* Data e hora */}
+            <div className={styles.dateTimeRow}>
+              {/* Calendário: escolha uma data (poderia suportar restrições como fromDate/toDate) */}
+              <div className={styles.calendarWrap}>
+                <DayPicker
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={(date) => {
+                    // impede escolher data sem ter selecionado o médico
+                    if (!selectedDoctor) return;
+                    setSelectedDate(date);
+                    setSelectedTime(null);
+                  }}
+                  // pode adicionar "fromDate"/"toDate" ou dias desabilitados
+                />
+                {!selectedDoctor && (
+                  <div className={styles.hint}>
+                    Selecione especialidade e médico para escolher a data
+                  </div>
+                )}
+              </div>
+
+              {/* Lista de horários: botões desabilitados quando indisponíveis */}
+              <div
+                className={styles.timeList}
+                aria-label="Horários disponíveis"
+              >
+                {times.map((time: string) => {
+                  const disabled =
+                    !selectedDoctor || !isAvailable(selectedDate, time);
+                  const isSelected = selectedTime === time;
+                  return (
+                    <button
+                      key={time}
+                      className={`${styles.timeButton} ${
+                        isSelected ? styles.selected : ""
+                      }`}
+                      onClick={() => handleSelectTime(time)}
+                      disabled={disabled}
+                      aria-pressed={isSelected}
+                      aria-label={`Horário ${time} ${
+                        disabled
+                          ? "indisponível"
+                          : isSelected
+                          ? "selecionado"
+                          : ""
+                      }`}
+                    >
+                      <Clock className={styles.timeIcon} size={16} />
+                      <span className={styles.timeLabel}>{time}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>{" "}
+            {/* Resumo / feedback (aria-live para leitores de tela) */}{" "}
+            <div className={styles.summary} aria-live="polite" role="status">
+              {successMessage ? (
+                <strong>{successMessage}</strong>
+              ) : selectedDate && selectedTime ? (
+                <>
+                  <span>Agendando para: </span>
+                  <strong>
+                    {selectedDate.toLocaleDateString("pt-BR", {
+                      day: "numeric",
+                      month: "long",
+                    })}{" "}
+                    às {selectedTime}
+                  </strong>
+                </>
+              ) : (
+                <span>Selecione data e horário</span>
+              )}
+            </div>
+            {/* Ações: cancelar fecha, confirmar envia (desabilitado até data+hora) */}
+            <div className={styles.dialogActions}>
+              <Dialog.Close asChild>
+                <button type="button" className={styles.cancelButton}>
+                  Cancelar
+                </button>
+              </Dialog.Close>
+              <button
+                type="button"
+                className={styles.confirmButton}
+                onClick={handleConfirm}
+                disabled={!selectedDate || !selectedTime || isSubmitting}
+                aria-busy={isSubmitting}
+                aria-disabled={!selectedDate || !selectedTime || isSubmitting}
+              >
+                {isSubmitting ? "Confirmando..." : "Confirmar"}
+              </button>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      )}
     </Dialog.Root>
   );
 }

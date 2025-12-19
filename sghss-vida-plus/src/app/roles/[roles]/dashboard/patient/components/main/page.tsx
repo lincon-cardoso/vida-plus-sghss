@@ -12,20 +12,53 @@ import { useEffect, useRef } from "react";
 import { usePatientMenuStore } from "@/lib/stores";
 import styles from "./styles/PatientMenu.module.scss";
 import ScheduleAppointmentDialog from "./components/ScheduleAppointmentDialog/ScheduleAppointmentDialog";
+import PatientUpdatesSection from "./components/PatientUpdatesSection/PatientUpdatesSection";
+import QuickActionsNav, {
+  type QuickAction,
+} from "./components/QuickActionsNav/QuickActionsNav";
+import WelcomeBox from "./components/WelcomeBox/WelcomeBox";
+import InfoBoxes, { type InfoBoxItem } from "./components/InfoBoxes/InfoBoxes";
+import AppointmentsCard from "./components/AppointmentsCard/AppointmentsCard";
+import type { Appointment } from "./components/AppointmentsCard/AppointmentItem";
+
+const QUICK_ACTIONS: QuickAction[] = [
+  { label: "Início", Icon: Home },
+  { label: "Pacientes", Icon: Users },
+  { label: "Agenda", Icon: Calendar },
+  { label: "Configurações", Icon: Settings },
+  { label: "sair", Icon: LogOut, color: "#ff0000" },
+];
+
+const INFO_BOXES: InfoBoxItem[] = [
+  { Icon: Calendar, count: 2, label: "Próximas Consultas" },
+  { Icon: FileText, count: 3, label: "Resultados de Exames" },
+  { Icon: Activity, count: 1, label: "Prescrição Ativa" },
+];
+
+const APPOINTMENTS: Appointment[] = [
+  {
+    avatar: "JS",
+    doctorName: "Dr. João Santos Silva",
+    specialty: "Cardiologia",
+    date: "15/11/2024",
+    time: "09:00",
+    status: "Confirmada",
+  },
+  {
+    avatar: "AC",
+    doctorName: "Dra. Ana Costa Pereira",
+    specialty: "Check-up Geral",
+    date: "22/11/2024",
+    time: "14:30",
+    status: "Pendente",
+  },
+];
 
 export default function PatientDashboardMain() {
   const isMenuOpen = usePatientMenuStore((s) => s.isMenuOpen);
   const closeMenu = usePatientMenuStore((s) => s.closeMenu);
 
   const menuRef = useRef<HTMLElement | null>(null);
-
-  const quickActions = [
-    { label: "Início", Icon: Home },
-    { label: "Pacientes", Icon: Users },
-    { label: "Agenda", Icon: Calendar },
-    { label: "Configurações", Icon: Settings },
-    { label: "sair", Icon: LogOut, color: "#ff0000" },
-  ];
 
   // Fecha com Esc
   useEffect(() => {
@@ -46,118 +79,22 @@ export default function PatientDashboardMain() {
   return (
     <div className={styles.root}>
       <div className={styles.layout}>
-        <nav
-          id="patient-menu"
-          className={styles.sidebarIcons}
-          aria-label="Navegação rápida"
-        >
-          <ul className={styles.iconList}>
-            {quickActions.map(({ label, Icon, color }) => (
-              <li key={label}>
-                <button
-                  type="button"
-                  className={styles.iconButton}
-                  aria-label={label}
-                >
-                  <Icon
-                    className={styles.icon}
-                    style={color ? { color } : undefined}
-                  />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <QuickActionsNav actions={QUICK_ACTIONS} menuRef={menuRef} />
 
         <section className={styles.content} aria-label="Conteúdo principal">
-          <div className={styles.welcomeBox}>
-            {/* caixa nome e apresentacao */}
-            <h1 className={styles.contentTitle}>Olá, João!</h1>
-            <p className={styles.editable}>
-              Bem-vinda ao seu portal do paciente.
-            </p>
-          </div>
-          <div className={styles.infoBoxes}>
-            <div className={styles.infoBox}>
-              <div className={styles.infoBoxTop}>
-                <Calendar className={styles.icon} />
-                <h2 className={styles.infoNumber}>2</h2>
-              </div>
-              <p className={styles.infoLabel}>Próximas Consultas</p>
-            </div>
-            <div className={styles.infoBox}>
-              <div className={styles.infoBoxTop}>
-                <FileText className={styles.icon} />
-                <h2 className={styles.infoNumber}>3</h2>
-              </div>
-              <p className={styles.infoLabel}>Resultados de Exames</p>
-            </div>
-            <div className={styles.infoBox}>
-              <div className={styles.infoBoxTop}>
-                <Activity className={styles.icon} />
-                <h2 className={styles.infoNumber}>1</h2>
-              </div>
-              <p className={styles.infoLabel}>Prescrição Ativa</p>
-            </div>
-          </div>
-          <div className={styles.appointmentsRoot}>
-            {/* Consultas */}
-            <h2 className={styles.sectionTitle}>Próximas Consultas</h2>
+          <WelcomeBox
+            title="Olá, João!"
+            subtitle="Bem-vinda ao seu portal do paciente."
+          />
+          <InfoBoxes items={INFO_BOXES} />
 
-            <div
-              className={styles.appointmentsCard}
-              aria-label="Lista de próximas consultas"
-            >
-              <ul className={styles.appointmentList}>
-                {/* Exemplo de item de consulta */}
-                <li className={styles.appointmentItem}>
-                  <div className={styles.appointmentLeft}>
-                    <div className={styles.appointmentAvatar}>JS</div>
-                    <div className={styles.appointmentDetails}>
-                      <p className={styles.doctorName}>Dr. João Santos Silva</p>
-                      <p className={styles.specialty}>Cardiologia</p>
-                    </div>
-                  </div>
+          <AppointmentsCard
+            title="Próximas Consultas"
+            appointments={APPOINTMENTS}
+            footer={<ScheduleAppointmentDialog />}
+          />
 
-                  <div className={styles.appointmentRight}>
-                    <p className={styles.appointmentDate}>15/11/2024</p>
-                    <p className={styles.appointmentTime}>09:00</p>
-                    <p
-                      className={`${styles.appointmentStatus} ${styles.confirmed}`}
-                    >
-                      Confirmada
-                    </p>
-                  </div>
-                </li>
-
-                <li className={styles.appointmentItem}>
-                  <div className={styles.appointmentLeft}>
-                    <div className={styles.appointmentAvatar}>AC</div>
-                    <div className={styles.appointmentDetails}>
-                      <p className={styles.doctorName}>
-                        Dra. Ana Costa Pereira
-                      </p>
-                      <p className={styles.specialty}>Check-up Geral</p>
-                    </div>
-                  </div>
-
-                  <div className={styles.appointmentRight}>
-                    <p className={styles.appointmentDate}>22/11/2024</p>
-                    <p className={styles.appointmentTime}>14:30</p>
-                    <p
-                      className={`${styles.appointmentStatus} ${styles.pending}`}
-                    >
-                      Pendente
-                    </p>
-                  </div>
-                </li>
-              </ul>
-
-              <div className={styles.appointmentFooter}>
-                <ScheduleAppointmentDialog />
-              </div>
-            </div>
-          </div>
+          <PatientUpdatesSection />
         </section>
       </div>
     </div>

@@ -1,0 +1,100 @@
+.root {
+  margin-top: 16px;
+}
+
+.cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  padding: 16px;
+  flex: 1 1 320px;
+  min-width: 280px;
+}
+
+.cardHeader {
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 16px;
+  color: #111827;
+}
+
+.itemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid #f1f5f9;
+}
+
+.item:first-of-type {
+  border-top: none;
+}
+
+.itemDate {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.badge {
+  background: #e6ffed;
+  color: #166534;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.prescriptionCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.prescriptionNote {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.prescriptionDoctor {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.prescriptionMeta {
+  text-align: right;
+}
+
+.prescriptionStatus {
+  display: inline-block;
+  background: #e6ffed;
+  color: #166534;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.prescriptionValid {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+}

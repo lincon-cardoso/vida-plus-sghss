@@ -286,7 +286,7 @@
         .appointmentFooter {
           margin-top: 0.5rem;
           display: flex;
-          justify-content: center;
+          flex-direction: column;
         }
       }
     }
