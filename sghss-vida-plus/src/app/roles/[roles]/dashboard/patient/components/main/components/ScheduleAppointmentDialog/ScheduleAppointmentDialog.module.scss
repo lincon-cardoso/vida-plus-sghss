@@ -1,0 +1,370 @@
+.scheduleButton {
+  width: 100%;
+  max-width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 2px solid #2563eb;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 120ms, color 120ms;
+
+  &:hover {
+    background: #2563eb;
+    color: #ffffff;
+  }
+}
+
+/* Dialog (Radix Portal)
+   Importante: o Portal do Radix é renderizado no <body>.
+*/
+.dialogOverlay {
+  position: fixed;
+  inset: 0;
+  /* Fundo preto escurecido, mas não “apagado” */
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
+.dialogContent {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: 10px;
+  width: 820px;
+  max-width: 92vw;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.3);
+  z-index: 1001;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .dialogHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    .dialogTitle {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    p {
+      margin: 0;
+      color: #4b5563;
+    }
+  }
+  .editRow {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    @media (min-width: 720px) {
+      flex-direction: row;
+      gap: 12px;
+    }
+
+    .editField {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      label {
+        font-weight: 500;
+      }
+      input,
+      select,
+      textarea {
+        padding: 12px;
+        background: #f3f4f6;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        color: #111827;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        height: 44px;
+        display: inline-flex;
+        align-items: center;
+        &:focus {
+          outline: 2px solid #2563eb;
+          outline-offset: 2px;
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+        select:invalid {
+          color: #9ca3af;
+        }
+        option[value=""] {
+          color: #9ca3af;
+        }
+      }
+    }
+  }
+
+  /* Data e hora (aninhados dentro do dialogContent para refletir o JSX) */
+  .dateTimeRow {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+
+    @media (max-width: 720px) {
+      flex-direction: column;
+    }
+
+    .calendarWrap {
+      flex: 0 0 320px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px;
+      background: #ffffff;
+
+      @media (max-width: 720px) {
+        width: 100%;
+        flex: 1;
+      }
+
+      /* react-day-picker (v9) – estilização local via :global */
+      :global(.rdp),
+      :global(.rdp-root) {
+        margin: 0;
+      }
+
+      :global(.rdp-months) {
+        width: 100%;
+        justify-content: center;
+      }
+
+      :global(.rdp-caption) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+
+      :global(.rdp-caption_label) {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #111827;
+        text-transform: lowercase;
+      }
+
+      /* Removendo as setas/navegação do react-day-picker conforme solicitado */
+      :global(.rdp-nav) {
+        display: none;
+      }
+
+      /* Caso existam botões de navegação individuais, mantemos sem visibilidade */
+      :global(.rdp-nav_button) {
+        display: none;
+      }
+
+      :global(.rdp-table),
+      :global(.rdp-month_grid) {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 6px;
+      }
+
+      :global(.rdp-weekday) {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #6b7280;
+        text-transform: lowercase;
+      }
+
+      :global(.rdp-day),
+      :global(.rdp-day_button) {
+        border-radius: 10px;
+      }
+
+      :global(.rdp-day_button) {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border: 1px solid transparent;
+        color: #111827;
+        cursor: button;
+      }
+
+      :global(.rdp-day_button:hover) {
+        border-color: #e5e7eb;
+        background: #f3f4f6;
+      }
+
+      :global(.rdp-selected .rdp-day_button),
+      :global(.rdp-day_selected .rdp-day_button) {
+        background: #2563eb;
+        border-color: #2563eb;
+        color: #ffffff;
+      }
+
+      :global(.rdp-today .rdp-day_button),
+      :global(.rdp-day_today .rdp-day_button) {
+        border-color: rgba(37, 99, 235, 0.45);
+      }
+
+      :global(.rdp-disabled .rdp-day_button),
+      :global(.rdp-day_disabled .rdp-day_button) {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
+
+    .timeList {
+      flex: 1;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 10px;
+      background: #ffffff;
+      max-height: 340px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+
+      @media (max-width: 420px) {
+        grid-template-columns: 1fr;
+      }
+
+      .timeButton {
+        width: 100%;
+        height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        background: #ffffff;
+        color: #111827;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 120ms, color 120ms, border-color 120ms,
+          box-shadow 120ms;
+
+        &:hover:not(:disabled) {
+          border-color: rgba(37, 99, 235, 0.35);
+          box-shadow: 0 2px 10px rgba(37, 99, 235, 0.08);
+        }
+
+        &:focus-visible {
+          outline: 2px solid #2563eb;
+          outline-offset: 2px;
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        &:disabled {
+          background: #f3f4f6;
+          color: #9ca3af;
+          border-color: #e5e7eb;
+          cursor: not-allowed;
+        }
+
+        .timeIcon {
+          flex: 0 0 auto;
+        }
+
+        .timeLabel {
+          line-height: 1;
+        }
+
+        &.selected {
+          background: #2563eb;
+          color: #ffffff;
+          border-color: #2563eb;
+
+          &:hover:not(:disabled) {
+            border-color: #2563eb;
+          }
+        }
+      }
+    }
+  }
+
+  .summary {
+    padding: 0.5rem 0;
+    color: #374151;
+    font-size: 0.95rem;
+    min-height: 22px;
+  }
+
+  .dialogActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 4px;
+
+    .cancelButton {
+      height: 44px;
+      padding: 0 14px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      color: #111827;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        background: #f3f4f6;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      }
+    }
+
+    .confirmButton {
+      height: 44px;
+      padding: 0 14px;
+      border-radius: 10px;
+      border: 1px solid #2563eb;
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 120ms, border-color 120ms, opacity 120ms;
+
+      &:hover:not(:disabled) {
+        border-color: #1d4ed8;
+        background: #1d4ed8;
+      }
+
+      &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      &:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      }
+    }
+  }
+
+  .dialogClose {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #6b7280;
+  }
+}
+
+/* estilos movidos para dentro de .dialogContent */

@@ -288,74 +288,9 @@
           display: flex;
           justify-content: center;
         }
-
-        .scheduleButton {
-          width: 100%;
-          max-width: 100%;
-          padding: 0.75rem 1rem;
-          border-radius: 8px;
-          border: 2px solid #2563eb;
-          background: transparent;
-          color: #2563eb;
-          font-weight: 600;
-          cursor: pointer;
-          transition: background-color 120ms, color 120ms;
-
-          &:hover {
-            background: #2563eb;
-            color: #ffffff;
-          }
-        }
       }
     }
   }
 }
 
-/* Dialog (Radix Portal)
-   Importante: o Portal do Radix é renderizado no <body>.
-   Se essas classes ficarem aninhadas (ex: .appointmentsRoot .dialogOverlay), o estilo NÃO aplica.
-*/
-.dialogOverlay {
-  position: fixed;
-  inset: 0;
-  /* Fundo preto escurecido, mas não “apagado” */
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 1000;
-}
-
-.dialogContent {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #ffffff;
-  padding: 1.25rem;
-  border-radius: 10px;
-  width: 520px;
-  max-width: 92vw;
-  max-height: calc(100vh - 2rem);
-  overflow: auto;
-  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.3);
-  z-index: 1001;
-  outline: none;
-}
-
-.dialogTitle {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #111827;
-  padding-right: 2rem;
-}
-
-.dialogClose {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: transparent;
-  border: none;
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
-  color: #6b7280;
-}
+/* Dialog styles moved to ScheduleAppointmentDialog.module.scss */
