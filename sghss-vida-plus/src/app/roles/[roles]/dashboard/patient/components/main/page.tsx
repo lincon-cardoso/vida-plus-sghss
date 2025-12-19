@@ -94,7 +94,7 @@ export default function PatientDashboardMain() {
             footer={<ScheduleAppointmentDialog />}
           />
 
-          <PatientUpdatesSection />
+          <PatientUpdatesSection FileTextIcon={FileText} />
         </section>
       </div>
     </div>
