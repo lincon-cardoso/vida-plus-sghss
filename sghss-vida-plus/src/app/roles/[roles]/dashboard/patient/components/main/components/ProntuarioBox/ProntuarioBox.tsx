@@ -2,7 +2,8 @@
 import type { ProntuarioBoxProps } from "./types/ProntuarioBox.types";
 import WelcomeBox from "@/app/roles/[roles]/dashboard/patient/components/main/components/WelcomeBox/WelcomeBox";
 import styles from "./ProntuarioBox.module.scss";
-import ProntuarioItem from "./components/ProntuarioItem";
+import ProntuarioItem from "./components/ProntuarioItem/ProntuarioItem";
+import ExameCard from "./components/exame-card/exame-card";
 
 export default function ProntuarioBox({
   items,
@@ -14,6 +15,7 @@ export default function ProntuarioBox({
       <div className={styles.prontuarioContent}>
         <WelcomeBox title={title} subtitle={subtitle} />
         <ProntuarioItem items={items} />
+        <ExameCard />
       </div>
     </div>
   );

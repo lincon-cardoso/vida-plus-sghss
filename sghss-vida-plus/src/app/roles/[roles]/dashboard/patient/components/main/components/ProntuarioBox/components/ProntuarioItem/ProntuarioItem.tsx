@@ -1,7 +1,7 @@
 "use client";
 import type { CSSProperties } from "react";
-import type { ProntuarItem } from "../types/ProntuarioBox.types";
-import styles from "../ProntuarioItem.module.scss";
+import type { ProntuarItem } from "../../types/ProntuarioBox.types";
+import styles from "./ProntuarioItem.module.scss";
 
 interface Props {
   items?: ProntuarItem[];
