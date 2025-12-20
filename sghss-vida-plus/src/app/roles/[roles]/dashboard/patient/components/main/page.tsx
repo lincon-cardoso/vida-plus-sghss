@@ -8,6 +8,8 @@ import {
   FileText,
   Activity,
   Clock,
+  AlertCircle,
+  CheckCircle,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -146,7 +148,14 @@ export default function PatientDashboardMain() {
 
           {activeItem === "Meu Prontuário" && (
             <>
-              <ProntuarioBox />
+              <ProntuarioBox
+                items={[
+                  { Icon: AlertCircle, label: "Exames Pendentes", value: 5 },
+                  { Icon: Clock, label: "Em Processo", value: 2 },
+                  { Icon: CheckCircle, label: "Concluídos", value: 12 },
+                  { Icon: Activity, label: "Urgente", value: 1 },
+                ]}
+              />
             </>
           )}
 
