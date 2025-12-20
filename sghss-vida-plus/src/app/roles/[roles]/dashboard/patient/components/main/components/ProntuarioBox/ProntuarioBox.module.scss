@@ -1,0 +1,14 @@
+.prontuarioBox {
+  background: var(--surface, #ffffff);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  display: block;
+}
+
+/* Ajustes responsivos */
+@media (min-width: 768px) {
+  .prontuarioBox {
+    padding: 20px;
+  }
+}

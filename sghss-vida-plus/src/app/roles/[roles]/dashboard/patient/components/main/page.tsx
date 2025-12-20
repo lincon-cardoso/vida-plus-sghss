@@ -7,27 +7,30 @@ import {
   LogOut,
   FileText,
   Activity,
+  Clock,
 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { usePatientMenuStore } from "@/lib/stores";
 import styles from "./styles/PatientMenu.module.scss";
 import ScheduleAppointmentDialog from "./components/ScheduleAppointmentDialog/ScheduleAppointmentDialog";
 import PatientUpdatesSection from "./components/PatientUpdatesSection/PatientUpdatesSection";
+import QuickActionsBanner from "./components/QuickActionsBanner/QuickActionsBanner";
 import QuickActionsNav, {
   type QuickAction,
 } from "./components/QuickActionsNav/QuickActionsNav";
 import WelcomeBox from "./components/WelcomeBox/WelcomeBox";
+import ProntuarioBox from "./components/ProntuarioBox/ProntuarioBox";
 import InfoBoxes, { type InfoBoxItem } from "./components/InfoBoxes/InfoBoxes";
 import AppointmentsCard from "./components/AppointmentsCard/AppointmentsCard";
 import type { Appointment } from "./components/AppointmentsCard/AppointmentItem";
 
-const QUICK_ACTIONS: QuickAction[] = [
-  { label: "Início", Icon: Home },
-  { label: "Pacientes", Icon: Users },
-  { label: "Agenda", Icon: Calendar },
-  { label: "Configurações", Icon: Settings },
-  { label: "sair", Icon: LogOut, color: "#ff0000" },
-];
+type PatientMenuItem =
+  | "Meu Dashboard"
+  | "Meu Prontuário"
+  | "Meus Agendamentos"
+  | "Configurações"
+  | "Sair";
 
 const INFO_BOXES: InfoBoxItem[] = [
   { Icon: Calendar, count: 2, label: "Próximas Consultas" },
@@ -55,10 +58,24 @@ const APPOINTMENTS: Appointment[] = [
 ];
 
 export default function PatientDashboardMain() {
+  const router = useRouter();
   const isMenuOpen = usePatientMenuStore((s) => s.isMenuOpen);
   const closeMenu = usePatientMenuStore((s) => s.closeMenu);
 
   const menuRef = useRef<HTMLElement | null>(null);
+  const [activeItem, setActiveItem] =
+    useState<PatientMenuItem>("Meu Dashboard");
+
+  const quickActions: QuickAction[] = useMemo(
+    () => [
+      { label: "Meu Dashboard", Icon: Home },
+      { label: "Meu Prontuário", Icon: Users },
+      { label: "Meus Agendamentos", Icon: Calendar },
+      { label: "Configurações", Icon: Settings },
+      { label: "Sair", Icon: LogOut, color: "#ff0000" },
+    ],
+    []
+  );
 
   // Fecha com Esc
   useEffect(() => {
@@ -76,25 +93,85 @@ export default function PatientDashboardMain() {
     }
   }, [isMenuOpen]);
 
+  function handleActionClick(action: QuickAction) {
+    const label = action.label as PatientMenuItem;
+
+    if (label === "Sair") {
+      // Obs.: o cookie de token é httpOnly; para logout real, crie um endpoint
+      // que limpe o cookie. Por enquanto, apenas redireciona para o login.
+      router.push("/login");
+      return;
+    }
+
+    setActiveItem(label);
+    closeMenu();
+  }
+
   return (
     <div className={styles.root}>
       <div className={styles.layout}>
-        <QuickActionsNav actions={QUICK_ACTIONS} menuRef={menuRef} />
+        <QuickActionsNav
+          actions={quickActions}
+          menuRef={menuRef}
+          activeLabel={activeItem}
+          onActionClick={handleActionClick}
+        />
 
         <section className={styles.content} aria-label="Conteúdo principal">
-          <WelcomeBox
-            title="Olá, João!"
-            subtitle="Bem-vinda ao seu portal do paciente."
-          />
-          <InfoBoxes items={INFO_BOXES} />
+          {activeItem === "Meu Dashboard" && (
+            <>
+              <WelcomeBox
+                title="Olá, João!"
+                subtitle="Bem-vinda ao seu portal do paciente."
+              />
+              <InfoBoxes items={INFO_BOXES} />
 
-          <AppointmentsCard
-            title="Próximas Consultas"
-            appointments={APPOINTMENTS}
-            footer={<ScheduleAppointmentDialog />}
-          />
+              <AppointmentsCard
+                title="Próximas Consultas"
+                appointments={APPOINTMENTS}
+                footer={<ScheduleAppointmentDialog />}
+              />
 
-          <PatientUpdatesSection FileTextIcon={FileText} />
+              <PatientUpdatesSection FileTextIcon={FileText} />
+              <QuickActionsBanner
+                items={[
+                  { Icon: FileText, label: "Exames" },
+                  { Icon: Clock, label: "Horários" },
+                  { Icon: Activity, label: "Atividades" },
+                  { Icon: Calendar, label: "Agenda" },
+                ]}
+              />
+            </>
+          )}
+
+          {activeItem === "Meu Prontuário" && (
+            <>
+              <ProntuarioBox />
+            </>
+          )}
+
+          {activeItem === "Meus Agendamentos" && (
+            <>
+              <WelcomeBox
+                title="Meus Agendamentos"
+                subtitle="Consulte e gerencie suas consultas."
+              />
+              <AppointmentsCard
+                title="Próximas Consultas"
+                appointments={APPOINTMENTS}
+                footer={<ScheduleAppointmentDialog />}
+              />
+            </>
+          )}
+
+          {activeItem === "Configurações" && (
+            <>
+              <WelcomeBox
+                title="Configurações"
+                subtitle="Ajuste suas preferências de conta e notificações."
+              />
+            </>
+          )}
         </section>
       </div>
     </div>

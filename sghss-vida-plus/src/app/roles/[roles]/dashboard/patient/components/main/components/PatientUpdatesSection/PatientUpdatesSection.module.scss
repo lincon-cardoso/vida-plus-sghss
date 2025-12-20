@@ -1,11 +1,12 @@
 .root {
   margin-top: 16px;
 
-  .cards {
+  > .cards {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
-    .card {
+
+    > .card {
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
@@ -13,17 +14,17 @@
       flex: 1 1 320px;
       min-width: 280px;
 
-      .cardHeader {
+      > .cardHeader {
         margin-bottom: 8px;
 
-        .cardTitle {
+        > .cardTitle {
           margin: 0;
           font-size: 16px;
           color: #111827;
         }
       }
 
-      .itemList {
+      > .itemList {
         list-style: none;
         padding: 0;
         margin: 0;
@@ -31,47 +32,47 @@
         flex-direction: column;
         gap: 10px;
 
-        .item {
+        > .item {
           display: flex;
           justify-content: space-between;
           align-items: center;
           padding: 12px;
           border: 1px solid #dadce0;
-          border-radius: 18px;         
+          border-radius: 18px;
           transition: border-color 120ms ease, box-shadow 160ms ease,
             transform 120ms ease;
 
           &:hover {
-            background: #F1F3F4;            
+            background: #f1f3f4;
             transform: translateY(-2px);
             cursor: pointer;
           }
 
-          .itemContent {
+          > .itemContent {
             display: flex;
             align-items: center;
             gap: 12px;
+
+            > .icon {
+              width: 20px;
+              height: 20px;
+              flex-shrink: 0;
+              color: #3b82f6;
+            }
+
+            > .itemText {
+              display: flex;
+              flex-direction: column;
+
+              .itemDate {
+                margin: 0;
+                color: #6b7280;
+                font-size: 13px;
+              }
+            }
           }
 
-          .icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            color: #3b82f6;
-          }
-
-          .itemText {
-            display: flex;
-            flex-direction: column;
-          }
-
-          .itemDate {
-            margin: 0;
-            color: #6b7280;
-            font-size: 13px;
-          }
-
-          .badge {
+          > .badge {
             background: #e6ffed;
             color: #166534;
             padding: 6px 10px;
@@ -81,7 +82,7 @@
         }
       }
 
-      .prescriptionCard {
+      > .prescriptionCard {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
@@ -92,27 +93,28 @@
 
         > div {
           flex: 1;
-          strong {
+
+          > strong {
             display: block;
           }
 
-          .prescriptionNote {
+          > .prescriptionNote {
             margin: 4px 0 0;
             color: #6b7280;
             font-size: 13px;
           }
 
-          .prescriptionDoctor {
+          > .prescriptionDoctor {
             margin: 6px 0 0;
             color: #6b7280;
             font-size: 13px;
           }
         }
 
-        .prescriptionMeta {
+        > .prescriptionMeta {
           text-align: right;
 
-          .prescriptionStatus {
+          > .prescriptionStatus {
             display: inline-block;
             background: #e6ffed;
             color: #166534;
@@ -121,7 +123,7 @@
             font-size: 13px;
           }
 
-          .prescriptionValid {
+          > .prescriptionValid {
             margin: 6px 0 0;
             color: #6b7280;
             font-size: 12px;

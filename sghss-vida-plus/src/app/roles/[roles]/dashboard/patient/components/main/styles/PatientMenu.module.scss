@@ -48,6 +48,10 @@
           cursor: pointer;
           transition: background-color 120ms, color 120ms, transform 120ms;
 
+          &[data-active="true"] {
+            background: rgba(0, 0, 0, 0.08);
+          }
+
           &:hover {
             background: rgba(0, 0, 0, 0.08);
             /* contraste aumentado */

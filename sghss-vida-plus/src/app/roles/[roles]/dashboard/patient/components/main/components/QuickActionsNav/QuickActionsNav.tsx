@@ -13,9 +13,16 @@ export type QuickAction = {
 type Props = {
   actions: QuickAction[];
   menuRef?: RefObject<HTMLElement | null>;
+  activeLabel?: string;
+  onActionClick?: (action: QuickAction) => void;
 };
 
-export default function QuickActionsNav({ actions, menuRef }: Props) {
+export default function QuickActionsNav({
+  actions,
+  menuRef,
+  activeLabel,
+  onActionClick,
+}: Props) {
   return (
     <nav
       id="patient-menu"
@@ -25,20 +32,28 @@ export default function QuickActionsNav({ actions, menuRef }: Props) {
       aria-label="Navegação rápida"
     >
       <ul className={styles.iconList}>
-        {actions.map(({ label, Icon, color }) => (
-          <li key={label}>
-            <button
-              type="button"
-              className={styles.iconButton}
-              aria-label={label}
-            >
-              <Icon
-                className={styles.icon}
-                style={color ? { color } : undefined}
-              />
-            </button>
-          </li>
-        ))}
+        {actions.map((action) => {
+          const { label, Icon, color } = action;
+          const isActive = activeLabel === label;
+
+          return (
+            <li key={label}>
+              <button
+                type="button"
+                className={styles.iconButton}
+                aria-label={label}
+                data-active={isActive ? "true" : undefined}
+                aria-current={isActive ? "page" : undefined}
+                onClick={() => onActionClick?.(action)}
+              >
+                <Icon
+                  className={styles.icon}
+                  style={color ? { color } : undefined}
+                />
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
