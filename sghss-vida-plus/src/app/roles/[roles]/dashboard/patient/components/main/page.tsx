@@ -151,7 +151,11 @@ export default function PatientDashboardMain() {
             <>
               <ProntuarioBox
                 tabs={[
-                  { key: "Meus Exames", label: "Meus Exames", Icon: TestTube },
+                  {
+                    key: "Meus Exames",
+                    label: "Meus Exames",
+                    Icon: TestTube,
+                  },
                   {
                     key: "Dados Pessoais",
                     label: "Dados Pessoais",
