@@ -9,13 +9,14 @@ export default function ProntuarioBox({
   items,
   title = "Meu Prontuário Médico",
   subtitle = "Acesse suas informações de saúde, exames e histórico médico",
+  tabs,
 }: ProntuarioBoxProps) {
   return (
     <div className={styles.prontuarioBox}>
       <div className={styles.prontuarioContent}>
         <WelcomeBox title={title} subtitle={subtitle} />
         <ProntuarioItem items={items} />
-        <ExameCard />
+        <ExameCard tabs={tabs} />
       </div>
     </div>
   );

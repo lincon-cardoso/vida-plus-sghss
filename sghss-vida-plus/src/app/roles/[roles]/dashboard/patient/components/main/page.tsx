@@ -10,6 +10,7 @@ import {
   Clock,
   AlertCircle,
   CheckCircle,
+  TestTube,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -149,11 +150,24 @@ export default function PatientDashboardMain() {
           {activeItem === "Meu Prontuário" && (
             <>
               <ProntuarioBox
+                tabs={[
+                  { key: "Meus Exames", label: "Meus Exames", Icon: TestTube },
+                  {
+                    key: "Dados Pessoais",
+                    label: "Dados Pessoais",
+                    Icon: Users,
+                  },
+                  {
+                    key: "Histórico Médico",
+                    label: "Histórico Médico",
+                    Icon: FileText,
+                  },
+                ]}
                 items={[
                   { Icon: AlertCircle, label: "Exames Pendentes", value: 5 },
                   { Icon: Clock, label: "Em Processo", value: 2 },
                   { Icon: CheckCircle, label: "Concluídos", value: 12 },
-                  { Icon: Activity, label: "Urgente", value: 1 },
+                  { Icon: Activity, label: "Urgente", value: 5 },
                 ]}
               />
             </>
