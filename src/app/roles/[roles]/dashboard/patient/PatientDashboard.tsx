@@ -10,7 +10,7 @@ export default function PatientDashboard({
     <main className="patient-dashboard__page">
       <BarraNavegacao payload={payload} />
       <div className="patient-dashboard__body">
-        <PatientDashboardMain />
+        <PatientDashboardMain />        
       </div>
     </main>
   );

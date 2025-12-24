@@ -14,6 +14,7 @@ export type ProntuarioTabItem = {
 };
 
 export type ProntuarItem = {
+  itemKey?: string;
   Icon: IconComp;
   count?: string | number;
   label?: string;

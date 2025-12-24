@@ -168,10 +168,30 @@ export default function PatientDashboardMain() {
                   },
                 ]}
                 items={[
-                  { Icon: AlertCircle, label: "Exames Pendentes", value: 5 },
-                  { Icon: Clock, label: "Em Processo", value: 2 },
-                  { Icon: CheckCircle, label: "Concluídos", value: 12 },
-                  { Icon: Activity, label: "Urgente", value: 5 },
+                  {
+                    itemKey: "exam_pending",
+                    Icon: AlertCircle,
+                    label: "Exames Pendentes",
+                    value: 5,
+                  },
+                  {
+                    itemKey: "exam_in_process",
+                    Icon: Clock,
+                    label: "Em Processo",
+                    value: 2,
+                  },
+                  {
+                    itemKey: "exam_completed",
+                    Icon: CheckCircle,
+                    label: "Concluídos",
+                    value: 12,
+                  },
+                  {
+                    itemKey: "exam_urgent",
+                    Icon: Activity,
+                    label: "Urgente",
+                    value: 5,
+                  },
                 ]}
               />
             </>

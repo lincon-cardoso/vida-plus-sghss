@@ -1,12 +1,19 @@
 "use client";
 import { useMemo, useState } from "react";
-import type { ProntuarioTabItem, ProntuarioTabKey } from "../../types/ProntuarioBox.types";
+import type {
+  ProntuarioTabItem,
+  ProntuarioTabKey,
+} from "../../types/ProntuarioBox.types";
+import styles from "./styles/exame-card.module.scss";
+import ExameCardPage from "./components/Examecard/page";
+import type { ProntuarItem } from "../../types/ProntuarioBox.types";
 
 interface Props {
   tabs?: ProntuarioTabItem[];
+  examItems?: ProntuarItem[];
 }
 
-export default function ExameCard({ tabs }: Props) {
+export default function ExameCard({ tabs, examItems }: Props) {
   const resolvedTabs: ProntuarioTabItem[] = useMemo(
     () =>
       tabs?.length
@@ -20,10 +27,15 @@ export default function ExameCard({ tabs }: Props) {
   );
 
   const [activeTab, setActiveTab] = useState<ProntuarioTabKey>("Meus Exames");
+  const idify = (s: string) => s.replace(/\s+/g, "-").toLowerCase();
   return (
-    <div>
+    <div className={styles.exameCard}>
       {/* Barra de guias */}
-      <nav aria-label="Guias do prontuário" role="tablist">
+      <nav
+        className={styles.tabs}
+        aria-label="Guias do prontuário"
+        role="tablist"
+      >
         {resolvedTabs.map((tab) => {
           const isActive = activeTab === tab.key;
           const Icon = tab.Icon;
@@ -31,20 +43,16 @@ export default function ExameCard({ tabs }: Props) {
           return (
             <button
               key={tab.key}
+              id={`tab-${idify(tab.key)}`}
               type="button"
               role="tab"
               aria-selected={isActive}
               onClick={() => setActiveTab(tab.key)}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                fontWeight: isActive ? 600 : 400,
-                textDecoration: isActive ? "underline" : "none",
-                padding: "12px 16px",
-              }}
+              className={`${styles.tabButton} ${isActive ? styles.active : ""}`}
             >
-              {Icon ? <Icon aria-hidden="true" /> : null}
+              {Icon ? (
+                <Icon aria-hidden="true" className={styles.icon} />
+              ) : null}
               <span>{tab.label}</span>
             </button>
           );
@@ -52,18 +60,22 @@ export default function ExameCard({ tabs }: Props) {
       </nav>
 
       {/* Conteúdo: 1 guia por vez */}
-      <section role="tabpanel" style={{ marginTop: 16 }}>
-        {activeTab === "Meus Exames" && (
-          <div>
-            <h2>Exames Solicitados - Aguardando Realização</h2>
-            {/* Aqui você renderiza seus cards */}
-            {/* <ExameCard /> */}
-          </div>
-        )}
+      <section
+        role="tabpanel"
+        id={`tabpanel-${idify(activeTab)}`}
+        aria-labelledby={`tab-${idify(activeTab)}`}
+        className={styles.tabPanel}
+      >
+        {activeTab === "Meus Exames" && <ExameCardPage examItems={examItems} />}
 
         {activeTab === "Dados Pessoais" && (
-          <div>
-            <h2>Dados Pessoais</h2>
+          <div className={styles.edicao}>
+            <div className={styles.edicao__header}>
+              <h2 className={styles.edicao__title}>Dados Pessoais</h2>
+              <button type="button" className={styles.edicao__btn}>
+                Editar
+              </button>
+            </div>
             {/* Form / informações do paciente */}
           </div>
         )}
