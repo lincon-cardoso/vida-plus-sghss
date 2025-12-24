@@ -6,6 +6,7 @@ import type {
 } from "../../types/ProntuarioBox.types";
 import styles from "./styles/exame-card.module.scss";
 import ExameCardPage from "./components/Examecard/page";
+import DadosPessoaisPage from "./components/DadosPessoais/page";
 import type { ProntuarItem } from "../../types/ProntuarioBox.types";
 
 interface Props {
@@ -68,17 +69,7 @@ export default function ExameCard({ tabs, examItems }: Props) {
       >
         {activeTab === "Meus Exames" && <ExameCardPage examItems={examItems} />}
 
-        {activeTab === "Dados Pessoais" && (
-          <div className={styles.edicao}>
-            <div className={styles.edicao__header}>
-              <h2 className={styles.edicao__title}>Dados Pessoais</h2>
-              <button type="button" className={styles.edicao__btn}>
-                Editar
-              </button>
-            </div>
-            {/* Form / informações do paciente */}
-          </div>
-        )}
+        {activeTab === "Dados Pessoais" && <DadosPessoaisPage />}
 
         {activeTab === "Histórico Médico" && (
           <div>

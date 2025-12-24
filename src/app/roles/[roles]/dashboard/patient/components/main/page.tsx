@@ -36,9 +36,24 @@ type PatientMenuItem =
   | "Sair";
 
 const INFO_BOXES: InfoBoxItem[] = [
-  { Icon: Calendar, count: 2, label: "Próximas Consultas" },
-  { Icon: FileText, count: 3, label: "Resultados de Exames" },
-  { Icon: Activity, count: 1, label: "Prescrição Ativa" },
+  {
+    itemKey: "upcoming_appointments",
+    Icon: Calendar,
+    count: 2,
+    label: "Próximas Consultas",
+  },
+  {
+    itemKey: "exam_results",
+    Icon: FileText,
+    count: 3,
+    label: "Resultados de Exames",
+  },
+  {
+    itemKey: "active_prescription",
+    Icon: Activity,
+    count: 1,
+    label: "Prescrição Ativa",
+  },
 ];
 
 const APPOINTMENTS: Appointment[] = [
@@ -71,11 +86,15 @@ export default function PatientDashboardMain() {
 
   const quickActions: QuickAction[] = useMemo(
     () => [
-      { label: "Meu Dashboard", Icon: Home },
-      { label: "Meu Prontuário", Icon: Users },
-      { label: "Meus Agendamentos", Icon: Calendar },
-      { label: "Configurações", Icon: Settings },
-      { label: "Sair", Icon: LogOut, color: "#ff0000" },
+      { itemKey: "nav_dashboard", label: "Meu Dashboard", Icon: Home },
+      { itemKey: "nav_prontuario", label: "Meu Prontuário", Icon: Users },
+      {
+        itemKey: "nav_agendamentos",
+        label: "Meus Agendamentos",
+        Icon: Calendar,
+      },
+      { itemKey: "nav_config", label: "Configurações", Icon: Settings },
+      { itemKey: "nav_logout", label: "Sair", Icon: LogOut, color: "#ff0000" },
     ],
     []
   );
@@ -138,10 +157,18 @@ export default function PatientDashboardMain() {
               <PatientUpdatesSection FileTextIcon={FileText} />
               <QuickActionsBanner
                 items={[
-                  { Icon: FileText, label: "Exames" },
-                  { Icon: Clock, label: "Horários" },
-                  { Icon: Activity, label: "Atividades" },
-                  { Icon: Calendar, label: "Agenda" },
+                  { itemKey: "banner_exames", Icon: FileText, label: "Exames" },
+                  {
+                    itemKey: "banner_horarios",
+                    Icon: Clock,
+                    label: "Horários",
+                  },
+                  {
+                    itemKey: "banner_atividades",
+                    Icon: Activity,
+                    label: "Atividades",
+                  },
+                  { itemKey: "banner_agenda", Icon: Calendar, label: "Agenda" },
                 ]}
               />
             </>

@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import styles from "../../styles/PatientMenu.module.scss";
 
 export type InfoBoxItem = {
+  itemKey?: string;
   Icon: LucideIcon;
   count: string | number;
   label: string;

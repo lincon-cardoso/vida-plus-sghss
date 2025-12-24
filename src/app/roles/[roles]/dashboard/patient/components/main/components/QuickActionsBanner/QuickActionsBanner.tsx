@@ -4,6 +4,7 @@ import styles from "./QuickActionsBanner.module.scss";
 type IconComp = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
 type BannerItem = {
+  itemKey?: string;
   Icon: IconComp;
   label?: string;
   color?: string;

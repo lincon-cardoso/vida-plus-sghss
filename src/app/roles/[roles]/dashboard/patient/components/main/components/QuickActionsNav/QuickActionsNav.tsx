@@ -5,6 +5,7 @@ import type { RefObject } from "react";
 import styles from "../../styles/PatientMenu.module.scss";
 
 export type QuickAction = {
+  itemKey?: string;
   label: string;
   Icon: LucideIcon;
   color?: string;
