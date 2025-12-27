@@ -1,4 +1,5 @@
 "use client";
+import { FileText, TestTube, Users } from "lucide-react";
 import { useMemo, useState } from "react";
 import type {
   ProntuarioTabItem,
@@ -7,14 +8,12 @@ import type {
 import styles from "./styles/exame-card.module.scss";
 import ExameCardPage from "./components/Examecard/page";
 import DadosPessoaisPage from "./components/DadosPessoais/page";
-import type { ProntuarItem } from "../../types/ProntuarioBox.types";
 
 interface Props {
   tabs?: ProntuarioTabItem[];
-  examItems?: ProntuarItem[];
 }
 
-export default function ExameCard({ tabs, examItems }: Props) {
+export default function ExameCard({ tabs }: Props) {
   const resolvedTabs: ProntuarioTabItem[] = useMemo(
     () =>
       tabs?.length
@@ -29,6 +28,18 @@ export default function ExameCard({ tabs, examItems }: Props) {
 
   const [activeTab, setActiveTab] = useState<ProntuarioTabKey>("Meus Exames");
   const idify = (s: string) => s.replace(/\s+/g, "-").toLowerCase();
+
+  function getTabIcon(tabKey: ProntuarioTabKey) {
+    switch (tabKey) {
+      case "Meus Exames":
+        return TestTube;
+      case "Dados Pessoais":
+        return Users;
+      case "Histórico Médico":
+        return FileText;
+    }
+  }
+
   return (
     <div className={styles.exameCard}>
       {/* Barra de guias */}
@@ -39,7 +50,7 @@ export default function ExameCard({ tabs, examItems }: Props) {
       >
         {resolvedTabs.map((tab) => {
           const isActive = activeTab === tab.key;
-          const Icon = tab.Icon;
+          const Icon = getTabIcon(tab.key);
 
           return (
             <button
@@ -67,7 +78,7 @@ export default function ExameCard({ tabs, examItems }: Props) {
         aria-labelledby={`tab-${idify(activeTab)}`}
         className={styles.tabPanel}
       >
-        {activeTab === "Meus Exames" && <ExameCardPage examItems={examItems} />}
+        {activeTab === "Meus Exames" && <ExameCardPage />}
 
         {activeTab === "Dados Pessoais" && <DadosPessoaisPage />}
 

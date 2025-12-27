@@ -1,11 +1,6 @@
 "use client";
+import { FileText } from "lucide-react";
 import styles from "./PatientUpdatesSection.module.scss";
-
-type IconComp = React.ComponentType<React.SVGProps<SVGSVGElement>>;
-
-interface Props {
-  FileTextIcon?: IconComp;
-}
 
 type UpdateItem = {
   id: string;
@@ -45,7 +40,7 @@ const MOCK_PRESCRIPTIONS: Prescription[] = [
   },
 ];
 
-export default function PatientUpdatesSection({ FileTextIcon }: Props) {
+export default function PatientUpdatesSection() {
   return (
     <section className={styles.root} aria-label="Atualizações do paciente">
       <div className={styles.cards}>
@@ -57,7 +52,7 @@ export default function PatientUpdatesSection({ FileTextIcon }: Props) {
             {MOCK_UPDATES.map((item) => (
               <li key={item.id} className={styles.item}>
                 <div className={styles.itemContent}>
-                  {FileTextIcon && <FileTextIcon className={styles.icon} />}
+                  <FileText className={styles.icon} />
                   <div className={styles.itemText}>
                     <strong>{item.title}</strong>
                     <p className={styles.itemDate}>{item.date}</p>

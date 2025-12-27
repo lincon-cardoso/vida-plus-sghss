@@ -1,17 +1,4 @@
 "use client";
-import {
-  Home,
-  Users,
-  Calendar,
-  Settings,
-  LogOut,
-  FileText,
-  Activity,
-  Clock,
-  AlertCircle,
-  CheckCircle,
-  TestTube,
-} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePatientMenuStore } from "@/lib/stores";
@@ -38,19 +25,16 @@ type PatientMenuItem =
 const INFO_BOXES: InfoBoxItem[] = [
   {
     itemKey: "upcoming_appointments",
-    Icon: Calendar,
     count: 2,
     label: "Próximas Consultas",
   },
   {
     itemKey: "exam_results",
-    Icon: FileText,
     count: 3,
     label: "Resultados de Exames",
   },
   {
     itemKey: "active_prescription",
-    Icon: Activity,
     count: 1,
     label: "Prescrição Ativa",
   },
@@ -86,15 +70,14 @@ export default function PatientDashboardMain() {
 
   const quickActions: QuickAction[] = useMemo(
     () => [
-      { itemKey: "nav_dashboard", label: "Meu Dashboard", Icon: Home },
-      { itemKey: "nav_prontuario", label: "Meu Prontuário", Icon: Users },
+      { itemKey: "nav_dashboard", label: "Meu Dashboard" },
+      { itemKey: "nav_prontuario", label: "Meu Prontuário" },
       {
         itemKey: "nav_agendamentos",
         label: "Meus Agendamentos",
-        Icon: Calendar,
       },
-      { itemKey: "nav_config", label: "Configurações", Icon: Settings },
-      { itemKey: "nav_logout", label: "Sair", Icon: LogOut, color: "#ff0000" },
+      { itemKey: "nav_config", label: "Configurações" },
+      { itemKey: "nav_logout", label: "Sair", color: "#ff0000" },
     ],
     []
   );
@@ -154,21 +137,19 @@ export default function PatientDashboardMain() {
                 footer={<ScheduleAppointmentDialog />}
               />
 
-              <PatientUpdatesSection FileTextIcon={FileText} />
+              <PatientUpdatesSection />
               <QuickActionsBanner
                 items={[
-                  { itemKey: "banner_exames", Icon: FileText, label: "Exames" },
+                  { itemKey: "banner_exames", label: "Exames" },
                   {
                     itemKey: "banner_horarios",
-                    Icon: Clock,
                     label: "Horários",
                   },
                   {
                     itemKey: "banner_atividades",
-                    Icon: Activity,
                     label: "Atividades",
                   },
-                  { itemKey: "banner_agenda", Icon: Calendar, label: "Agenda" },
+                  { itemKey: "banner_agenda", label: "Agenda" },
                 ]}
               />
             </>
@@ -181,41 +162,34 @@ export default function PatientDashboardMain() {
                   {
                     key: "Meus Exames",
                     label: "Meus Exames",
-                    Icon: TestTube,
                   },
                   {
                     key: "Dados Pessoais",
                     label: "Dados Pessoais",
-                    Icon: Users,
                   },
                   {
                     key: "Histórico Médico",
                     label: "Histórico Médico",
-                    Icon: FileText,
                   },
                 ]}
                 items={[
                   {
                     itemKey: "exam_pending",
-                    Icon: AlertCircle,
                     label: "Exames Pendentes",
                     value: 5,
                   },
                   {
                     itemKey: "exam_in_process",
-                    Icon: Clock,
                     label: "Em Processo",
                     value: 2,
                   },
                   {
                     itemKey: "exam_completed",
-                    Icon: CheckCircle,
                     label: "Concluídos",
                     value: 12,
                   },
                   {
                     itemKey: "exam_urgent",
-                    Icon: Activity,
                     label: "Urgente",
                     value: 5,
                   },

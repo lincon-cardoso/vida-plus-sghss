@@ -1,13 +1,19 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
+import { Calendar, Home, LogOut, Settings, Users } from "lucide-react";
 import type { RefObject } from "react";
 import styles from "../../styles/PatientMenu.module.scss";
 
+export type QuickActionKey =
+  | "nav_dashboard"
+  | "nav_prontuario"
+  | "nav_agendamentos"
+  | "nav_config"
+  | "nav_logout";
+
 export type QuickAction = {
-  itemKey?: string;
+  itemKey: QuickActionKey;
   label: string;
-  Icon: LucideIcon;
   color?: string;
 };
 
@@ -24,6 +30,21 @@ export default function QuickActionsNav({
   activeLabel,
   onActionClick,
 }: Props) {
+  function getActionIcon(itemKey: QuickActionKey) {
+    switch (itemKey) {
+      case "nav_dashboard":
+        return Home;
+      case "nav_prontuario":
+        return Users;
+      case "nav_agendamentos":
+        return Calendar;
+      case "nav_config":
+        return Settings;
+      case "nav_logout":
+        return LogOut;
+    }
+  }
+
   return (
     <nav
       id="patient-menu"
@@ -34,11 +55,12 @@ export default function QuickActionsNav({
     >
       <ul className={styles.iconList}>
         {actions.map((action) => {
-          const { label, Icon, color } = action;
+          const { label, color } = action;
+          const Icon = getActionIcon(action.itemKey);
           const isActive = activeLabel === label;
 
           return (
-            <li key={label}>
+            <li key={action.itemKey}>
               <button
                 type="button"
                 className={styles.iconButton}
@@ -47,10 +69,12 @@ export default function QuickActionsNav({
                 aria-current={isActive ? "page" : undefined}
                 onClick={() => onActionClick?.(action)}
               >
-                <Icon
-                  className={styles.icon}
-                  style={color ? { color } : undefined}
-                />
+                {Icon ? (
+                  <Icon
+                    className={styles.icon}
+                    style={color ? { color } : undefined}
+                  />
+                ) : null}
               </button>
             </li>
           );

@@ -1,0 +1,277 @@
+.dadosPessoais {
+  margin: 10px;
+  padding: 0;
+
+  /* Sections wrapper */
+  .dadosPessoais__sections {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    align-items: stretch; /* garante altura uniforme entre os cartões */
+  }
+
+  /* Card base used by info and contact */
+  .dadosPessoais__card {
+    background: var(--surface, #fff);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e9eaec;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-self: stretch; /* permite que cada cartão estique para a altura do container */
+  }
+
+  /* Informações pessoais card */
+  .dadosPessoais__card--informacoes {
+    @extend .dadosPessoais__card;
+    flex: 0 0 60%;
+    width: 100%;
+
+    .dadosPessoais__header {
+      margin-bottom: 16px;
+    }
+
+    .dadosPessoais__headerTitle {
+      font-size: 18px;
+    }
+
+    .dadosPessoais__lista {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px 32px;
+
+      .dadosPessoais__item {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .dadosPessoais__item--full {
+        grid-column: 1 / -1;
+      }
+
+      .dadosPessoais__label {
+        font-size: 11px;
+        text-transform: uppercase;
+        color: var(--muted, #6b7280);
+        letter-spacing: 0.6px;
+      }
+
+      .dadosPessoais__value {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        color: var(--text, #111827);
+
+        .dadosPessoais__itemIcon {
+          width: 16px;
+          height: 16px;
+          color: var(--muted, #6b7280);
+        }
+      }
+    }
+  }
+
+  /* Contato card */
+  .dadosPessoais__card--contato {
+    @extend .dadosPessoais__card;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .dadosPessoais__header {
+      margin-bottom: 12px;
+    }
+
+    .dadosPessoais__headerTitle {
+      font-size: 16px;
+      margin-bottom: 0;
+    }
+
+    .dadosPessoais__contactItem {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      .dadosPessoais__contactIcon {
+        width: 16px;
+        height: 16px;
+        color: var(--muted, #6b7280);
+      }
+
+      .dadosPessoais__contactText {
+        display: flex;
+        flex-direction: column;
+
+        .dadosPessoais__contactLabel {
+          font-size: 11px;
+          text-transform: uppercase;
+          color: var(--muted, #6b7280);
+        }
+
+        .dadosPessoais__contactValue {
+          font-size: 14px;
+          color: var(--text, #111827);
+        }
+      }
+    }
+  }
+
+  /* Header itens (ícone / título) */
+  .dadosPessoais__headerIcon {
+    color: var(--primary-blue, #1a73e8);
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(26, 115, 232, 0.08);
+    padding: 6px;
+    border-radius: 10px;
+  }
+
+  .dadosPessoais__headerTitle {
+    font-weight: 600;
+  }
+
+  .dadosPessoais__clinicos {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #eef0f2;
+
+    /* Paleta (mantém o visual e melhora contraste AAA) */
+    --clin-red-ink: #7f1d1d;
+    --clin-yellow-ink: #7a4a00;
+    --clin-blue-ink: #1e3a8a;
+
+    .dadosPessoais__clinicosHeader {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dadosPessoais__clinicosHeaderIcon {
+      width: 18px;
+      height: 18px;
+      color: #ef4444;
+    }
+
+    .dadosPessoais__clinicosTitle {
+      font-weight: 600;
+      color: var(--text, #111827);
+    }
+
+    .dadosPessoais__clinicosGrid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .dadosPessoais__clinicosCard {
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #e9eaec;
+      background: var(--surface, #fff);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 96px;
+
+      .dadosPessoais__clinicosCardTop {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .dadosPessoais__clinicosCardIcon {
+        width: 18px;
+        height: 18px;
+        color: var(--muted, #6b7280);
+      }
+
+      .dadosPessoais__clinicosCardLabel {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text, #111827);
+      }
+    }
+
+    .dadosPessoais__clinicosCard--tipo {
+      background: #fbe9e9;
+      border-color: #f4c5c5;
+
+      .dadosPessoais__clinicosCardIcon {
+        color: var(--clin-red-ink);
+      }
+
+      .dadosPessoais__clinicosCardLabel {
+        color: var(--clin-red-ink);
+      }
+
+      .dadosPessoais__bloodType {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--clin-red-ink);
+        line-height: 1;
+      }
+    }
+
+    .dadosPessoais__clinicosCard--alergias {
+      background: #fbf6dc;
+      border-color: #f1e2a8;
+
+      .dadosPessoais__clinicosCardIcon {
+        color: var(--clin-yellow-ink);
+      }
+
+      .dadosPessoais__clinicosCardLabel {
+        color: var(--clin-yellow-ink);
+      }
+
+      .dadosPessoais__pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .dadosPessoais__pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 10px;
+        border: 1px solid #f2d38f;
+        background: #fff2c8;
+        font-size: 13px;
+        color: var(--clin-yellow-ink);
+      }
+    }
+
+    .dadosPessoais__clinicosCard--emergencia {
+      background: #e8f1ff;
+      border-color: #c8dcff;
+
+      .dadosPessoais__clinicosCardIcon {
+        color: var(--clin-blue-ink);
+      }
+
+      .dadosPessoais__clinicosCardLabel {
+        color: var(--clin-blue-ink);
+      }
+
+      .dadosPessoais__emergencyText {
+        font-size: 14px;
+        color: var(--clin-blue-ink);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .dadosPessoais__clinicosGrid {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

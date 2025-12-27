@@ -1,6 +1,10 @@
 "use client";
+import { Activity, AlertCircle, CheckCircle, Clock } from "lucide-react";
 import type { CSSProperties } from "react";
-import type { ProntuarItem } from "../../types/ProntuarioBox.types";
+import type {
+  ProntuarItem,
+  ProntuarioItemKey,
+} from "../../types/ProntuarioBox.types";
 import styles from "./ProntuarioItem.module.scss";
 
 interface Props {
@@ -8,6 +12,21 @@ interface Props {
 }
 
 export default function ProntuarioItem({ items }: Props) {
+  function getItemIcon(itemKey?: ProntuarioItemKey) {
+    switch (itemKey) {
+      case "exam_pending":
+        return AlertCircle;
+      case "exam_in_process":
+        return Clock;
+      case "exam_completed":
+        return CheckCircle;
+      case "exam_urgent":
+        return Activity;
+      default:
+        return null;
+    }
+  }
+
   return (
     <div>
       {items?.length ? (
@@ -16,7 +35,7 @@ export default function ProntuarioItem({ items }: Props) {
           aria-label="Atalhos do prontuário"
         >
           {items.map((it, i) => {
-            const Icon = it.Icon;
+            const Icon = getItemIcon(it.itemKey);
 
             type ItemStyle = CSSProperties & { "--item-accent"?: string };
 
@@ -43,7 +62,7 @@ export default function ProntuarioItem({ items }: Props) {
                 </span>
 
                 <span className={styles.iconWrap} aria-hidden="true">
-                  <Icon className={styles.icon} />
+                  {Icon ? <Icon className={styles.icon} /> : null}
                 </span>
               </button>
             );

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "project": ["src/**/*.{js,jsx,ts,tsx}", "tsconfig.json"],
+  "entry": [
+    "next.config.{js,ts,mjs,cjs}",
+    "src/app/**/{page,layout,route,loading,error,not-found,template}.{js,jsx,ts,tsx}",
+    "src/proxy.{js,ts}"
+  ],
+  "ignore": ["**/*.d.ts", "**/*.test.*", "**/*.spec.*"]
+}

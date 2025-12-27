@@ -16,7 +16,7 @@ export default function ProntuarioBox({
       <div className={styles.prontuarioContent}>
         <WelcomeBox title={title} subtitle={subtitle} />
         <ProntuarioItem items={items} />
-        <ExameCard tabs={tabs} examItems={items} />
+        <ExameCard tabs={tabs} />
       </div>
     </div>
   );

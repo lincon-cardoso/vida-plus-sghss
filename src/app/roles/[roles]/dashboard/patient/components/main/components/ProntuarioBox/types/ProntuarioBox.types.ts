@@ -1,7 +1,3 @@
-import type { ComponentType, SVGProps } from "react";
-
-export type IconComp = ComponentType<SVGProps<SVGSVGElement>>;
-
 export type ProntuarioTabKey =
   | "Meus Exames"
   | "Dados Pessoais"
@@ -10,12 +6,16 @@ export type ProntuarioTabKey =
 export type ProntuarioTabItem = {
   key: ProntuarioTabKey;
   label: string;
-  Icon?: IconComp;
 };
 
+export type ProntuarioItemKey =
+  | "exam_pending"
+  | "exam_in_process"
+  | "exam_completed"
+  | "exam_urgent";
+
 export type ProntuarItem = {
-  itemKey?: string;
-  Icon: IconComp;
+  itemKey?: ProntuarioItemKey;
   count?: string | number;
   label?: string;
   color?: string;

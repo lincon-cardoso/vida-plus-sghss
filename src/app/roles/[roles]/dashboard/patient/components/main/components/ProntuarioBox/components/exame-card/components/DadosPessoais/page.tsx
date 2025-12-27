@@ -1,11 +1,10 @@
 "use client";
-
-import styles from "./styles/DadosPessoais.module.scss";
+import DadosPessoais from "./components/DadosPessoais";
 
 export default function DadosPessoaisPage() {
   return (
-    <div className={styles.edicao}>
-        <h2>Dados Pessoais</h2>
+    <div>
+      <DadosPessoais />
     </div>
   );
 }
