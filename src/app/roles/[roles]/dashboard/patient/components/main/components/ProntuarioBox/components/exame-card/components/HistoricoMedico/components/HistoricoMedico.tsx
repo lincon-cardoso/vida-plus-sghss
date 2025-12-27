@@ -1,33 +1,28 @@
 "use client";
-
+import { Download } from "lucide-react";
 import styles from "./styles/HistoricoMedico.module.scss";
-
-// type Entry = {
-//   date?: string;
-//   type?: string;
-//   doctor?: string;
-//   note?: string;
-// };
-
-// interface Props {
-//   entries?: Entry[];
-// }
-//   const resolved: Entry[] =
-//     entries && entries.length
-//       ? entries
-//       : [
-//           {
-//             date: new Date().toLocaleDateString("pt-BR"),
-//             type: "—",
-//             doctor: "—",
-//             note: "Nenhum histórico disponível",
-//           },
-//         ];
 
 export default function HistoricoMedico() {
   return (
     <section className={styles.historico}>
-      <h1>Histórico Médico </h1>
+      <div className={styles.header}>
+        <h3 className={styles.title}>Linha do Tempo</h3>
+        <a
+          className={styles.exportLink}
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            // TODO: implementar exportação real
+            console.log("Exportar histórico clicado");
+          }}
+          aria-label="Exportar Histórico"
+        >
+          <Download className={styles.icon} size={16} aria-hidden="true" />
+          <span>Exportar Histórico</span>
+        </a>
+      </div>
+
+      {/* Conteúdo do histórico (ex.: entradas) */}
     </section>
   );
 }

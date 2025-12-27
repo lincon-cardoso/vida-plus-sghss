@@ -2,6 +2,47 @@
   padding: 0.75rem;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.exportLink {
+  color: #0b78e3;
+  font-size: 0.9rem;
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  text-decoration: none;
+}
+
+.exportLink:hover,
+.exportLink:focus {
+  text-decoration: underline;
+}
+
+.icon {
+  width: 26px;
+  height: 26px;
+  display: inline-block;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
 .entry {
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   padding: 0.5rem 0;
