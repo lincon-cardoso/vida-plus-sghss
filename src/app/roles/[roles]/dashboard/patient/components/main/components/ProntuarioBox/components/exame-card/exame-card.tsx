@@ -8,6 +8,7 @@ import type {
 import styles from "./styles/exame-card.module.scss";
 import ExameCardPage from "./components/Examecard/page";
 import DadosPessoaisPage from "./components/DadosPessoais/page";
+import HistoricoMedicoPage from "./components/HistoricoMedico/page";
 
 interface Props {
   tabs?: ProntuarioTabItem[];
@@ -82,12 +83,7 @@ export default function ExameCard({ tabs }: Props) {
 
         {activeTab === "Dados Pessoais" && <DadosPessoaisPage />}
 
-        {activeTab === "Histórico Médico" && (
-          <div>
-            <h2>Histórico Médico</h2>
-            {/* Lista de consultas, diagnósticos, etc */}
-          </div>
-        )}
+        {activeTab === "Histórico Médico" && <HistoricoMedicoPage />}
       </section>
     </div>
   );

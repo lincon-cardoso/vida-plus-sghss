@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizeCss: true,
+    scrollRestoration: true,
   },
 
   async headers() {

@@ -65,8 +65,26 @@ export default function PatientDashboardMain() {
   const closeMenu = usePatientMenuStore((s) => s.closeMenu);
 
   const menuRef = useRef<HTMLElement | null>(null);
-  const [activeItem, setActiveItem] =
-    useState<PatientMenuItem>("Meu Dashboard");
+
+  const [activeItem, setActiveItem] = useState<PatientMenuItem>(() => {
+    try {
+      const raw = sessionStorage.getItem(
+        "vida-plus:patient-dashboard:activeItem"
+      );
+      if (
+        raw === "Meu Dashboard" ||
+        raw === "Meu Prontuário" ||
+        raw === "Meus Agendamentos" ||
+        raw === "Configurações" ||
+        raw === "Sair"
+      ) {
+        return raw;
+      }
+    } catch {
+      // ignore
+    }
+    return "Meu Dashboard";
+  });
 
   const quickActions: QuickAction[] = useMemo(
     () => [
@@ -97,6 +115,18 @@ export default function PatientDashboardMain() {
       setTimeout(() => menuRef.current?.focus(), 0);
     }
   }, [isMenuOpen]);
+
+  // Mantém a aba selecionada após refresh (F5)
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(
+        "vida-plus:patient-dashboard:activeItem",
+        String(activeItem)
+      );
+    } catch {
+      // ignore
+    }
+  }, [activeItem]);
 
   function handleActionClick(action: QuickAction) {
     const label = action.label as PatientMenuItem;

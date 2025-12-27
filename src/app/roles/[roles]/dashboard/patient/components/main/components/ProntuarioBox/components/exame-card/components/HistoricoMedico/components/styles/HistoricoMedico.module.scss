@@ -1,0 +1,37 @@
+.historico {
+  padding: 0.75rem;
+}
+
+.entry {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.5rem 0;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.entryDate {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.6);
+  min-width: 75px;
+}
+
+.entryContent {
+  flex: 1;
+}
+
+.entryType {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.entryNote {
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.8);
+  margin-top: 0.25rem;
+}
+
+.entryDoctor {
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 0.25rem;
+}
