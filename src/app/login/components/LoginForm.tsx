@@ -16,7 +16,7 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if(loading) return; // previne múltiplos envios
+    if (loading) return; // previne múltiplos envios
     setLoading(true);
     setError("");
     setSuccess("");
@@ -41,20 +41,21 @@ export default function LoginForm() {
         return;
       }
 
-      setSuccess("Login bem-sucedido! Redirecionando...");          
-      
+      setSuccess("Login bem-sucedido! Redirecionando...");
+
       setTimeout(() => {
-        const serverRole = data?.role as "patient" | "doctor" | "admin" | undefined;
+        const serverRole = data?.role as
+          | "patient"
+          | "doctor"
+          | "admin"
+          | undefined;
         if (serverRole) {
           router.replace(`/roles/${serverRole}/dashboard`);
         } else {
           router.replace(`/roles/${role}`);
         }
       }, 5000);
-      
-      
-      
-    } catch (err) {
+    } catch {
       setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
       errorRef.current?.focus();
       setLoading(false);

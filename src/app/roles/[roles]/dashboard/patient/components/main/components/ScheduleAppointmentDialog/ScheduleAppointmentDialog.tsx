@@ -7,7 +7,13 @@ import { useMemo, useState, useEffect } from "react";
 import { Clock } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 
-export default function ScheduleAppointmentDialog() {
+interface ScheduleAppointmentDialogProps {
+  trigger?: React.ReactNode;
+}
+
+export default function ScheduleAppointmentDialog({
+  trigger,
+}: ScheduleAppointmentDialogProps) {
   // Estado local do componente:
   // - open: controla visibilidade do diálogo
   // - selectedDate / selectedTime: data e hora escolhidas
@@ -117,11 +123,15 @@ export default function ScheduleAppointmentDialog() {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       {/* Botão que abre o diálogo */}
-      <Dialog.Trigger asChild>
-        <button type="button" className={styles.scheduleButton}>
-          Agendar Nova Consulta
-        </button>
-      </Dialog.Trigger>
+      {trigger ? (
+        <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
+      ) : (
+        <Dialog.Trigger asChild>
+          <button type="button" className={styles.scheduleButton}>
+            Agendar Nova Consulta
+          </button>
+        </Dialog.Trigger>
+      )}
       {mounted && (
         <Dialog.Portal>
           <Dialog.Overlay className={styles.dialogOverlay} />

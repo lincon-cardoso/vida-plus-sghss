@@ -13,6 +13,7 @@ import WelcomeBox from "./components/WelcomeBox/WelcomeBox";
 import ProntuarioBox from "./components/ProntuarioBox/ProntuarioBox";
 import InfoBoxes, { type InfoBoxItem } from "./components/InfoBoxes/InfoBoxes";
 import AppointmentsCard from "./components/AppointmentsCard/AppointmentsCard";
+import MeusAgendamentos from "./components/MeusAgendamentos/MeusAgendamentos";
 import type { Appointment } from "./components/AppointmentsCard/AppointmentItem";
 
 type PatientMenuItem =
@@ -228,19 +229,7 @@ export default function PatientDashboardMain() {
             </>
           )}
 
-          {activeItem === "Meus Agendamentos" && (
-            <>
-              <WelcomeBox
-                title="Meus Agendamentos"
-                subtitle="Consulte e gerencie suas consultas."
-              />
-              <AppointmentsCard
-                title="Próximas Consultas"
-                appointments={APPOINTMENTS}
-                footer={<ScheduleAppointmentDialog />}
-              />
-            </>
-          )}
+          {activeItem === "Meus Agendamentos" && <MeusAgendamentos />}
 
           {activeItem === "Configurações" && (
             <>

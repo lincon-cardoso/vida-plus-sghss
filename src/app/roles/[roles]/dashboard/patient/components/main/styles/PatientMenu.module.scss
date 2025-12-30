@@ -85,18 +85,33 @@
 
       .welcomeBox {
         padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        .welcomeContent {
+          min-width: 0; /* allow truncation */
+        }
 
         .contentTitle {
           margin: 0;
           font-size: 1.5rem;
           font-weight: 600;
           color: #111827;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .editable {
-          margin: 0.5rem 0 0 0;
+          margin: 0.25rem 0 0 0;
           font-size: 1rem;
           color: #6b7280;
+        }
+
+        .welcomeActions {
+          flex: 0 0 auto;
         }
       }
 
