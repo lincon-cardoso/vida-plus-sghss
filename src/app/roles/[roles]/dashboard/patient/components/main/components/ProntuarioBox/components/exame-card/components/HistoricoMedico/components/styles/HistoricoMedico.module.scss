@@ -2,36 +2,166 @@
   padding: 0.75rem;
 }
 
-.entry {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 0.5rem 0;
+.header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text, #111827);
+}
+
+.exportLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  color: var(--muted, #6b7280);
+}
+
+.exportLink:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text, #111827);
+}
+
+.icon {
+  flex: 0 0 auto;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
 }
 
-.entryDate {
-  font-size: 0.85rem;
-  color: rgba(0, 0, 0, 0.6);
-  min-width: 75px;
+.item {
+  width: 100%;
 }
 
-.entryContent {
-  flex: 1;
+.card {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: #ffffff;
+  padding: 0.9rem;
 }
 
-.entryType {
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.metaLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
   font-weight: 600;
-  font-size: 0.95rem;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
-.entryNote {
-  font-size: 0.9rem;
-  color: rgba(0, 0, 0, 0.8);
-  margin-top: 0.25rem;
+.badgeConsulta {
+  background: #e6f0ff;
+  color: #2563eb;
 }
 
-.entryDoctor {
+.badgeExame {
+  background: color-mix(in srgb, var(--accent, #0ea5a6) 14%, white);
+  color: var(--accent, #0ea5a6);
+}
+
+.badgeMedicacao {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.badgeProcedimento {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+
+.dot {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.date {
   font-size: 0.85rem;
-  color: rgba(0, 0, 0, 0.6);
-  margin-top: 0.25rem;
+  color: rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+}
+
+.chevron {
+  color: rgba(0, 0, 0, 0.35);
+  display: inline-flex;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.doctorRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.doctorIcon {
+  flex: 0 0 auto;
+}
+
+.doctor {
+  font-size: 0.9rem;
+}
+
+.summaryBox {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.summary {
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.78);
+}
+
+.attachmentRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.attachmentLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  color: var(--primary-blue, #1a73e8);
+}
+
+.attachmentLink:hover {
+  text-decoration: underline;
 }
