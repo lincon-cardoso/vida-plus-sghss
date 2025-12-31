@@ -14,6 +14,7 @@ import ProntuarioBox from "./components/ProntuarioBox/ProntuarioBox";
 import InfoBoxes, { type InfoBoxItem } from "./components/InfoBoxes/InfoBoxes";
 import AppointmentsCard from "./components/AppointmentsCard/AppointmentsCard";
 import MeusAgendamentos from "./components/MeusAgendamentos/MeusAgendamentos";
+import Configuracoes from "./components/Configuracoes/Configuracoes";
 import type { Appointment } from "./components/AppointmentsCard/AppointmentItem";
 
 type PatientMenuItem =
@@ -231,14 +232,7 @@ export default function PatientDashboardMain() {
 
           {activeItem === "Meus Agendamentos" && <MeusAgendamentos />}
 
-          {activeItem === "Configurações" && (
-            <>
-              <WelcomeBox
-                title="Configurações"
-                subtitle="Ajuste suas preferências de conta e notificações."
-              />
-            </>
-          )}
+          {activeItem === "Configurações" && <Configuracoes />}
         </section>
       </div>
     </div>
