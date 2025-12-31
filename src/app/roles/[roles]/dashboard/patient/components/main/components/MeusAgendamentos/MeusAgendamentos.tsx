@@ -4,12 +4,20 @@ import { Plus, Calendar, CheckCircle, XCircle } from "lucide-react";
 import styles from "./styles/MeusAgendamentos.module.scss";
 import ScheduleAppointmentDialog from "../ScheduleAppointmentDialog/ScheduleAppointmentDialog";
 import { useState } from "react";
+import ProximosAgendamentos from "./components/ProximosAgendamentos/ProximosAgendamentos";
+import HistoricoAgendamentos from "./components/HistoricoAgendamentos/HistoricoAgendamentos";
 
 export default function MeusAgendamentos() {
   const items = [
     { text: "Próximas", icon: Calendar, number: 5 },
     { text: "Realizadas", icon: CheckCircle, number: 10 },
     { text: "Canceladas", icon: XCircle, number: 2 },
+  ];
+
+  // Array para as tabs, facilitando o map
+  const tabs = [
+    { label: "Próximas", count: 0 },
+    { label: "Histórico", count: 1 },
   ];
 
   const [activeTab, setActiveTab] = useState("Próximas");
@@ -55,39 +63,25 @@ export default function MeusAgendamentos() {
         })}
       </div>
 
+      {/* Botões de tab usando map para reduzir código */}
       <div className={styles.tabButtons}>
-        <button
-          className={`${styles.tabButton} ${
-            activeTab === "Próximas" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("Próximas")}
-        >
-          Próximas (0)
-        </button>
-        <button
-          className={`${styles.tabButton} ${
-            activeTab === "Histórico" ? styles.active : ""
-          }`}
-          onClick={() => setActiveTab("Histórico")}
-        >
-          Histórico (1)
-        </button>
+        {tabs.map((tab) => (
+          <button
+            key={tab.label}
+            className={`${styles.tabButton} ${
+              activeTab === tab.label ? styles.active : ""
+            }`}
+            onClick={() => setActiveTab(tab.label)}
+          >
+            {tab.label} ({tab.count})
+          </button>
+        ))}
       </div>
 
       <div className={styles.tabContent}>
-        {activeTab === "Próximas" && (
-          <div className={styles.proximasContent}>
-            <h2>Próximos Agendamentos</h2>
-            <p>Você não tem agendamentos futuros.</p>
-          </div>
-        )}
+        {activeTab === "Próximas" && <ProximosAgendamentos />}
 
-        {activeTab === "Histórico" && (
-          <div className={styles.historicoContent}>
-            <h2>Histórico de Agendamentos</h2>
-            <p>Você não tem agendamentos anteriores.</p>
-          </div>
-        )}
+        {activeTab === "Histórico" && <HistoricoAgendamentos />}
       </div>
     </section>
   );
