@@ -168,14 +168,6 @@ export default function Perfil() {
             />
           </div>
         </div>
-
-        {/* Botão para salvar alterações pessoais */}
-        <div className={styles.actions}>
-          <button type="button" className={styles.saveButton}>
-            <Save className={styles.saveIcon} />
-            Salvar Alterações
-          </button>
-        </div>
       </form>
 
       {/* Divisor visual */}
@@ -241,11 +233,11 @@ export default function Perfil() {
           </div>
         </div>
 
-        {/* Botão para salvar informações de saúde */}
+        {/* Botão para salvar alterações */}
         <div className={styles.actions}>
           <button type="button" className={styles.saveButton}>
             <Save className={styles.saveIcon} />
-            Salvar Informações
+            Salvar Alterações
           </button>
         </div>
       </form>

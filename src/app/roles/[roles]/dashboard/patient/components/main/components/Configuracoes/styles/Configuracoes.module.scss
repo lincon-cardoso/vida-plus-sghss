@@ -125,8 +125,16 @@
         word-break: break-word;
         /* torna essa área a que rola */
         overflow: auto;
+        overflow-x: hidden;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge legado */
         flex: 1 1 auto;
         min-height: 0;
+
+        &::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+        }
       }
     }
   }
