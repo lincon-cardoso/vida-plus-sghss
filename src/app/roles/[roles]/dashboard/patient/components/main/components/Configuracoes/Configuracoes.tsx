@@ -4,6 +4,7 @@ import { Bell, Globe, Moon, Shield, User } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import Perfil from "./components/perfil/Perfil";
+import Notificacoes from "./components/notificacoes/Notificacoes";
 
 import styles from "./styles/Configuracoes.module.scss";
 
@@ -34,8 +35,9 @@ export default function Configuracoes() {
               <li key={id} className={styles.navListItem}>
                 <button
                   type="button"
-                  className={styles.navItem}
-                  data-active={activeId === id}
+                  className={`${styles.navItem} ${
+                    activeId === id ? styles.active : ""
+                  }`}
                   aria-pressed={activeId === id}
                   onClick={() => setActiveId(id)}
                 >
@@ -51,14 +53,7 @@ export default function Configuracoes() {
             {/* Conteúdo que muda conforme o item ativo */}
             {activeId === "perfil" && <Perfil />}
 
-            {activeId === "notificacoes" && (
-              <div>
-                <h2 className={styles.sectionTitle}>Notificações</h2>
-                <p className={styles.sectionBody}>
-                  Gerencie alertas por e-mail e notificações do aplicativo.
-                </p>
-              </div>
-            )}
+            {activeId === "notificacoes" && <Notificacoes />}
 
             {activeId === "seguranca" && (
               <div>

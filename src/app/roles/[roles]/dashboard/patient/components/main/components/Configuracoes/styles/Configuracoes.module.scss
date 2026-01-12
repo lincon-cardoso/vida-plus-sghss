@@ -69,6 +69,7 @@
             color: var(--muted);
             transition: background-color 120ms ease, color 120ms ease;
 
+            &.active,
             &[data-active="true"] {
               background-color: rgba(26, 115, 232, 0.1);
               color: var(--primary-blue);
