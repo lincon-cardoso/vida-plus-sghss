@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import PatientDashboard from "./patient/PatientDashboard";
+import MedicDashboard from "./medic/MedicDashboard";
 
 export default async function DashboardPage({
   params,
@@ -19,8 +20,11 @@ export default async function DashboardPage({
     redirect(`/roles/${payload.role}/dashboard`);
   }
 
- 
   if (payload.role === "patient") {
     return <PatientDashboard payload={payload} />;
+  }
+
+  if (payload.role === "doctor") {
+    return <MedicDashboard payload={payload} />;
   }
 }

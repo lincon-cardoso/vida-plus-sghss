@@ -18,6 +18,7 @@ export type QuickAction = {
 };
 
 type Props = {
+  id?: string;
   actions: QuickAction[];
   menuRef?: RefObject<HTMLElement | null>;
   activeLabel?: string;
@@ -25,6 +26,7 @@ type Props = {
 };
 
 export default function QuickActionsNav({
+  id,
   actions,
   menuRef,
   activeLabel,
@@ -47,7 +49,7 @@ export default function QuickActionsNav({
 
   return (
     <nav
-      id="patient-menu"
+      id={id ?? "patient-menu"}
       ref={menuRef}
       tabIndex={-1}
       className={styles.sidebarIcons}
