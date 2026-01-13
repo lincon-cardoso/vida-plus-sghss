@@ -1,0 +1,228 @@
+/* Notificacoes.module.scss
+   Estilos para o componente Notificações
+   - Mantém organização por blocos (container, header, section, list, toggle, botão)
+   - Comentários explicativos para facilitar manutenção e entendimento do CSS
+*/
+
+.container {
+  /* Bloco principal: card branco, sombra suave e espaçamento interno */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  border: 1px solid #eef0f3;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  /* Header do card: geralmente contém título e ícone */
+  .header {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  /* Título principal do bloco */
+  .title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  /* Container para alinhar conteúdo do header (ícone + título) */
+  .headerContent {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* -------------------------------
+     Seções (Email / Push / SMS)
+     Cada seção possui um cabeçalho e uma lista de itens
+     ------------------------------- */
+  .section {
+    /* Cabeçalho da seção: ícone e títulos */
+    .sectionHeader {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    /* Caixa do ícone (fundo leve e borda arredondada) */
+    .sectionIcon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f6f9ff;
+      border-radius: 8px;
+    }
+
+    /* Estilo do ícone em si (tamanho e cor) */
+    .icon {
+      width: 20px;
+      height: 20px;
+      color: #0070f3;
+    }
+
+    /* Título e subtítulo da seção */
+    .sectionTitle {
+      font-size: 16px;
+      font-weight: 600;
+      color: #222;
+      margin: 0;
+    }
+    .sectionSubtitle {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: #7a7a7a;
+    }
+
+    /* Lista de opções (cada opção é uma linha com texto e toggle) */
+    .list {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+
+      .item {
+        /* Linha da opção: texto à esquerda, toggle à direita */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+        border-top: 1px solid #eef0f3;
+
+        .itemText {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .itemTitle {
+          font-size: 15px;
+          font-weight: 600;
+          color: #222;
+        }
+
+        .itemDescription {
+          font-size: 13px;
+          color: #888;
+        }
+      }
+
+      /* Remove a borda do primeiro item para ficar visualmente correto */
+      .item:first-child {
+        border-top: none;
+      }
+    }
+  }
+
+  /* Linha divisória entre seções */
+  .divider {
+    height: 1px;
+    background-color: #eaeef2;
+    margin: 12px 0;
+  }
+
+  /* -------------------------------
+     Toggle switch (estilo customizado)
+     - O input real fica invisível (acessível via teclado)
+     - .knob é o círculo móvel
+     - Quando o input está checked, movemos a .knob e estilizamos o fundo
+     ------------------------------- */
+  .toggle {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 28px;
+    background: #e9edf3;
+    border-radius: 999px;
+    padding: 3px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+
+    /* Input invisível, mas foco e acessibilidade ainda são importantes */
+    input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* Botão visual (knob) */
+    .knob {
+      position: relative;
+      display: block;
+      width: 22px;
+      height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+      transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+        box-shadow 0.18s;
+    }
+
+    /* Quando o checkbox está marcado, deslocamos a knob para a direita */
+    input:checked + .knob {
+      transform: translateX(18px);
+    }
+
+    /* Pseudo-elemento que cria o fundo azul quando marcado (efeito visual) */
+    input:checked + .knob::before {
+      content: "";
+      position: absolute;
+      left: -3px;
+      top: -3px;
+      width: calc(100% + 6px);
+      height: calc(100% + 6px);
+      border-radius: 999px;
+      background: #0b7bff;
+      z-index: -1;
+    }
+  }
+
+  /* Container do botão de salvar: alinha à direita */
+  .saveContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+
+  /* Botão de salvar: visual chamativo e estado desabilitado */
+  .saveButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0b7bff;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(11, 123, 255, 0.16);
+    transition: opacity 0.15s ease, transform 0.08s ease;
+  }
+
+  /* Estado desabilitado: reduz opacidade e remove box-shadow */
+  .saveButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .saveIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Ajuste responsivo: mais padding em telas maiores */
+  @media (min-width: 768px) {
+    padding: 24px;
+  }
+}

@@ -5,6 +5,9 @@ import { useMemo, useState } from "react";
 
 import Perfil from "./components/perfil/Perfil";
 import Notificacoes from "./components/notificacoes/Notificacoes";
+import Seguranca from "./components/seguranca/seguranca";
+import Idioma from "./components/idioma/Idioma";
+import Aparencia from "./components/aparencia/aparencia";
 
 import styles from "./styles/Configuracoes.module.scss";
 
@@ -55,33 +58,11 @@ export default function Configuracoes() {
 
             {activeId === "notificacoes" && <Notificacoes />}
 
-            {activeId === "seguranca" && (
-              <div>
-                <h2 className={styles.sectionTitle}>Segurança</h2>
-                <p className={styles.sectionBody}>
-                  Altere senha, configure autenticação em duas etapas e
-                  dispositivos confiáveis.
-                </p>
-              </div>
-            )}
+            {activeId === "seguranca" && <Seguranca />}
 
-            {activeId === "idioma" && (
-              <div>
-                <h2 className={styles.sectionTitle}>Idioma e Região</h2>
-                <p className={styles.sectionBody}>
-                  Selecione idioma, fuso horário e preferências regionais.
-                </p>
-              </div>
-            )}
+            {activeId === "idioma" && <Idioma />}
 
-            {activeId === "aparencia" && (
-              <div>
-                <h2 className={styles.sectionTitle}>Aparência</h2>
-                <p className={styles.sectionBody}>
-                  Alterar tema, modo claro/escuro e preferências visuais.
-                </p>
-              </div>
-            )}
+            {activeId === "aparencia" && <Aparencia />}
           </div>
         </div>
       </div>
