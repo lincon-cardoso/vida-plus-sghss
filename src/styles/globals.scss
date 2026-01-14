@@ -189,3 +189,19 @@ select {
     overflow: hidden;
   }
 }
+
+/* Medic dashboard */
+.medic-dashboard {
+  &__page {
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+}

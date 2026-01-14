@@ -1,31 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { LayoutDashboard, LogOut } from "lucide-react";
 import { useMedicMenuStore } from "@/lib/stores";
+import MedicQuickActionsNav from "./components/MedicQuickActionsNav";
+import { useMedicActiveItem } from "./useMedicActiveItem";
 import styles from "./styles/MedicMenu.module.scss";
 
-type MedicMenuItem = "Meu Dashboard" | "Sair";
-
+/**
+ * Componente principal do dashboard do médico.
+ * Gerencia a navegação e exibição do conteúdo ativo.
+ */
 export default function MedicDashboardMain() {
   const router = useRouter();
   const isMenuOpen = useMedicMenuStore((s) => s.isMenuOpen);
   const closeMenu = useMedicMenuStore((s) => s.closeMenu);
 
   const menuRef = useRef<HTMLElement | null>(null);
-
-  const [activeItem, setActiveItem] = useState<MedicMenuItem>(() => {
-    try {
-      const raw = sessionStorage.getItem(
-        "vida-plus:medic-dashboard:activeItem"
-      );
-      if (raw === "Meu Dashboard" || raw === "Sair") return raw;
-    } catch {
-      // ignore
-    }
-    return "Meu Dashboard";
-  });
+  const [activeItem, setActiveItem] = useMedicActiveItem();
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -39,75 +31,36 @@ export default function MedicDashboardMain() {
     if (isMenuOpen) setTimeout(() => menuRef.current?.focus(), 0);
   }, [isMenuOpen]);
 
-  useEffect(() => {
-    try {
-      sessionStorage.setItem(
-        "vida-plus:medic-dashboard:activeItem",
-        String(activeItem)
-      );
-    } catch {
-      // ignore
-    }
-  }, [activeItem]);
-
-  function handleMenuClick(item: MedicMenuItem) {
-    if (item === "Sair") {
+  function handleActionClick(action: { itemKey: string; label: string }) {
+    if (action.itemKey === "nav_logout" || action.label === "Sair") {
       router.push("/login");
       return;
     }
-    setActiveItem(item);
+    // atualmente só temos a view principal; manter compatibilidade
+    setActiveItem("Home");
     closeMenu();
   }
 
   return (
     <div className={styles.root}>
       {isMenuOpen && (
-        <div
-          className={styles.overlay}
-          role="presentation"
-          onClick={closeMenu}
-        />
+        <div className={styles.overlay} aria-hidden="true">
+          Menu aberto (implementação futura de overlay)
+        </div>
       )}
 
       <div className={styles.layout}>
-        <nav
-          id="medic-menu"
-          ref={menuRef}
-          tabIndex={-1}
-          className={styles.sidebarIcons}
-          aria-label="Menu do médico"
-        >
-          <ul className={styles.iconList}>
-            <li>
-              <button
-                type="button"
-                className={styles.iconButton}
-                data-active={activeItem === "Meu Dashboard"}
-                onClick={() => handleMenuClick("Meu Dashboard")}
-                aria-label="Meu Dashboard"
-              >
-                <LayoutDashboard className={styles.icon} />
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                className={styles.iconButton}
-                data-active={activeItem === "Sair"}
-                onClick={() => handleMenuClick("Sair")}
-                aria-label="Sair"
-              >
-                <LogOut className={styles.icon} />
-              </button>
-            </li>
-          </ul>
-        </nav>
+        <MedicQuickActionsNav
+          menuRef={menuRef}
+          activeLabel={activeItem}
+          onActionClick={handleActionClick}
+        />
 
         <section className={styles.content} aria-label="Conteúdo principal">
-          {activeItem === "Meu Dashboard" && (
-            <div>
-              <h2 style={{ margin: 0 }}>Dashboard do Médico</h2>
-              <p style={{ marginTop: 8, color: "#6b7280" }}>
+          {activeItem === "Home" && (
+            <div className={styles.dashboardContent}>
+              <h2 className={styles.title}>Dashboard do Médico</h2>
+              <p className={styles.description}>
                 Estrutura base criada. Componentes específicos serão
                 adicionados.
               </p>
