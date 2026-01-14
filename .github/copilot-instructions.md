@@ -14,7 +14,6 @@ Estas instruções são **mandatórias** para gerar/editar/revisar código neste
 - Alias TS: imports `@/*` apontam para `src/*` (ver `tsconfig.json`).
 - Estado global/UI: Zustand em `src/lib/stores.ts` para estados simples (ex.: abrir/fechar menu).
 - Estilos globais: `src/styles/globals.scss` é importado em `src/app/layout.tsx`; ainda assim, componentes novos devem preferir `*.module.scss`.
-- CI/CD: `.github/workflows/deploy.yml` existe, mas está vazio nesta branch.
 - Dependências: `next-auth` está instalado, mas não há uso no `src/` atualmente — não presuma que o fluxo NextAuth está integrado.
 
 ---
@@ -23,7 +22,6 @@ Estas instruções são **mandatórias** para gerar/editar/revisar código neste
 
 - O assistente pode usar as MCPs e ferramentas instaladas no ambiente (ex.: `microsoft-docs`, `mcp_huggingface`, `prisma`, ferramentas de container, etc.) para **pesquisar documentação, exemplos e recursos** que melhorem suas respostas e a geração de código.
 - Se as MCPs instaladas não fornecerem resposta suficiente, o assistente pode realizar **buscas na web** e **analisar fontes externas** (docs, artigos, repositórios públicos) para complementar a informação e gerar código mais preciso; essas buscas são usadas apenas para pesquisa e análise.
-- Para ações que executem mudanças no repositório ou consultas externas que possam ter impacto (ex.: criar PRs, executar migrations), o assistente **avisará antes** no PR/issue/chat e solicitará aprovação explícita antes de aplicar qualquer alteração.
 - Não é necessário registrar pesquisas ou consultas internas em PRs quando usadas apenas para pesquisa e geração de código; registro/nota em PRs só será feito quando mudanças forem aplicadas ao repositório.
 
 ## 🔧 Fluxos de desenvolvedor (comandos do `package.json`)
@@ -269,8 +267,7 @@ interface LogEntry {
 
 ### Deployment e CI/CD
 
-- Preferir plataformas como Vercel ou Netlify para Next.js, com builds automatizados via GitHub Actions.
-- Configurar CI/CD em `.github/workflows/deploy.yml` para lint, typecheck, testes e deploy.
+- Preferir plataformas como Vercel ou Netlify para Next.js.
 - Monitorar com Sentry para erros em produção, integrando com o logger.
 
 ---
@@ -327,52 +324,6 @@ interface ButtonProps {
 
 ---
 
-## 🔀 Git e commits
-
-### Convenção de commits (Conventional Commits)
-
-Mensagens de commit devem seguir o formato:
-
-```
-<tipo>(<escopo>): <descrição curta>
-
-[corpo opcional]
-
-[rodapé opcional]
-```
-
-### Tipos permitidos
-
-| Tipo       | Uso                                        |
-| ---------- | ------------------------------------------ |
-| `feat`     | Nova funcionalidade                        |
-| `fix`      | Correção de bug                            |
-| `docs`     | Documentação                               |
-| `style`    | Formatação (não afeta lógica)              |
-| `refactor` | Refatoração (sem mudança de comportamento) |
-| `test`     | Adição ou correção de testes               |
-| `chore`    | Tarefas de build, CI, dependências         |
-
-### Exemplos
-
-```
-feat(login): add role selection step
-fix(dashboard): correct appointment date format
-docs(readme): update setup instructions
-refactor(Button): extract loading state to hook
-test(auth): add unit tests for signToken
-chore(deps): upgrade next to 15.x
-```
-
-### Regras de branch
-
-- `main` — branch protegida, sempre estável.
-- `feat/<nome>` — novas funcionalidades.
-- `fix/<nome>` — correções.
-- `refactor/<nome>` — refatorações.
-
----
-
 ## ✅ Checklist final (antes de concluir qualquer entrega)
 
 ### Qualidade de código
@@ -417,8 +368,3 @@ chore(deps): upgrade next to 15.x
 - [ ] Nenhum dado sensível em logs.
 - [ ] Entradas validadas; dados não assumidos como confiáveis.
 - [ ] Sem `dangerouslySetInnerHTML` (exceto sanitizado).
-
-### Git
-
-- [ ] Commit segue Conventional Commits: `tipo(escopo): descrição`.
-- [ ] Branch nomeada corretamente: `feat/`, `fix/`, `refactor/`.
