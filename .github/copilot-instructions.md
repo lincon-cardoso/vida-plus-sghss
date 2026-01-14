@@ -40,6 +40,17 @@ Estas instruções são **mandatórias** para gerar/editar/revisar código neste
 
 Você é um assistente de desenvolvimento Front-end profissional, orientado a produto, qualidade, previsibilidade e manutenção a longo prazo.
 
+### Regras rápidas (não fazer)
+
+- Não adicionar novas dependências (inclui libs de validação, logging, analytics, sanitização, UI) sem aprovação explícita.
+- Quando sugerir uma lib nova, apresentar como opção e pedir aprovação antes de instalar/usar (preferir alternativas sem dependências quando possível).
+- Não usar Tailwind, styled-components, CSS-in-JS ou estilos inline.
+- Não usar `any`.
+- Não deixar `console.log` no código final.
+- Não usar `dangerouslySetInnerHTML` (exceto quando inevitável e com sanitização explícita).
+- Não “clientificar” componentes sem necessidade real (estado/efeitos/eventos/APIs do browser).
+- Não introduzir acoplamento com regras específicas de tela dentro de componentes reutilizáveis.
+
 ### Stack e restrições
 
 - **Obrigatório**: Next.js (App Router), React com TypeScript, estilos via SCSS Modules exclusivamente.
@@ -53,6 +64,13 @@ Você é um assistente de desenvolvimento Front-end profissional, orientado a pr
 - O uso de `"use client"` é permitido apenas quando houver estado, efeitos, eventos ou uso direto de APIs do browser (`window`, `document`, `localStorage`).
 - Nunca usar `"use client"` por hábito ou conveniência; não transformar UI simples em Client Component sem necessidade real.
 - Quando precisar isolar partes client-only dentro de dashboards, usar `next/dynamic` com `{ ssr: false }` (ex.: `PatientDashboardMain` em `src/app/roles/[roles]/dashboard/patient/PatientDashboard.tsx`).
+
+#### Regras práticas do App Router (Next.js)
+
+- Preferir buscar dados e ler cookies/headers no Server Component sempre que possível (`cookies()`/`headers()`), evitando fetch no client por padrão.
+- Client Components devem usar `next/navigation` (ex.: `useRouter`, `usePathname`) e não devem acessar `cookies()`/`headers()`.
+- Evitar `useEffect` para “buscar dados no mount” quando a tela pode ser Server Component (reduz loading states e melhora performance).
+- Se precisar de interatividade isolada (ex.: modal/menu), manter o mínimo de superfície em `"use client"` e compor com Server Components.
 
 #### Decisões Lógicas (Fluxograma)
 
@@ -71,6 +89,13 @@ Precisa de estado, efeitos ou APIs do browser?
 - Evitar acoplamento com regras específicas de tela; priorizar APIs de componente estáveis.
 - Separação de responsabilidades é obrigatória: UI não valida regra de negócio, não decide fluxo e não conhece domínio.
 - Convenção prática: componentes específicos de rota ficam junto da rota (ex.: `src/app/login/components/*`, `src/app/roles/[roles]/dashboard/**/components/*`); componentes reutilizáveis e genéricos ficam em `src/components/*`.
+
+#### Exemplos rápidos (organização)
+
+- Faça: componentes específicos de uma página/fluxo ficam junto da rota (ex.: `src/app/login/components/LoginForm.tsx`).
+- Faça: componentes reutilizáveis (Button, Modal, Card, Input) ficam em `src/components/*`.
+- Evite: criar componentes genéricos dentro de `src/app/**` (vira acoplamento e dificulta reuso).
+- Evite: colocar regra de negócio dentro de componentes reutilizáveis; mantenha-os “burros” e previsíveis.
 
 ### Componentes reutilizáveis (padrão de pastas)
 
@@ -108,7 +133,7 @@ Precisa de estado, efeitos ou APIs do browser?
 #### Exemplos Práticos de Acessibilidade
 
 - Para modais: Usar `useEffect` para focar no primeiro elemento interativo ao abrir, e restaurar foco ao fechar.
-- Testes: Integrar `axe-core` ou `@testing-library/jest-dom` para verificar violações em testes.
+- Testes: Se já estiver no projeto **ou com aprovação explícita** para adicionar dependências, considerar `axe-core` e/ou `@testing-library/jest-dom` para verificar violações em testes.
 - Navegação: Garantir que menus dropdown sejam acessíveis com `aria-expanded` e navegação por teclado.
 
 ### SCSS Modules (estilo)
@@ -126,6 +151,7 @@ Precisa de estado, efeitos ou APIs do browser?
 - Validar entradas; não assumir dados confiáveis sem validação.
 
 #### Otimizações de Performance
+
 - Usar `React.memo` para componentes que re-renderizam frequentemente com props iguais.
 - Aplicar `useMemo` e `useCallback` para computações e funções custosas.
 - Implementar lazy loading com `next/dynamic` para componentes grandes ou rotas.
@@ -134,6 +160,7 @@ Precisa de estado, efeitos ou APIs do browser?
 - **Métricas Sugeridas**: Manter bundle size < 200KB; usar `webpack-bundle-analyzer` para análise.
 
 #### Segurança Adicional
+
 - Seguir OWASP Top 10: proteger contra XSS (sanitizar inputs), CSRF (usar tokens), injeção SQL (via Prisma queries seguras).
 - Validar inputs em API routes com bibliotecas como Zod ou Joi (exemplo: `const schema = z.object({ email: z.string().email() });`).
 - Implementar rate limiting e autenticação robusta (ex.: refresh tokens além de JWT simples).
@@ -177,11 +204,14 @@ Precisa de estado, efeitos ou APIs do browser?
 
 ## 🚨 Error Boundaries e tratamento de erros
 
+> Observação (Next.js App Router): o padrão preferencial para erros em rotas/segmentos é usar `error.tsx` (e `global-error.tsx` quando aplicável) dentro de `src/app/**`. Esses arquivos **precisam** ser Client Components (ex.: devem conter `"use client"`). Não presuma que um Error Boundary genérico em `src/components/*` vai capturar erros de Server Components/rotas sem essa integração.
+
 ### Estratégia de Error Boundaries
 
 - Usar Error Boundaries do React para capturar erros em runtime de componentes.
-- Cada seção crítica do dashboard deve ter seu próprio Error Boundary para evitar que um erro derrube toda a página.
-- Estrutura recomendada: `src/components/ErrorBoundary/ErrorBoundary.tsx`.
+- Cada seção crítica do dashboard deve ter seu próprio boundary para evitar que um erro derrube toda a página.
+- Preferir boundaries por segmento/rota via `src/app/**/error.tsx` e manter fallbacks específicos.
+- Se existir um componente reutilizável, ele pode ficar em `src/components/ErrorBoundary/*`, mas deve ser integrado pelos `error.tsx` das rotas.
 
 ### Fallbacks
 
@@ -194,6 +224,13 @@ Precisa de estado, efeitos ou APIs do browser?
 - Funções async devem usar try/catch e retornar estados de erro explícitos.
 - API routes devem retornar respostas padronizadas: `{ success: boolean, data?: T, error?: string }`.
 - Client Components que fazem fetch devem tratar estados: `loading`, `error`, `success`.
+
+#### Padrão para API Routes (Next.js App Router)
+
+- Validar entrada (body/query/params) antes de processar; sem dependências novas, usar type guards simples e checagens explícitas.
+- Retornar status codes coerentes: `200/201` sucesso, `400` payload inválido, `401` não autenticado, `403` sem permissão, `404` não encontrado, `409` conflito, `422` regra de domínio inválida, `500` erro inesperado.
+- Nunca expor stack traces/mensagens internas no `error`; manter mensagem amigável e genérica.
+- Padronizar resposta JSON: `{ success: boolean, data?: T, error?: string }` e evitar misturar formatos na mesma API.
 
 ---
 
@@ -259,6 +296,8 @@ interface LogEntry {
 
 ### Ferramentas Recomendadas
 
+> Importante: as opções abaixo são **sugestões**. Não instalar/adicionar dependências novas sem aprovação explícita (ver seção “Regras rápidas”).
+
 - **i18n**: Considerar `next-intl` para internacionalização futura, com estrutura em `src/locales/`.
 - **Logging**: Usar `winston` ou `pino` para logging estruturado em produção, integrando com `src/lib/logger.ts`.
 - **Testes E2E**: Adicionar Playwright para testes end-to-end, focando em fluxos críticos como login e dashboards.
@@ -266,7 +305,7 @@ interface LogEntry {
 ### Deployment e CI/CD
 
 - Preferir plataformas como Vercel ou Netlify para Next.js.
-- Monitorar com Sentry para erros em produção, integrando com o logger.
+- Monitorar com Sentry para erros em produção (somente com aprovação explícita), integrando com o logger.
 
 ---
 
@@ -279,7 +318,7 @@ interface LogEntry {
 
 ### Monitoramento de Erros
 
-- Configurar Sentry ou similar para capturar erros em produção, vinculado ao logger estruturado.
+- Configurar Sentry ou similar para capturar erros em produção (somente com aprovação explícita), vinculado ao logger estruturado.
 - Evitar logs de dados sensíveis; focar em contexto para debugging.
 
 ---
