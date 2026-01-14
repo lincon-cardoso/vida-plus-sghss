@@ -126,7 +126,6 @@ Precisa de estado, efeitos ou APIs do browser?
 - Validar entradas; não assumir dados confiáveis sem validação.
 
 #### Otimizações de Performance
-
 - Usar `React.memo` para componentes que re-renderizam frequentemente com props iguais.
 - Aplicar `useMemo` e `useCallback` para computações e funções custosas.
 - Implementar lazy loading com `next/dynamic` para componentes grandes ou rotas.
@@ -135,7 +134,6 @@ Precisa de estado, efeitos ou APIs do browser?
 - **Métricas Sugeridas**: Manter bundle size < 200KB; usar `webpack-bundle-analyzer` para análise.
 
 #### Segurança Adicional
-
 - Seguir OWASP Top 10: proteger contra XSS (sanitizar inputs), CSRF (usar tokens), injeção SQL (via Prisma queries seguras).
 - Validar inputs em API routes com bibliotecas como Zod ou Joi (exemplo: `const schema = z.object({ email: z.string().email() });`).
 - Implementar rate limiting e autenticação robusta (ex.: refresh tokens além de JWT simples).
