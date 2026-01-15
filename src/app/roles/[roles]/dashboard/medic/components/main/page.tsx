@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useMedicMenuStore } from "@/lib/stores";
 import MedicQuickActionsNav from "./components/MedicQuickActionsNav";
+import MedicHome from "./components/MedicHome";
 import { useMedicActiveItem, type MedicMenuItem } from "./useMedicActiveItem";
 import styles from "./styles/MedicMenu.module.scss";
 
@@ -62,15 +63,7 @@ export default function MedicDashboardMain() {
         />
 
         <section className={styles.content} aria-label="Conteúdo principal">
-          {activeItem === "Home" && (
-            <div className={styles.dashboardContent}>
-              <h2 className={styles.title}>Dashboard do Médico</h2>
-              <p className={styles.description}>
-                Estrutura base criada. Componentes específicos serão
-                adicionados.
-              </p>
-            </div>
-          )}
+          {activeItem === "Home" && <MedicHome />}
 
           {activeItem === "Monitor" && (
             <div className={styles.dashboardContent}>

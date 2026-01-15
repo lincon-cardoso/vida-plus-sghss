@@ -64,24 +64,6 @@ const DEFAULT_ACTIONS: MedicAction[] = [
   { itemKey: "nav_settings", label: "Configurações" },
 ];
 
-function hexToRgba(hex: string, alpha = 1) {
-  // remove leading #
-  const h = hex.replace("#", "");
-  const bigint = parseInt(
-    h.length === 3
-      ? h
-          .split("")
-          .map((c) => c + c)
-          .join("")
-      : h,
-    16
-  );
-  const r = (bigint >> 16) & 255;
-  const g = (bigint >> 8) & 255;
-  const b = bigint & 255;
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
 export default function MedicQuickActionsNav({
   id,
   actions = DEFAULT_ACTIONS,
@@ -101,18 +83,9 @@ export default function MedicQuickActionsNav({
       <div className={styles.top}>
         <ul className={styles.iconList}>
           {actions.map((action) => {
-            const { label, color } = action;
+            const { label } = action;
             const Icon = getIcon(action.itemKey);
             const isActive = activeLabel === label;
-
-            const buttonStyle: React.CSSProperties | undefined =
-              isActive && color
-                ? { background: hexToRgba(color, 0.12) }
-                : undefined;
-
-            const iconStyle: React.CSSProperties | undefined = color
-              ? { color }
-              : undefined;
 
             return (
               <li key={action.itemKey}>
@@ -123,11 +96,8 @@ export default function MedicQuickActionsNav({
                   data-active={isActive ? "true" : undefined}
                   aria-current={isActive ? "page" : undefined}
                   onClick={() => onActionClick?.(action)}
-                  style={buttonStyle}
                 >
-                  {Icon ? (
-                    <Icon className={styles.icon} style={iconStyle} />
-                  ) : null}
+                  {Icon ? <Icon className={styles.icon} /> : null}
                   {isExpanded && <span className={styles.label}>{label}</span>}
                 </button>
               </li>
@@ -148,9 +118,8 @@ export default function MedicQuickActionsNav({
               onClick={() =>
                 onActionClick?.({ itemKey: "nav_logout", label: "Sair" })
               }
-              style={{ background: hexToRgba("#ef4444", 0.06) }}
             >
-              <LogOut className={styles.icon} style={{ color: "#ef4444" }} />
+              <LogOut className={styles.icon} />
               {isExpanded && <span className={styles.label}>Sair</span>}
             </button>
           </li>
