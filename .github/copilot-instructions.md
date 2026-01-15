@@ -144,32 +144,333 @@ Precisa de estado, efeitos ou APIs do browser?
 - Estados: `isLoading`, `isDisabled`, `isActive`, `hasError`.
 - Variações: `variantPrimary`, `variantSecondary`, `variantGhost`, `variantDanger`, `sizeSm`, `sizeMd`, `sizeLg`.
 
-### Performance e Segurança (Consolidado)
+### Performance
 
-- Evitar re-renders desnecessários e lógica pesada no render; não fazer fetch em componentes de UI sem pedido explícito.
-- Nunca expor secrets/tokens/chaves; nunca logar dados sensíveis; evitar `dangerouslySetInnerHTML`.
-- Validar entradas; não assumir dados confiáveis sem validação.
+**Otimizações Obrigatórias:**
 
-#### Otimizações de Performance
+**Render e Re-renders:**
 
-- Usar `React.memo` para componentes que re-renderizam frequentemente com props iguais.
-- Aplicar `useMemo` e `useCallback` para computações e funções custosas.
-- Implementar lazy loading com `next/dynamic` para componentes grandes ou rotas.
-- Otimizar imagens com `<Image>` do Next.js (lazy, formatos modernos).
-- Monitorar Web Vitals (LCP, FID, CLS) e usar ferramentas como Lighthouse para auditorias.
-- **Métricas Sugeridas**: Manter bundle size < 200KB; usar `webpack-bundle-analyzer` para análise.
+- Evitar lógica pesada no render (computações custosas devem usar `useMemo`)
+- Usar `React.memo` para componentes que re-renderizam com props iguais
+- Aplicar `useCallback` para funções passadas como props (evita re-renders desnecessários)
+- Não fazer fetch em componentes de UI sem pedido explícito
 
-#### Segurança Adicional
+**Code Splitting e Lazy Loading:**
 
-- Seguir OWASP Top 10: proteger contra XSS (sanitizar inputs), CSRF (usar tokens), injeção SQL (via Prisma queries seguras).
-- Validar inputs em API routes com bibliotecas como Zod ou Joi (exemplo: `const schema = z.object({ email: z.string().email() });`).
-- Implementar rate limiting e autenticação robusta (ex.: refresh tokens além de JWT simples).
-- Sanitizar dados antes de renderizar (ex.: usar `DOMPurify` para HTML dinâmico, se inevitável).
-- **Auditorias**: Usar `npm audit` e Snyk para scans; revisar vulnerabilidades antes de deploy.
+- Implementar lazy loading com `next/dynamic` para:
+  - Componentes grandes (ex.: modais, dashboards complexos)
+  - Bibliotecas pesadas usadas condicionalmente
+  - Partes client-only isoladas (`{ ssr: false }`)
+- Usar `<Image>` do Next.js para otimização automática (lazy, WebP, dimensões corretas)
+
+**Métricas e Monitoramento:**
+
+- Monitorar Web Vitals: **LCP** (< 2.5s), **FID** (< 100ms), **CLS** (< 0.1)
+- Manter bundle size do JS client < 200KB (usar `webpack-bundle-analyzer`)
+- Rodar Lighthouse audits regularmente (alvo: 90+ em Performance)
+
+**Checklist Prática:**
+
+- [ ] Componentes pesados usam `next/dynamic`
+- [ ] Imagens usam `<Image>` do Next.js
+- [ ] Computações custosas usam `useMemo`
+- [ ] Callbacks em props usam `useCallback`
+- [ ] Bundle analisado e otimizado (< 200KB)
+
+### Segurança
+
+**Proteções Obrigatórias:**
+
+**Dados Sensíveis:**
+
+- ❌ Nunca expor secrets/tokens/chaves no código client
+- ❌ Nunca logar senhas, tokens, CPF, cartões ou dados pessoais sensíveis
+- ✅ Validar TODAS as entradas (nunca assumir dados confiáveis)
+- ✅ Sanitizar dados antes de renderizar (evitar `dangerouslySetInnerHTML`)
+
+**OWASP Top 10:**
+
+- **XSS:** Sanitizar inputs do usuário antes de renderizar (usar DOMPurify se inevitável renderizar HTML)
+- **CSRF:** Usar tokens CSRF em formulários críticos
+- **Injeção SQL:** Usar Prisma (queries parametrizadas) quando schema estiver ativo
+- **Auth:** Implementar rate limiting, refresh tokens, validação robusta
+
+**Validação em API Routes:**
+
+- Validar entrada (body/query/params) com type guards explícitos
+- Quando aprovado, usar Zod ou Joi: `const schema = z.object({ email: z.string().email() });`
+- Retornar erros genéricos (nunca expor stack traces ou detalhes internos)
+
+**Auditorias:**
+
+- Rodar `npm audit` regularmente e revisar vulnerabilidades antes de deploy
+- Considerar Snyk para scans automáticos (com aprovação)
+- Revisar dependências: evitar libs abandonadas ou com CVEs conhecidos
+
+**Checklist Prática:**
+
+- [ ] Nenhum secret/token exposto em código client
+- [ ] Inputs validados em API routes
+- [ ] Sem `dangerouslySetInnerHTML` (ou sanitizado explicitamente)
+- [ ] `npm audit` sem vulnerabilidades críticas/altas
 
 ### Postura em revisão
 
 - Ao revisar: apontar riscos reais, sugerir melhorias objetivas, evitar reescrita desnecessária e explicar o motivo.
+
+---
+
+## 🚫 Anti-Patterns Comuns (❌ vs ✅)
+
+### Server vs Client Components
+
+❌ **Não fazer:**
+
+```tsx
+"use client"; // Desnecessário!
+
+export default function StaticCard({ title, description }: Props) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  );
+}
+```
+
+✅ **Fazer:**
+
+```tsx
+// Sem "use client" — Server Component por padrão
+export default function StaticCard({ title, description }: Props) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  );
+}
+```
+
+---
+
+### Tipagem
+
+❌ **Não fazer:**
+
+```tsx
+interface Props {
+  data: any; // ❌ Nunca usar any!
+  onClick: any;
+}
+```
+
+✅ **Fazer:**
+
+```tsx
+interface Props {
+  data: { id: string; name: string }; // Tipo explícito
+  onClick: () => void; // Função tipada
+}
+```
+
+---
+
+### Acessibilidade — Botões
+
+❌ **Não fazer:**
+
+```tsx
+<div onClick={handleClick} className={styles.button}>
+  Clique aqui
+</div>
+```
+
+✅ **Fazer:**
+
+```tsx
+<button onClick={handleClick} className={styles.button}>
+  Clique aqui
+</button>
+```
+
+---
+
+### Acessibilidade — Formulários
+
+❌ **Não fazer:**
+
+```tsx
+<div>
+  Nome:
+  <input type="text" />
+</div>
+```
+
+✅ **Fazer:**
+
+```tsx
+<div>
+  <label htmlFor="name-input">Nome:</label>
+  <input id="name-input" type="text" />
+</div>
+```
+
+---
+
+### SCSS Modules — Aninhamento
+
+❌ **Não fazer:**
+
+```scss
+.card {
+  .header {
+    .title {
+      .icon {
+        // ❌ 4 níveis! Dificulta manutenção
+        color: red;
+      }
+    }
+  }
+}
+```
+
+✅ **Fazer:**
+
+```scss
+.card {
+  // Máximo 2 níveis
+}
+
+.cardHeader {
+  // ...
+}
+
+.cardTitle {
+  // ...
+}
+
+.cardIcon {
+  color: red;
+}
+```
+
+---
+
+### SCSS Modules — Classes por Intenção
+
+❌ **Não fazer:**
+
+```scss
+.box1 {
+  /* ❌ Não semântico */
+}
+.wrapper2 {
+  /* ❌ Genérico demais */
+}
+.redText {
+  /* ❌ Descreve estilo, não intenção */
+}
+```
+
+✅ **Fazer:**
+
+```scss
+.container {
+  /* ✅ Intenção clara */
+}
+.header {
+  /* ✅ Semântico */
+}
+.errorMessage {
+  /* ✅ Descreve propósito */
+}
+```
+
+---
+
+### Nomenclatura — Booleanos
+
+❌ **Não fazer:**
+
+```tsx
+interface Props {
+  loading: boolean; // ❌ Sem prefixo
+  disabled: boolean;
+  active: boolean;
+}
+```
+
+✅ **Fazer:**
+
+```tsx
+interface Props {
+  isLoading: boolean; // ✅ Prefixo is/has
+  isDisabled: boolean;
+  isActive: boolean;
+}
+```
+
+---
+
+### Fetch de Dados
+
+❌ **Não fazer:**
+
+```tsx
+"use client";
+import { useEffect, useState } from "react";
+
+export default function Page() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/data")
+      .then((r) => r.json())
+      .then(setData);
+  }, []); // ❌ Fetch no client quando poderia ser Server!
+
+  return <div>{data?.title}</div>;
+}
+```
+
+✅ **Fazer:**
+
+```tsx
+// Server Component (sem "use client")
+export default async function Page() {
+  const data = await fetch("/api/data").then((r) => r.json());
+
+  return <div>{data.title}</div>;
+}
+```
+
+---
+
+### Organização de Arquivos
+
+❌ **Não fazer:**
+
+```
+src/components/
+  LoginForm.tsx        ❌ Componente específico de Login em src/components
+  PatientDashboard.tsx ❌ Dashboard específico em pasta genérica
+```
+
+✅ **Fazer:**
+
+```
+src/app/login/components/
+  LoginForm.tsx        ✅ Específico de rota fica junto da rota
+
+src/app/roles/[roles]/dashboard/patient/
+  PatientDashboard.tsx ✅ Dashboard fica no contexto correto
+
+src/components/
+  Button/              ✅ Reutilizável genérico
+  Modal/               ✅ Reutilizável genérico
+```
 
 ---
 
