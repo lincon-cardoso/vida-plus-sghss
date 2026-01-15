@@ -14,10 +14,16 @@ export default async function DashboardPage({
   const token = (await cookies()).get("token")?.value;
   if (!token) redirect("/login");
 
-  const payload = verifyToken(token);
+  let payload;
+  try {
+    payload = verifyToken(token);
 
-  if (payload.role !== roles) {
-    redirect(`/roles/${payload.role}/dashboard`);
+    // Nota: layout.tsx já valida role !== roles, mas mantido aqui para redundância e clareza
+    if (payload.role !== roles) {
+      redirect(`/roles/${payload.role}/dashboard`);
+    }
+  } catch {
+    redirect("/login");
   }
 
   if (payload.role === "patient") {
@@ -27,4 +33,7 @@ export default async function DashboardPage({
   if (payload.role === "doctor") {
     return <MedicDashboard payload={payload} />;
   }
+
+  // Fallback para roles não suportadas (ex.: admin) - redireciona para dashboard apropriado
+  redirect(`/roles/${payload.role}/dashboard`);
 }

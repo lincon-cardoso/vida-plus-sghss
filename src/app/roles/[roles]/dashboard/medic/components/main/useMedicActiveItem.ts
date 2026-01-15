@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 
-type MedicMenuItem = "Home" | "Sair";
+export type MedicMenuItem =
+  | "Home"
+  | "Sair"
+  | "Monitor"
+  | "Atendimento"
+  | "Teleconsulta"
+  | "Agenda"
+  | "Configurações";
 
 const STORAGE_KEY = "vida-plus:medic-dashboard:activeItem";
 
@@ -8,7 +15,16 @@ export function useMedicActiveItem() {
   const [activeItem, setActiveItem] = useState<MedicMenuItem>(() => {
     try {
       const raw = sessionStorage.getItem(STORAGE_KEY);
-      if (raw === "Home" || raw === "Sair") return raw;
+      if (
+        raw === "Home" ||
+        raw === "Sair" ||
+        raw === "Monitor" ||
+        raw === "Atendimento" ||
+        raw === "Teleconsulta" ||
+        raw === "Agenda" ||
+        raw === "Configurações"
+      )
+        return raw;
     } catch {
       // ignore
     }

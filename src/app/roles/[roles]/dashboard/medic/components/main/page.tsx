@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useMedicMenuStore } from "@/lib/stores";
 import MedicQuickActionsNav from "./components/MedicQuickActionsNav";
-import { useMedicActiveItem } from "./useMedicActiveItem";
+import { useMedicActiveItem, type MedicMenuItem } from "./useMedicActiveItem";
 import styles from "./styles/MedicMenu.module.scss";
 
 /**
@@ -36,24 +36,29 @@ export default function MedicDashboardMain() {
       router.push("/login");
       return;
     }
-    // atualmente só temos a view principal; manter compatibilidade
-    setActiveItem("Home");
-    closeMenu();
+
+    // Mapeia itemKey para activeItem
+    const itemMap: Record<string, MedicMenuItem> = {
+      nav_home: "Home",
+      nav_monitor: "Monitor",
+      nav_stetho: "Atendimento",
+      nav_video: "Teleconsulta",
+      nav_calendar: "Agenda",
+      nav_settings: "Configurações",
+    };
+
+    const newActiveItem = itemMap[action.itemKey] || "Home";
+    setActiveItem(newActiveItem);
   }
 
   return (
     <div className={styles.root}>
-      {isMenuOpen && (
-        <div className={styles.overlay} aria-hidden="true">
-          Menu aberto (implementação futura de overlay)
-        </div>
-      )}
-
       <div className={styles.layout}>
         <MedicQuickActionsNav
           menuRef={menuRef}
           activeLabel={activeItem}
           onActionClick={handleActionClick}
+          isExpanded={isMenuOpen}
         />
 
         <section className={styles.content} aria-label="Conteúdo principal">
@@ -63,6 +68,51 @@ export default function MedicDashboardMain() {
               <p className={styles.description}>
                 Estrutura base criada. Componentes específicos serão
                 adicionados.
+              </p>
+            </div>
+          )}
+
+          {activeItem === "Monitor" && (
+            <div className={styles.dashboardContent}>
+              <h2 className={styles.title}>Monitor de Pacientes</h2>
+              <p className={styles.description}>
+                Conteúdo do monitor de pacientes será exibido aqui.
+              </p>
+            </div>
+          )}
+
+          {activeItem === "Atendimento" && (
+            <div className={styles.dashboardContent}>
+              <h2 className={styles.title}>Atendimento</h2>
+              <p className={styles.description}>
+                Área para atendimento aos pacientes.
+              </p>
+            </div>
+          )}
+
+          {activeItem === "Teleconsulta" && (
+            <div className={styles.dashboardContent}>
+              <h2 className={styles.title}>Teleconsulta</h2>
+              <p className={styles.description}>
+                Consultas remotas e telemedicina.
+              </p>
+            </div>
+          )}
+
+          {activeItem === "Agenda" && (
+            <div className={styles.dashboardContent}>
+              <h2 className={styles.title}>Agenda</h2>
+              <p className={styles.description}>
+                Gerencie seus horários e consultas.
+              </p>
+            </div>
+          )}
+
+          {activeItem === "Configurações" && (
+            <div className={styles.dashboardContent}>
+              <h2 className={styles.title}>Configurações</h2>
+              <p className={styles.description}>
+                Ajustes de conta e preferências.
               </p>
             </div>
           )}

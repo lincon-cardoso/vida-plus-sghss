@@ -239,7 +239,7 @@ Precisa de estado, efeitos ou APIs do browser?
 ### Substituição do console.log
 
 - `console.log` é **proibido** em código final. Para debug temporário, usar e remover antes do commit.
-- Para logging em produção, usar uma abstração centralizada em `src/lib/logger.ts`.
+- Para logging em produção, usar uma abstração centralizada em `src/lib/logger.ts` **somente quando essa camada fizer parte do repo e houver aprovação explícita**.
 
 ### Estrutura do logger (quando implementado)
 

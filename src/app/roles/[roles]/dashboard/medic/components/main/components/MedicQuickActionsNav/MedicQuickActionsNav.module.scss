@@ -8,6 +8,11 @@
   gap: 0.75rem;
   padding: 0.5rem;
   width: 64px;
+  transition: width 0.3s ease;
+}
+
+.root.expanded {
+  width: 200px; /* Ajuste conforme necessário para acomodar o texto */
 }
 
 .top {
@@ -53,6 +58,12 @@
   transition: background-color 120ms, color 120ms, transform 120ms;
 }
 
+.root.expanded .iconButton {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0 0.5rem;
+}
+
 .iconButton[data-active="true"] {
   background: rgba(0, 0, 0, 0.08);
 }
@@ -71,6 +82,13 @@
   width: 28px;
   height: 28px;
   color: var(--gray-700, #374151);
+}
+
+.label {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--gray-700, #374151);
+  white-space: nowrap;
 }
 
 .logout {

@@ -33,6 +33,7 @@ type Props = {
   menuRef?: RefObject<HTMLElement | null>;
   activeLabel?: string;
   onActionClick?: (action: MedicAction) => void;
+  isExpanded?: boolean;
 };
 
 function getIcon(itemKey: MedicActionKey) {
@@ -87,13 +88,14 @@ export default function MedicQuickActionsNav({
   menuRef,
   activeLabel,
   onActionClick,
+  isExpanded = false,
 }: Props) {
   return (
     <nav
       id={id ?? "medic-menu"}
       ref={menuRef}
       tabIndex={-1}
-      className={styles.root}
+      className={`${styles.root} ${isExpanded ? styles.expanded : ""}`}
       aria-label="Navegação do médico"
     >
       <div className={styles.top}>
@@ -126,6 +128,7 @@ export default function MedicQuickActionsNav({
                   {Icon ? (
                     <Icon className={styles.icon} style={iconStyle} />
                   ) : null}
+                  {isExpanded && <span className={styles.label}>{label}</span>}
                 </button>
               </li>
             );
@@ -148,6 +151,7 @@ export default function MedicQuickActionsNav({
               style={{ background: hexToRgba("#ef4444", 0.06) }}
             >
               <LogOut className={styles.icon} style={{ color: "#ef4444" }} />
+              {isExpanded && <span className={styles.label}>Sair</span>}
             </button>
           </li>
         </ul>
