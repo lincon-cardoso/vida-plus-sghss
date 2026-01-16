@@ -145,8 +145,17 @@ export default function Seguranca() {
 
   function handleDownload(policy: string) {
     // Placeholder: disparar download / abrir PDF
-    // Ex.: window.open(`/docs/${policy}.pdf`, "_blank")
-    console.log("download:", policy);
+    if (typeof window !== "undefined") {
+      window.open(`/docs/${policy}.pdf`, "_blank");
+    }
+  }
+
+  function handleManageConsents() {
+    // TODO: implementar workflow de gerenciamento de consentimentos
+  }
+
+  function handleRequestDeletion() {
+    // TODO: implementar fluxo de solicitação de exclusão de dados com confirmação
   }
 
   return (
@@ -364,7 +373,7 @@ export default function Seguranca() {
             <button
               type="button"
               className={styles.privacyButton}
-              onClick={() => console.log("Gerenciar consentimentos")}
+              onClick={() => handleManageConsents()}
             >
               <span>Gerenciar Consentimentos</span>
               <Shield className={styles.iconSmall} />
@@ -377,7 +386,7 @@ export default function Seguranca() {
           <button
             type="button"
             className={styles.dangerLink}
-            onClick={() => console.log("Solicitar exclusão de dados")}
+            onClick={() => handleRequestDeletion()}
           >
             Solicitar exclusão de todos os meus dados
           </button>

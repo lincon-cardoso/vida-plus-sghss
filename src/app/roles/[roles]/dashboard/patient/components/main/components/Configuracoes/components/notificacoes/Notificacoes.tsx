@@ -38,17 +38,7 @@ export default function Notificacoes() {
     // Simula requisição de salvamento (ex.: chamada à API)
     setTimeout(() => {
       // Aqui você normalmente enviaria os dados ao backend via fetch/axios
-      console.log("Preferências salvas", {
-        confirmacaoConsultas,
-        lembretesConsultas,
-        resultadosExames,
-        receitasMedicas,
-        mensagensMedico,
-        atualizacoesFila,
-        promocoesNovidades,
-        lembretesUrgentes,
-        alteracoesHorario,
-      });
+      // TODO: enviar preferências para o backend
       setSaving(false);
       // Pode disparar um toast/feedback aqui (ex.: "Preferências salvas com sucesso")
     }, 800);

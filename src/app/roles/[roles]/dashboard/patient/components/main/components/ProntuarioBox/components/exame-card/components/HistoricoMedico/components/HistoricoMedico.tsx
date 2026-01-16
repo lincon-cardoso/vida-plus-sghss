@@ -176,7 +176,6 @@ export default function HistoricoMedico({
           onClick={(e) => {
             e.preventDefault();
             // TODO: implementar exportação real - aqui seria chamada uma função para gerar e baixar um PDF ou arquivo do histórico
-            console.log("Exportar histórico clicado");
           }}
           aria-label="Exportar Histórico"
         >

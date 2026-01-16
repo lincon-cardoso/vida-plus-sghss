@@ -73,10 +73,7 @@ export default function ScheduleAppointmentDialog({
 
     // simula chamada à API
     setTimeout(() => {
-      console.log("Confirmando:", {
-        date: selectedDate.toISOString(),
-        time: selectedTime,
-      });
+      // TODO: enviar os dados ao backend / registrar evento de agendamento
 
       setSuccessMessage(
         `Agendamento confirmado para ${selectedDate.toLocaleDateString(

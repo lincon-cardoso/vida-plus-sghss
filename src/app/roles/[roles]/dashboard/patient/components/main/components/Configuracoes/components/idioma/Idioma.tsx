@@ -117,16 +117,7 @@ export default function Idioma() {
   function handleSave() {
     setSaving(true);
     setTimeout(() => {
-      console.log("Preferências salvas", {
-        language,
-        country,
-        state,
-        city,
-        timezone,
-        dateFormat,
-        timeFormat,
-        weekStart,
-      });
+      // TODO: enviar preferências para o backend
       setSaving(false);
     }, 800);
   }
