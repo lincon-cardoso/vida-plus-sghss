@@ -82,6 +82,28 @@ Este agente descreve e padroniza o comportamento para implementar mudanças Fron
 
 > **Se não houver resposta:** Seguir opção conservadora (mínimo viável) e documentar no PR.
 
+### Modos de Operação (Pequeno / Médio / Grande)
+
+Objetivo: ajustar rigor e artefatos ao tamanho do trabalho, mantendo previsibilidade.
+
+- **Pequeno (fix pontual / estilo / bug simples):** mudanças mínimas; validar `npm run lint` e `npm run typecheck`.
+- **Médio (feature UI com interação / novos componentes):** justificar `"use client"` quando existir; isolar client-only via `next/dynamic` quando possível; incluir passos de teste manual no PR; rodar `npm run test` quando houver testes aplicáveis.
+- **Grande (múltiplas rotas / refactor / mudança de fluxo):** dividir em PRs incrementais quando possível; registrar decisões (mini log) e escopo negativo; exigir "mapa de impacto" (rotas afetadas + riscos) no PR.
+
+### Gates (bloqueadores antes do Reviewer)
+
+Antes de pedir auditoria, o Builder deve garantir:
+
+- **Zero violações de regras do repo** (ex.: `any`, `console.log`, inline/CSS-in-JS/Tailwind, `dangerouslySetInnerHTML`).
+- **"use client" sempre justificado** (estado/evento/efeito/API browser/hook Next) ou removido.
+- **API routes** (quando tocadas) com validação explícita e resposta `{ success, data?, error? }`.
+
+Regra de decisão (espelhada no Reviewer):
+
+- Se o self-review encontrar qualquer item que seria classificado como **[CRÍTICO]** ou **[ALTO]**, tratar como **bloqueador** e corrigir antes de solicitar auditoria.
+- Itens **[MÉDIO]** devem ser documentados com plano curto (ou corrigidos se forem baratos e de baixo risco).
+- Itens **[BAIXO]** não bloqueiam, mas devem ser listados se houver muitos (evitar ruído).
+
 ### Quando Pedir Confirmação (checklist)
 
 ### Quando pedir confirmação
@@ -101,12 +123,10 @@ Se nada disso se aplicar, seguir com a implementação mínima e reportar decis�
 Regra: Server Component por padrão.
 
 - Usar **Server Component** quando:
-
   - Não há eventos (onClick/onSubmit), nem estado local, nem efeitos.
   - Dados podem ser lidos no server (cookies/headers) e renderizados direto.
 
 - Usar **"use client"** apenas quando:
-
   - Precisa de estado/efeitos/eventos (form, modal, menu, interação), ou
   - Precisa de APIs do browser (`window`, `document`, `localStorage`), ou
   - Precisa de hooks client do Next (ex.: `useRouter`, `usePathname`).
@@ -118,13 +138,11 @@ Regra: Server Component por padrão.
 ### Definition of Done (por tipo de mudança)
 
 - Bug visual/estilo:
-
   - Ajuste mínimo com SCSS Module (mobile-first, sem `!important`, máximo 2 níveis).
   - Sem regressão de semântica/a11y básica (labels, botões, alt quando aplicável).
   - `npm run lint` e `npm run typecheck` passam.
 
 - Feature pequena (UI/fluxo):
-
   - Sem acoplamento de regra de tela em componente reutilizável.
   - Justificativa explícita se houver "use client".
   - Teste unitário/comportamental quando houver lógica (sem dependências novas).
@@ -137,12 +155,27 @@ Regra: Server Component por padrão.
 
 ## Integração com o agente 🔍 Reviewer — Auditoria (Conservador)
 
-Após implementar e antes de pedir merge, solicitar auditoria do Reviewer com:
+### Protocolo de Handoff (obrigatório)
+
+Objetivo: permitir auditoria objetiva, sem adivinhação e sem retrabalho (modo solo ou em time).
+
+Após implementar e antes de pedir merge, sempre entregar ao Reviewer um bloco **Handoff para Auditoria** com:
 
 - Objetivo do PR em 1–2 frases.
+- Escopo negativo (o que foi deliberadamente evitado).
 - Lista de arquivos alterados.
-- Observações de decisões: por que teve/ não teve "use client" e onde ficou o client-only (se houver).
-- Comandos rodados (mínimo: lint + typecheck; test quando aplicável).
+- Decisões (com justificativa): por que teve/ não teve `"use client"`; se isolou client-only via `next/dynamic`.
+- Comandos rodados (mínimo: `npm run lint` + `npm run typecheck`; `npm run test` quando aplicável).
+- Riscos conhecidos / follow-ups (se houver).
+
+### Loop de Self-review (modo solo)
+
+Como você atua sozinho, o fluxo recomendado é:
+
+1. Builder implementa e gera o bloco **Handoff para Auditoria**
+2. Rodar uma auditoria (como se fosse o Reviewer) usando esse handoff
+3. Corrigir achados **[CRÍTICO]** e **[ALTO]** (sempre bloqueadores)
+4. Repetir a auditoria uma única vez para confirmar que zerou bloqueadores
 
 ## Regras de comunicação e milestones
 
@@ -240,6 +273,29 @@ Formato das preambles: encontrado/entendi + próximo passo (máx. 2 sentenças).
 
 - [ ] Nenhuma (padrão)
 - [ ] Adicionadas com aprovação: [listar]
+
+## 🔁 Handoff para Auditoria
+
+**Objetivo:** [1–2 frases]
+
+**Escopo negativo (o que NÃO foi feito):** [1–3 bullets]
+
+**Arquivos alterados:**
+
+- [listar]
+
+**Decisões:**
+
+- `"use client"`: [não / sim] — motivo: [estado/evento/efeito/API browser/hook Next]
+- Isolamento client-only: [não / sim via `next/dynamic` com `{ ssr: false }`] — arquivo: [se aplicável]
+
+**Comandos rodados:**
+
+- [ ] `npm run lint`
+- [ ] `npm run typecheck`
+- [ ] `npm run test` ([N/A] ou resultado)
+
+**Riscos / follow-ups:** [se houver]
 
 ## ✅ Checklist de Qualidade
 

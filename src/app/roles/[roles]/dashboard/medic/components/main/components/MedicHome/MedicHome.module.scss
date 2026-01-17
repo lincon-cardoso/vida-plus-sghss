@@ -38,24 +38,44 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
-}
 
-.statIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  /* default blue */
-  background: #eef2ff;
-  color: #3b82f6;
-}
+  .statIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    /* default blue */
+    background: #eef2ff;
+    color: #3b82f6;
 
-.statIcon svg,
-.statIcon :global(svg) {
-  width: 22px;
-  height: 22px;
+    svg,
+    :global(svg) {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .statValue {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .statTitle {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1f2937;
+  }
+
+  .statSubtext {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
 }
 
 /* Variantes de cor para os cards (cor igual à imagem) */
@@ -79,26 +99,6 @@
   color: #f59e0b; /* amarelo */
 }
 
-.statValue {
-  margin: 0.5rem 0 0 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #111827;
-}
-
-.statTitle {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #1f2937;
-}
-
-.statSubtext {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #6b7280;
-}
-
 @media (min-width: 640px) {
   .statsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -109,4 +109,272 @@
   .statsGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
+
+/* Agenda section styles */
+.agendaSection {
+  margin-top: 1.5rem;
+}
+
+.agendaGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .agendaGrid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.agendaCard {
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.agendaHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.agendaHeader h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.agendaCount {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.appointmentList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.appointmentItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 120ms ease;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(2, 6, 23, 0.04);
+    transform: translateY(-1px);
+  }
+
+  .appointmentTime {
+    min-width: 68px;
+    color: #6b7280;
+    font-weight: 600;
+    border-right: 1px solid #e6e6e6;
+    padding-right: 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .appointmentDetails {
+    flex: 1;
+  }
+
+  .appointmentPatient {
+    margin: 0;
+    font-weight: 500;
+    color: #111827;
+  }
+
+  .appointmentType {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.85rem;
+  }
+
+  .appointmentAction {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: transparent;
+  }
+}
+
+/* Variantes por status usando data attribute set no TSX */
+.appointmentItem[data-status="done"] {
+  background: #ecfdf5;
+  border-color: #10b981;
+}
+
+.appointmentItem[data-status="done"] .appointmentAction {
+  color: #065f46; /* dark green */
+  background: transparent;
+}
+
+.appointmentItem[data-status="in-progress"] {
+  background: #eef2ff;
+  border-color: #3b82f6;
+}
+
+.appointmentItem[data-status="in-progress"] .appointmentAction {
+  background: #3b82f6; /* blue */
+  color: #ffffff;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+}
+
+.appointmentItem[data-status="scheduled"] {
+  background: #ffffff;
+  border-color: #e5e7eb;
+}
+
+.appointmentItem[data-status="scheduled"] .appointmentAction {
+  color: #9ca3af;
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sideColumn {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 2rem;
+
+  background: #ffffff;
+}
+
+.pendingCard {
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  .pendingTitle {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .pendingList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+
+  .pendingItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 10px;
+    background: #f8fafc; /* slightly lighter */
+    color: #111827;
+    box-shadow: none;
+  }
+
+  .pendingIcon {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .pendingIconDanger {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.06);
+    border-color: rgba(239, 68, 68, 0.12);
+  }
+
+  .pendingIconWarning {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.06);
+    border-color: rgba(245, 158, 11, 0.12);
+  }
+
+  .pendingIconNeutral {
+    color: #6b7280;
+    background: rgba(107, 114, 128, 0.06);
+    border-color: rgba(107, 114, 128, 0.08);
+  }
+
+  .pendingText {
+    color: #374151;
+    font-size: 0.9rem;
+  }
+}
+
+.performanceCard {
+  border: none;
+  border-radius: 12px;
+  padding: 1.25rem;
+  color: #ffffff;
+  /* fundo verde suave para contraste com texto branco */
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.08);
+}
+
+/* Scoped performance styles for dark background */
+.performanceCard .performanceTitle {
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.performanceCard .performanceList {
+  display: grid;
+  grid-auto-rows: auto;
+  gap: 0.5rem;
+}
+
+.performanceCard .performanceLabel {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+.performanceCard .performanceValue {
+  font-weight: 600;
+}
+
+.performanceCard .performanceList .performanceItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
