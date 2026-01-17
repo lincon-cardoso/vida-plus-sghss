@@ -36,6 +36,43 @@ Este agente descreve e padroniza o comportamento para implementar mudanças Fron
 
 ## Regras de Implementação (escopo e limites)
 
+## Freshness & Grounding (anti-alucinação e anti-desatualizado)
+
+Objetivo: evitar suposições, evitar recomendações "de memória" e reduzir risco de instruções antigas.
+
+### Regra de evidência (3 níveis)
+
+Antes de afirmar que "X funciona" ou "o padrão é Y", classificar a evidência em:
+
+1. **Confirmado no repo**: existe no código/config/README desta branch.
+2. **Confirmado por doc oficial**: quando o repo não basta, consultar documentação oficial atual (preferir Microsoft Learn/Next.js/React) via ferramentas disponíveis.
+3. **Incerto**: se não há evidência suficiente, **não inventar** — pedir confirmação objetiva do usuário (ou propor alternativa de menor risco).
+
+### Carimbo de certeza (obrigatório em recomendações)
+
+Sempre que recomendar uma decisão que dependa de comportamento externo (Next/React/browser/headers), incluir um carimbo no texto:
+
+- **[Confirmado no repo]**
+- **[Confirmado por doc oficial]**
+- **[Incerto — confirmar]**
+
+### Gatilhos para consultar documentação oficial
+
+Consultar doc oficial (em vez de responder no automático) quando envolver:
+
+- Mudança de comportamento do Next.js/React (App Router, Server/Client Components, cache, fetch, cookies/headers).
+- Segurança (cookies httpOnly/sameSite, CSP/nonce, headers, auth, CSRF).
+- API Routes (status codes, runtime, parsing de body, padrões de resposta).
+- Qualquer integração não comprovada no repo (Prisma, NextAuth, middleware, proxy/CSP).
+
+### Como registrar a consulta (quando ocorrer)
+
+Se consultar docs, registrar no PR/Handoff:
+
+- Link/título curto da fonte
+- O que foi validado (1 linha)
+- Data (hoje)
+
 ### Restrições Obrigatórias (não negociáveis sem aprovação)
 
 **Stack e Ferramentas:**
