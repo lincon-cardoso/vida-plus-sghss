@@ -27,56 +27,75 @@ $border: rgba(0, 0, 0, 0.06);
   }
 }
 
-.clock {
-  font-weight: 600;
-  color: white;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
+.description {
+  margin: 0.35rem 0 0;
+  color: #6b7280;
+  font-size: 0.95rem;
 }
 
-.controls {
+.actionBar {
+  background: white;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 0.85rem;
+}
+
+.primaryActions {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   align-items: center;
+}
+
+.primaryActions button {
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0 1.15rem;
+}
+
+.primaryActions button[aria-label="Chamar próximo paciente"] {
+  flex: 1;
+  background: linear-gradient(180deg, $blue-500 0%, $blue-600 100%);
+  color: white;
+  box-shadow: 0 10px 22px rgba(31, 110, 242, 0.14);
+}
+
+.primaryActions button[aria-label="Adicionar paciente"] {
+  width: 140px;
+  background: $green-500;
+  color: white;
+}
+
+.filtersCard {
+  background: white;
+  border: 1px solid $border;
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+.filtersHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
+  color: $text-700;
+}
 
-  .primaryActions {
-    display: flex;
-    gap: 0.75rem;
+.filtersTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
 
-    button {
-      border: none;
-      padding: 0.65rem 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    button[aria-label="Chamar próximo paciente"] {
-      background: linear-gradient(180deg, $blue-500 0%, $blue-600 100%);
-      color: white;
-      box-shadow: 0 6px 18px rgba(31, 110, 242, 0.16);
-    }
-
-    button[aria-label="Adicionar paciente"] {
-      background: $green-500;
-      color: white;
-    }
-  }
-
-  .filters {
-    flex: 1 1 320px;
-
-    input {
-      width: 100%;
-      padding: 0.6rem 0.75rem;
-      border-radius: 10px;
-      border: 1px solid $muted-400;
-      background: $muted-300;
-    }
-  }
+.filtersIcon {
+  display: inline-grid;
+  place-items: center;
 }
 
 .visuallyHidden {
@@ -98,6 +117,7 @@ $border: rgba(0, 0, 0, 0.06);
   grid-template-columns: 2fr 1fr;
   gap: 1rem;
   align-items: start;
+  margin-top: 1rem;
 }
 
 .leftPanel {
@@ -108,7 +128,7 @@ $border: rgba(0, 0, 0, 0.06);
     $blue-500 100%
   );
   border-radius: 16px;
-  padding: 1.25rem;
+  padding: 1rem 1rem 1.25rem;
   color: white;
   box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
   min-height: 420px;
@@ -123,6 +143,14 @@ $border: rgba(0, 0, 0, 0.06);
     align-items: center;
     gap: 0.5rem;
     color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* smaller priority dot in the queue area and aligned right */
+  .priority {
+    width: 10px;
+    height: 10px;
+    margin-left: auto;
+    border-radius: 999px;
   }
 }
 
@@ -146,17 +174,13 @@ $border: rgba(0, 0, 0, 0.06);
 }
 
 .queueItem {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.02)
-  );
+  background: rgba(255, 255, 255, 0.06);
   border-radius: 12px;
   padding: 0.8rem;
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .position {
@@ -174,28 +198,49 @@ $border: rgba(0, 0, 0, 0.06);
   flex: 1;
 }
 
-.name {
-  font-weight: 700;
+.queueInfo {
+  flex: 1;
+  min-width: 0;
 }
 
-.meta {
-  font-size: 0.85rem;
+.queueName {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.queueMeta {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.priority {
-  width: 18px;
-  height: 18px;
+.queueRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.queueTime {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
   border-radius: 999px;
   display: inline-block;
 }
 
-.urgent {
-  background: #ffb020; // amber dot
+.statusUrgent {
+  background: #f59e0b;
 }
 
-.normal {
-  background: #6ee7b7; // green dot
+.statusNormal {
+  background: #60a5fa;
 }
 
 .rightPanel {
@@ -208,19 +253,23 @@ $border: rgba(0, 0, 0, 0.06);
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  align-items: stretch;
 }
 
 .serviceItem {
   background: white;
   border-radius: 12px;
-  padding: 0.85rem;
+  padding: 1.25rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.7rem;
   border: 1px solid $border;
+  min-height: 120px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
 }
 
 .serviceInfo {
@@ -230,43 +279,393 @@ $border: rgba(0, 0, 0, 0.06);
 .nameRow {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: inline-grid;
+  place-items: center;
+}
+
+.statValue {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.statLabel {
+  display: block;
+  font-weight: 600;
+  color: #111827;
+  margin-top: 0.2rem;
+}
+
+.statMeta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Icon background and value color per card (matches image order) */
+.iconWaiting {
+  background: #eef2ff;
+  color: $blue-700;
+}
+.statValueWaiting {
+  color: $blue-500;
+}
+
+.iconCalling {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+.statValueCalling {
+  color: #f59e0b;
+}
+
+.iconReady {
+  background: #ecfdf5;
+  color: $green-500;
+}
+.statValueReady {
+  color: $green-500;
+}
+
+.iconInService {
+  background: #f5f3ff;
+  color: #a78bfa;
+}
+.statValueInService {
+  color: #8b5cf6;
+}
+
+.iconDone {
+  background: #ecfdf5;
+  color: $green-500;
+}
+.statValueDone {
+  color: $green-500;
+}
+
+.iconTotal {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.statValueTotal {
+  color: #6b7280;
+}
+
+.actions {
+  margin-left: 0;
+  display: flex;
+  align-items: center;
+}
+
+.actions button {
+  display: none; /* do not display the button in the card version as in the image */
+}
+
+@media (max-width: 1100px) {
+  .serviceList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .serviceList {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Painel de Chamadas (lado esquerdo) */
+.panelTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panelLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.panelText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.panelIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.panelSubtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.panelRight {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.speakerButton {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.14);
+  border: none;
+  color: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+}
+
+.timeBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.05;
+}
+
+.clockValue {
+  font-weight: 800;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+}
+
+.clockDate {
+  margin-top: 0.15rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.monitorBox {
+  height: 240px;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.monitorInner {
+  width: 100%;
+}
+
+.monitorGlyph {
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  display: inline-grid;
+  place-items: center;
+  margin: 0 auto 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.monitorText {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.monitorSubtext {
+  margin-top: 0.45rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.queueSection {
+  border-radius: 14px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  margin: 0 0 0.65rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Filtros (lado direito) */
+.searchRow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: $muted-300;
+  border-radius: 12px;
+  padding: 0.75rem 0.85rem;
+}
+
+.searchIcon {
+  display: inline-grid;
+  place-items: center;
+  color: #6b7280;
+}
+
+.searchRow input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0;
+}
+
+.selectRow {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.selectPill {
+  flex: 1;
+  min-width: 200px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid $muted-400;
+  background: $muted-300;
+  color: #111827;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.selectIcon {
+  display: inline-grid;
+  place-items: center;
+  color: #6b7280;
+}
+
+.filterPills {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .pill {
-  font-size: 0.75rem;
-  padding: 0.2rem 0.5rem;
+  font-size: 0.95rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 12px;
+  font-weight: 500;
+  border: none;
+  background: $muted-300;
+  color: #111827;
+  cursor: pointer;
+}
+
+/* Lista de atendimento */
+.serviceCard {
+  background: white;
+  border-radius: 14px;
+  padding: 1.25rem;
+  border: 1px solid $border;
+}
+
+.serviceCardTitle {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.appointmentList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.appointmentItem {
+  background: white;
+  border-radius: 14px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid $muted-400;
+}
+
+.appointmentHeader {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.appointmentName {
+  font-weight: 500;
+  color: #111827;
+}
+
+.appointmentMeta {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 0.35rem;
+}
+
+.callButton {
+  background: linear-gradient(180deg, $blue-500 0%, $blue-600 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 0.95rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.statusTag {
+  font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
   border-radius: 999px;
   font-weight: 600;
 }
 
-.pillUrgent {
-  background: rgba(255, 176, 32, 0.12);
-  color: #ffb020;
+.statusTagUrgent {
+  background: $blue-700;
+  color: white;
 }
 
-.pillNormal {
-  background: rgba(34, 197, 94, 0.08);
-  color: #22c55e;
-}
-
-.actions {
-  margin-left: 1rem;
-
-  button {
-    background: linear-gradient(180deg, $blue-500 0%, $blue-600 100%);
-    color: white;
-    border: none;
-    padding: 0.55rem 0.8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-  }
-}
-
-.empty {
-  color: rgba(0, 0, 0, 0.45);
-  padding: 0.6rem;
+.statusTagNormal {
+  background: $muted-300;
+  color: #111827;
+  border: 1px solid $muted-400;
 }
 
 @media (max-width: 900px) {
@@ -276,5 +675,9 @@ $border: rgba(0, 0, 0, 0.06);
 
   .leftPanel {
     min-height: 300px;
+  }
+
+  .primaryActions button[aria-label="Adicionar paciente"] {
+    width: 130px;
   }
 }
