@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMedicMenuStore } from "@/lib/stores";
 import MedicQuickActionsNav from "./components/MedicQuickActionsNav";
 import MedicHome from "./components/MedicHome";
+import MedicMonitor from "./components/MedicMonitor";
 import { useMedicActiveItem, type MedicMenuItem } from "./useMedicActiveItem";
 import styles from "./styles/MedicMenu.module.scss";
 
@@ -65,14 +66,7 @@ export default function MedicDashboardMain() {
         <section className={styles.content} aria-label="Conteúdo principal">
           {activeItem === "Home" && <MedicHome />}
 
-          {activeItem === "Monitor" && (
-            <div className={styles.dashboardContent}>
-              <h2 className={styles.title}>Monitor de Pacientes</h2>
-              <p className={styles.description}>
-                Conteúdo do monitor de pacientes será exibido aqui.
-              </p>
-            </div>
-          )}
+          {activeItem === "Monitor" && <MedicMonitor />}
 
           {activeItem === "Atendimento" && (
             <div className={styles.dashboardContent}>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import styles from "./MedicHome.module.scss";
 
 import { Check, Play, Circle, AlertCircle } from "lucide-react";
@@ -17,7 +20,17 @@ export default function MedicHome({
 }: {
   nome?: string;
 }) {
-  const dataatual = new Date();
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 60000); // Atualiza a cada 60 segundos (1 minuto)
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const dataatual = currentDate;
   const diasSemana = [
     "Domingo",
     "Segunda-feira",
@@ -45,6 +58,8 @@ export default function MedicHome({
   const mesAno = mesesAno[dataatual.getMonth()];
   const diaMes = dataatual.getDate();
   const ano = dataatual.getFullYear();
+  const hora = dataatual.getHours().toString().padStart(2, "0");
+  const minuto = dataatual.getMinutes().toString().padStart(2, "0");
   const todayIso = dataatual.toISOString().split("T")[0];
 
   return (
@@ -52,7 +67,7 @@ export default function MedicHome({
       <div className={styles.contentWrapper}>
         <h2 className={styles.title}>Bom dia, {nome}!</h2>
         <p className={styles.description}>
-          Hoje é {diaSemana}, {diaMes} de {mesAno} de {ano}.
+          Hoje é {diaSemana}, {diaMes} de {mesAno} de {ano} às {hora}:{minuto}.
         </p>
       </div>
 
