@@ -1,139 +1,22 @@
 import styles from "./MedicHome.module.scss";
 
+import { Check, Play, Circle, AlertCircle } from "lucide-react";
+
 import {
-  Calendar,
-  Users,
-  TrendingUp,
-  Clock,
-  Check,
-  Play,
-  Circle,
-  AlertCircle,
-} from "lucide-react";
-import type { ReactNode } from "react";
+  stats,
+  appointments,
+  pendencias,
+  performance,
+  recentPatients,
+  actions,
+  mockDoctorName,
+} from "./data";
 
-/**
- * Tipos de dado e dados estáticos para os cards do Dashboard do Médico.
- * Mantidos fora do componente para facilitar testes e reutilização.
- */
-export type StatItem = {
-  id: string;
-  title: string;
-  value: string | number;
-  subtext?: string;
-  icon: ReactNode;
-  variant: "Blue" | "Green" | "Purple" | "Yellow";
-};
-
-export const stats: StatItem[] = [
-  {
-    id: "consultas",
-    title: "Consultas Hoje",
-    value: 8,
-    subtext: "3 pendentes",
-    icon: <Calendar size={20} aria-hidden />,
-    variant: "Blue",
-  },
-  {
-    id: "pacientes",
-    title: "Pacientes Ativos",
-    value: 145,
-    subtext: "+12 este mês",
-    icon: <Users size={20} aria-hidden />,
-    variant: "Green",
-  },
-  {
-    id: "satisfacao",
-    title: "Taxa de Satisfação",
-    value: "4.8",
-    subtext: "★ de 5.0",
-    icon: <TrendingUp size={20} aria-hidden />,
-    variant: "Purple",
-  },
-  {
-    id: "horas",
-    title: "Horas Trabalhadas",
-    value: "32h",
-    subtext: "Esta semana",
-    icon: <Clock size={20} aria-hidden />,
-    variant: "Yellow",
-  },
-];
-
-type Appointment = {
-  id: string;
-  time: string;
-  patient: string;
-  type: string;
-  status: "done" | "in-progress" | "scheduled";
-};
-
-const appointments: Appointment[] = [
-  {
-    id: "a1",
-    time: "09:00",
-    patient: "Maria Silva Santos",
-    type: "Consulta",
-    status: "done",
-  },
-  {
-    id: "a2",
-    time: "10:00",
-    patient: "Carlos Oliveira",
-    type: "Retorno",
-    status: "done",
-  },
-  {
-    id: "a3",
-    time: "11:00",
-    patient: "Ana Paula Costa",
-    type: "Consulta",
-    status: "in-progress",
-  },
-  {
-    id: "a4",
-    time: "14:00",
-    patient: "Pedro Souza",
-    type: "Teleconsulta",
-    status: "scheduled",
-  },
-  {
-    id: "a5",
-    time: "15:00",
-    patient: "Juliana Martins",
-    type: "Consulta",
-    status: "scheduled",
-  },
-  {
-    id: "a6",
-    time: "16:00",
-    patient: "Roberto Silva",
-    type: "Retorno",
-    status: "scheduled",
-  },
-];
-
-type Pending = {
-  id: string;
-  title: string;
-  count: number;
-  variant: "Danger" | "Warning" | "Neutral";
-};
-
-const pendencias: Pending[] = [
-  { id: "p1", title: "laudos para assinar", count: 3, variant: "Danger" },
-  { id: "p2", title: "prescrições pendentes", count: 5, variant: "Warning" },
-  { id: "p3", title: "pacientes em espera", count: 2, variant: "Neutral" },
-];
-
-const performance = [
-  { id: "pf1", label: "Consultas realizadas", value: "89" },
-  { id: "pf2", label: "Avaliação média", value: "4.8 ★" },
-  { id: "pf3", label: "Taxa de retorno", value: "78%" },
-];
-
-export default function MedicHome() {
-  const nome = "Lincon";
+export default function MedicHome({
+  nome = mockDoctorName,
+}: {
+  nome?: string;
+}) {
   const dataatual = new Date();
   const diasSemana = [
     "Domingo",
@@ -162,6 +45,7 @@ export default function MedicHome() {
   const mesAno = mesesAno[dataatual.getMonth()];
   const diaMes = dataatual.getDate();
   const ano = dataatual.getFullYear();
+  const todayIso = dataatual.toISOString().split("T")[0];
 
   return (
     <div className={styles.dashboardContent}>
@@ -219,7 +103,7 @@ export default function MedicHome() {
                 >
                   <time
                     className={styles.appointmentTime}
-                    dateTime={`2026-01-17T${a.time}`}
+                    dateTime={`${todayIso}T${a.time}`}
                   >
                     {a.time}
                   </time>
@@ -229,10 +113,20 @@ export default function MedicHome() {
                     <p className={styles.appointmentType}>{a.type}</p>
                   </div>
 
-                  <div className={styles.appointmentAction} aria-hidden="true">
-                    {a.status === "done" && <Check size={18} />}
-                    {a.status === "in-progress" && <Play size={18} />}
-                    {a.status === "scheduled" && <Circle size={18} />}
+                  <div className={styles.appointmentAction}>
+                    <span aria-hidden>
+                      {a.status === "done" && <Check size={18} />}
+                      {a.status === "in-progress" && <Play size={18} />}
+                      {a.status === "scheduled" && <Circle size={18} />}
+                    </span>
+
+                    <span className={styles.srOnly}>
+                      {a.status === "done"
+                        ? "Concluído"
+                        : a.status === "in-progress"
+                          ? "Em andamento"
+                          : "Agendado"}
+                    </span>
                   </div>
                 </li>
               ))}
@@ -271,6 +165,68 @@ export default function MedicHome() {
               </dl>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section
+        className={styles.recentPatientsSection}
+        aria-label="Pacientes Recentes"
+      >
+        <div
+          className={styles.recentPatientsCard}
+          role="region"
+          aria-labelledby="recent-patients-title"
+        >
+          <header className={styles.recentHeader}>
+            <h3 id="recent-patients-title">Pacientes Recentes</h3>
+          </header>
+
+          <ul className={styles.recentList} role="list">
+            {recentPatients.map((p) => (
+              <li key={p.id} className={styles.recentItem} role="listitem">
+                <article
+                  className={styles.patientCard}
+                  aria-label={`Paciente ${p.name}`}
+                >
+                  <div className={styles.patientInfo}>
+                    <div className={styles.patientAvatar} aria-hidden>
+                      {p.name.charAt(0)}
+                    </div>
+                    <p className={styles.patientName}>{p.name}</p>
+                    <p className={styles.patientDiagnosis}>{p.diagnosis}</p>
+                    <p className={styles.patientLastVisit}>
+                      Última visita: {p.lastVisit}
+                    </p>
+                  </div>
+
+                  <div
+                    className={`${styles.patientStatus} ${styles[`status${p.status.variant}`]}`}
+                    role="status"
+                    aria-label={`Status: ${p.status.label}`}
+                  >
+                    {p.status.label}
+                  </div>
+                </article>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={styles.actionsGrid} aria-label="Ações rápidas">
+          {actions.map((a) => (
+            <button
+              key={a.id}
+              type="button"
+              className={styles.actionTile}
+              aria-label={a.label}
+              disabled
+            >
+              <span className={styles.actionIcon} aria-hidden>
+                {a.icon}
+              </span>
+              <span className={styles.actionLabel}>{a.label}</span>
+            </button>
+          ))}
         </div>
       </section>
     </div>

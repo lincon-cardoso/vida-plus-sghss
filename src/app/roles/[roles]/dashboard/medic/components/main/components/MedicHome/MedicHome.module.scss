@@ -1,8 +1,5 @@
 .dashboardContent {
   padding: 1rem;
-  // background: white;
-  // border-radius: 8px;
-  // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   .contentWrapper {
     .title {
       margin: 0 0 0.5rem 0;
@@ -184,41 +181,41 @@
     box-shadow: 0 8px 24px rgba(2, 6, 23, 0.04);
     transform: translateY(-1px);
   }
+}
 
-  .appointmentTime {
-    min-width: 68px;
-    color: #6b7280;
-    font-weight: 600;
-    border-right: 1px solid #e6e6e6;
-    padding-right: 0.9rem;
-    font-size: 0.95rem;
-  }
+.appointmentTime {
+  min-width: 68px;
+  color: #6b7280;
+  font-weight: 600;
+  border-right: 1px solid #e6e6e6;
+  padding-right: 0.9rem;
+  font-size: 0.95rem;
+}
 
-  .appointmentDetails {
-    flex: 1;
-  }
+.appointmentDetails {
+  flex: 1;
+}
 
-  .appointmentPatient {
-    margin: 0;
-    font-weight: 500;
-    color: #111827;
-  }
+.appointmentPatient {
+  margin: 0;
+  font-weight: 500;
+  color: #111827;
+}
 
-  .appointmentType {
-    margin: 0;
-    color: #6b7280;
-    font-size: 0.85rem;
-  }
+.appointmentType {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
 
-  .appointmentAction {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background: transparent;
-  }
+.appointmentAction {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
 }
 
 /* Variantes por status usando data attribute set no TSX */
@@ -348,33 +345,221 @@
   /* fundo verde suave para contraste com texto branco */
   background: linear-gradient(180deg, #10b981 0%, #059669 100%);
   box-shadow: 0 12px 30px rgba(16, 185, 129, 0.08);
+
+  /* Scoped performance styles for dark background (aninhadas para clareza) */
+  .performanceTitle {
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .performanceList {
+    display: grid;
+    grid-auto-rows: auto;
+    gap: 0.5rem;
+
+    .performanceItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .performanceLabel {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+  }
+
+  .performanceValue {
+    font-weight: 600;
+  }
 }
 
-/* Scoped performance styles for dark background */
-.performanceCard .performanceTitle {
-  color: rgba(255, 255, 255, 0.95);
-  margin: 0 0 0.5rem 0;
-  font-size: 0.95rem;
+/* Recent patients and quick actions */
+.recentPatientsSection {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.recentPatientsCard {
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+.recentHeader {
+  margin-bottom: 0.5rem;
+}
+
+.recentHeader h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.recentList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+}
+
+.recentItem {
+  flex: 0 0 320px; /* cartões roláveis em telas pequenas */
+
+  @media (min-width: 1024px) {
+    flex: initial;
+  }
+}
+
+.patientCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 3px solid #e5e7eb;
+  background: #ffffff;
+  min-width: 0;
+}
+
+.patientAvatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #3b82f6;
   font-weight: 600;
 }
 
-.performanceCard .performanceList {
-  display: grid;
-  grid-auto-rows: auto;
-  gap: 0.5rem;
+.patientInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.performanceCard .performanceLabel {
-  color: rgba(255, 255, 255, 0.9);
+.patientName {
+  margin: 0;
+  font-weight: 600;
+  color: #111827;
+}
+
+.patientDiagnosis {
+  margin: 0;
+  color: #6b7280;
   font-size: 0.9rem;
 }
 
-.performanceCard .performanceValue {
-  font-weight: 600;
+.patientLastVisit {
+  margin: 0.25rem 0 0 0;
+  color: #6b7280;
+  font-size: 0.8rem;
 }
 
-.performanceCard .performanceList .performanceItem {
+.patientStatus {
+  padding: 0.35rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.statusSuccess {
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.statusInfo {
+  background: #eef2ff;
+  color: #1e3a8a;
+}
+
+.statusWarning {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.actionsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 0.25rem;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.actionTile {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  min-height: 88px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+  text-align: center;
+}
+
+.actionTile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.04);
+}
+
+.actionTile:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.actionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  color: #3b82f6;
+  background: #eef2ff;
+}
+
+.actionLabel {
+  color: #1f2937;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Utility: visually hidden but accessible text */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
