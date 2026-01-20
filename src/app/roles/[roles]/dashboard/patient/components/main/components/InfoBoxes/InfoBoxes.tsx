@@ -1,5 +1,3 @@
-"use client";
-
 import { Activity, Calendar, FileText } from "lucide-react";
 import styles from "../../styles/PatientMenu.module.scss";
 

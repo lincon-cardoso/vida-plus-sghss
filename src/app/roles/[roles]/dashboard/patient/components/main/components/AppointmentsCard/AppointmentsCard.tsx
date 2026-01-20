@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode } from "react";
 import styles from "../../styles/PatientMenu.module.scss";
 import AppointmentItem, { type Appointment } from "./AppointmentItem";

@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "../../styles/PatientMenu.module.scss";
 
 type Status = "Confirmada" | "Pendente";
@@ -44,7 +42,7 @@ export default function AppointmentItem({ appointment }: Props) {
         <p className={styles.appointmentTime}>{appointment.time}</p>
         <p
           className={`${styles.appointmentStatus} ${getStatusClass(
-            appointment.status
+            appointment.status,
           )}`}
         >
           {appointment.status}

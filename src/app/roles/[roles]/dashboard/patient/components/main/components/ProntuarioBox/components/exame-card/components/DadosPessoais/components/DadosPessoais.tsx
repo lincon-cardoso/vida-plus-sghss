@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "./styles/DadosPessoais.module.scss";
 import {
   User,

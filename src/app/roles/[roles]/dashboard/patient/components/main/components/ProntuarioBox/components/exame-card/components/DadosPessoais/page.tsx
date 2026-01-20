@@ -1,4 +1,3 @@
-"use client";
 import DadosPessoais from "./components/DadosPessoais";
 
 export default function DadosPessoaisPage() {

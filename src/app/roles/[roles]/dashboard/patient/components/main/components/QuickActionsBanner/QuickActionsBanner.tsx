@@ -48,7 +48,6 @@ export default function QuickActionsBanner({ items }: Props) {
                 type="button"
                 className={styles.bannerItem}
                 onClick={it.onClick}
-                style={{ color: it.color }}
               >
                 {Icon ? <Icon className={styles.icon} /> : null}
                 {it.label && <span className={styles.label}>{it.label}</span>}

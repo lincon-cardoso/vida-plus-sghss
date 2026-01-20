@@ -1,5 +1,3 @@
-"use client";
-
 import { AlertCircle, CheckCircle, Clock } from "lucide-react";
 import styles from "./styles/exame-card.module.scss";
 
@@ -101,7 +99,7 @@ export default function ExameCard({ exams }: Props) {
       {sections.map((text, id) => {
         const Icon = iconByIndex[id];
         const items = resolvedExams.filter(
-          (it) => it.status === statusByIndex[id]
+          (it) => it.status === statusByIndex[id],
         );
 
         return (
@@ -145,8 +143,8 @@ export default function ExameCard({ exams }: Props) {
                                 {it.priority === "urgente"
                                   ? "Urgente"
                                   : it.priority === "alta"
-                                  ? "Alta"
-                                  : "Normal"}
+                                    ? "Alta"
+                                    : "Normal"}
                               </span>
                             )}
                           </span>
@@ -169,7 +167,7 @@ export default function ExameCard({ exams }: Props) {
                             <div className={styles.rowValue}>
                               {it.requestedAt &&
                                 new Date(it.requestedAt).toLocaleDateString(
-                                  "pt-BR"
+                                  "pt-BR",
                                 )}
                             </div>
                           </div>
@@ -179,7 +177,7 @@ export default function ExameCard({ exams }: Props) {
                             <div className={styles.rowValue}>
                               {it.collectedAt
                                 ? new Date(it.collectedAt).toLocaleDateString(
-                                    "pt-BR"
+                                    "pt-BR",
                                   )
                                 : "-"}
                             </div>
@@ -190,7 +188,7 @@ export default function ExameCard({ exams }: Props) {
                             <div className={styles.rowValue}>
                               {it.expectedAt
                                 ? new Date(it.expectedAt).toLocaleDateString(
-                                    "pt-BR"
+                                    "pt-BR",
                                   )
                                 : "-"}
                             </div>
@@ -231,8 +229,8 @@ export default function ExameCard({ exams }: Props) {
                                 {it.priority === "urgente"
                                   ? "Urgente"
                                   : it.priority === "alta"
-                                  ? "Alta"
-                                  : "Normal"}
+                                    ? "Alta"
+                                    : "Normal"}
                               </span>
                             )}
                           </span>
@@ -255,11 +253,11 @@ export default function ExameCard({ exams }: Props) {
                             <div className={styles.rowValue}>
                               {it.completedAt
                                 ? new Date(it.completedAt).toLocaleDateString(
-                                    "pt-BR"
+                                    "pt-BR",
                                   )
                                 : it.requestedAt &&
                                   new Date(it.requestedAt).toLocaleDateString(
-                                    "pt-BR"
+                                    "pt-BR",
                                   )}
                             </div>
                           </div>
@@ -341,8 +339,8 @@ export default function ExameCard({ exams }: Props) {
                               {it.priority === "urgente"
                                 ? "Urgente"
                                 : it.priority === "alta"
-                                ? "Alta"
-                                : "Normal"}
+                                  ? "Alta"
+                                  : "Normal"}
                             </span>
                           )}
                         </span>
@@ -367,7 +365,7 @@ export default function ExameCard({ exams }: Props) {
                           <div className={styles.rowValue}>
                             {it.requestedAt &&
                               new Date(it.requestedAt).toLocaleDateString(
-                                "pt-BR"
+                                "pt-BR",
                               )}
                           </div>
                         </div>

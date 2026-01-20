@@ -1,4 +1,3 @@
-"use client";
 import { FileText } from "lucide-react";
 import styles from "./PatientUpdatesSection.module.scss";
 

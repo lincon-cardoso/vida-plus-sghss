@@ -1,4 +1,3 @@
-"use client";
 import type { ProntuarioBoxProps } from "./types/ProntuarioBox.types";
 import WelcomeBox from "@/app/roles/[roles]/dashboard/patient/components/main/components/WelcomeBox/WelcomeBox";
 import styles from "./ProntuarioBox.module.scss";

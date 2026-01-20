@@ -1,5 +1,3 @@
-"use client";
-
 // Importações de ícones da biblioteca Lucide React para uso visual no componente
 import { ChevronRight, Download, FileText, Stethoscope } from "lucide-react";
 // Importação dos estilos modulares SCSS para este componente
@@ -57,10 +55,10 @@ function TimelineItem({ entry }: { entry: TimelineEntry }) {
                 entry.kind === "consulta"
                   ? styles.badgeConsulta
                   : entry.kind === "exame"
-                  ? styles.badgeExame
-                  : entry.kind === "Medicação"
-                  ? styles.badgeMedicacao
-                  : styles.badgeProcedimento
+                    ? styles.badgeExame
+                    : entry.kind === "Medicação"
+                      ? styles.badgeMedicacao
+                      : styles.badgeProcedimento
               }`}
             >
               {badgeLabel}
