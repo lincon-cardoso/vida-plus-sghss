@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 import { Calendar, Users, TrendingUp, Clock, Check } from "lucide-react";
 
 /**
@@ -10,7 +10,7 @@ export type StatItem = {
   title: string;
   value: string | number;
   subtext?: string;
-  icon: ReactNode;
+  icon: LucideIcon;
   variant: "Blue" | "Green" | "Purple" | "Yellow";
 };
 
@@ -20,7 +20,7 @@ export const stats: StatItem[] = [
     title: "Consultas Hoje",
     value: 8,
     subtext: "3 pendentes",
-    icon: <Calendar size={20} aria-hidden />,
+    icon: Calendar,
     variant: "Blue",
   },
   {
@@ -28,7 +28,7 @@ export const stats: StatItem[] = [
     title: "Pacientes Ativos",
     value: 145,
     subtext: "+12 este mês",
-    icon: <Users size={20} aria-hidden />,
+    icon: Users,
     variant: "Green",
   },
   {
@@ -36,7 +36,7 @@ export const stats: StatItem[] = [
     title: "Taxa de Satisfação",
     value: "4.8",
     subtext: "★ de 5.0",
-    icon: <TrendingUp size={20} aria-hidden />,
+    icon: TrendingUp,
     variant: "Purple",
   },
   {
@@ -44,7 +44,7 @@ export const stats: StatItem[] = [
     title: "Horas Trabalhadas",
     value: "32h",
     subtext: "Esta semana",
-    icon: <Clock size={20} aria-hidden />,
+    icon: Clock,
     variant: "Yellow",
   },
 ];
@@ -156,14 +156,14 @@ export const recentPatients: Patient[] = [
 export type ActionItem = {
   id: string;
   label: string;
-  icon: ReactNode;
+  icon: LucideIcon;
 };
 
 export const actions: ActionItem[] = [
-  { id: "a1", label: "Ver Pacientes", icon: <Users size={20} aria-hidden /> },
-  { id: "a2", label: "Minha Agenda", icon: <Calendar size={20} aria-hidden /> },
-  { id: "a3", label: "Assinar Laudos", icon: <Check size={20} aria-hidden /> },
-  { id: "a4", label: "Relatórios", icon: <TrendingUp size={20} aria-hidden /> },
+  { id: "a1", label: "Ver Pacientes", icon: Users },
+  { id: "a2", label: "Minha Agenda", icon: Calendar },
+  { id: "a3", label: "Assinar Laudos", icon: Check },
+  { id: "a4", label: "Relatórios", icon: TrendingUp },
 ];
 
 export const mockDoctorName = "Dr. João Silva";

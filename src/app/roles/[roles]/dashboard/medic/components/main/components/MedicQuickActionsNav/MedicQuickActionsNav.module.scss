@@ -10,7 +10,7 @@
   width: 64px;
   min-width: 64px;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow: visible;
   will-change: width;
   transition: width 0.3s ease;
 
@@ -42,8 +42,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible;
   }
 
   .separator {
@@ -70,6 +69,7 @@
   }
 
   .iconButton {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -79,10 +79,35 @@
     border: none;
     background: transparent;
     cursor: pointer;
-    transition: background-color 120ms, color 120ms, transform 120ms;
+    transition:
+      background-color 120ms,
+      color 120ms,
+      transform 120ms;
 
     &[data-active="true"] {
       background: rgba(0, 0, 0, 0.08);
+    }
+
+    /* when parent opens submenu */
+    &[aria-expanded="true"] {
+      background: #f3f4f6; /* light gray */
+
+      .icon {
+        color: var(--gray-900, #111827);
+      }
+
+      .label {
+        color: var(--gray-900, #111827);
+      }
+
+      .chevron {
+        transform: rotate(90deg);
+      }
+
+      /* Keep vertical alignment for collapsed chevron (translateY) */
+      .chevronCollapsed .chevronIcon {
+        transform: rotate(90deg);
+      }
     }
 
     &:hover {
@@ -107,9 +132,19 @@
     }
   }
 
+  .iconWrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: transparent;
+  }
+
   .icon {
-    width: 28px;
-    height: 28px;
+    width: 20px;
+    height: 20px;
     color: var(--gray-700, #374151);
   }
 
@@ -118,5 +153,165 @@
     font-size: 0.875rem;
     color: var(--gray-700, #374151);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 56px);
+  }
+
+  .chevron {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    transition: transform 150ms ease;
+  }
+
+  .chevronCollapsed {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .chevronIcon {
+    width: 16px;
+    height: 16px;
+    color: var(--gray-700, #374151);
+    transition: transform 150ms ease;
+  }
+
+  /* Adjust sizes and spacing when the whole nav is collapsed */
+  &:not(.expanded) {
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .chevronIcon {
+      width: 12px;
+      height: 12px;
+    }
+
+    .chevron {
+      margin-left: 6px;
+    }
+  }
+
+  .submenu {
+    margin-top: 0.25rem;
+    list-style: none;
+    padding: 0 0 0 1.25rem; /* increased indent under label */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+
+    /* collapsed state (hidden but present for animation) */
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition:
+      max-height 200ms ease,
+      opacity 150ms ease,
+      transform 150ms ease;
+  }
+
+  .submenu.open {
+    max-height: 400px; /* large enough for a few items */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .submenuItem {
+    background: transparent;
+    border: none;
+    text-align: left;
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: var(--gray-700, #374151);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover {
+      background: rgba(37, 99, 235, 0.06);
+    }
+
+    &[data-active="true"] {
+      background: rgba(37, 99, 235, 0.12);
+      color: #1e3a8a;
+      font-weight: 600;
+      box-shadow: inset 3px 0 0 rgba(37, 99, 235, 0.6);
+    }
+  }
+
+  .submenuIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: transparent;
+
+    .submenuItem[data-active="true"] & {
+      background: rgba(37, 99, 235, 1);
+
+      .icon {
+        color: #ffffff;
+      }
+    }
+  }
+
+  .submenuLabel {
+    flex: 1 1 auto;
+  }
+
+  /* Flyout de subitens no modo recolhido (ícone-only) */
+  &:not(.expanded) {
+    .iconList > li {
+      position: relative;
+    }
+  }
+
+  .submenuCollapsed {
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 0;
+    z-index: 50;
+    list-style: none;
+    margin: 0;
+    padding: 0.375rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow:
+      0 10px 20px rgba(0, 0, 0, 0.12),
+      0 2px 6px rgba(0, 0, 0, 0.08);
+    min-width: 56px;
+
+    .submenuItem {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      justify-content: center;
+      border-radius: 10px;
+    }
+
+    .submenuLabel {
+      display: none;
+    }
   }
 }

@@ -81,7 +81,10 @@ export default function MedicHome({
               aria-labelledby={`stat-title-${s.id}`}
             >
               <div className={styles.statIcon} aria-hidden="true">
-                {s.icon}
+                {(() => {
+                  const Icon = s.icon;
+                  return <Icon size={20} aria-hidden />;
+                })()}
               </div>
 
               <p className={styles.statValue}>{s.value}</p>
@@ -237,7 +240,10 @@ export default function MedicHome({
               disabled
             >
               <span className={styles.actionIcon} aria-hidden>
-                {a.icon}
+                {(() => {
+                  const Icon = a.icon;
+                  return <Icon size={20} aria-hidden />;
+                })()}
               </span>
               <span className={styles.actionLabel}>{a.label}</span>
             </button>

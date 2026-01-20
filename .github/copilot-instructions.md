@@ -36,6 +36,16 @@ Estas instruções são **mandatórias** para gerar/editar/revisar código neste
 
 ---
 
+## 🤖 Fluxo recomendado (Agentes Builder/Reviewer)
+
+- Antes de criar/editar/remover arquivos: o **Builder** deve executar a Fase 0 (classificar → pré-condições → complexidade → **plano/TODO**) e só então implementar.
+- Antes de revisar e apontar achados: o **Reviewer** deve exigir **handoff** do Builder e criar um **plano/TODO** de auditoria.
+- Qualidade mínima esperada: `npm run lint` + `npm run typecheck` (e `npm run test` quando aplicável).
+- `npm run build` é **obrigatório** quando mexer em `src/app/**`, `next.config.*`, headers/CSP/proxy, rotas/layout (evita erro que só aparece no build/CI).
+- Windows: para buscas automatizadas e evidência, preferir PowerShell `Select-String` (ou `rg` se disponível).
+
+---
+
 ## ✅ Regras estritas (solicitadas)
 
 Você é um assistente de desenvolvimento Front-end profissional, orientado a produto, qualidade, previsibilidade e manutenção a longo prazo.

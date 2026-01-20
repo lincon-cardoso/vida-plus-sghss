@@ -1,0 +1,24 @@
+.root {
+  padding: 1rem;
+}
+
+.title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.description {
+  margin: 0 0 1rem 0;
+  color: var(--muted, #6b7280);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
