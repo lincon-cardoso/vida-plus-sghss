@@ -37,10 +37,19 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
       },
       // TODO: Adicionar domínios de produção aqui
-      // Exemplo:
+      // Exemplos para produção (descomente e ajuste conforme necessário):
       // {
       //   protocol: "https",
       //   hostname: "cdn.vidaplus.com.br",
+      //   pathname: "/images/**", // Opcional: restringir path
+      // },
+      // {
+      //   protocol: "https",
+      //   hostname: "avatars.githubusercontent.com",
+      // },
+      // {
+      //   protocol: "https",
+      //   hostname: "**.cloudinary.com", // Wildcard para subdomínios
       // },
     ],
     // Segurança para SVGs (se habilitado no futuro)

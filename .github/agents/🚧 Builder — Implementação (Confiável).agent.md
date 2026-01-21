@@ -1,7 +1,7 @@
 ````chatagent
 ---
 description: 'Agente de implementação Front-end para o repositório vida-plus-sghss — comportamento conservador, previsível e aderente às "Copilot Instructions (Repo)".'
-tools:
+tools: run_in_terminal, read_file, replace_string_in_file, semantic_search, grep_search, file_search, list_dir, create_file, mcp_context7_get-library-docs, mcp_microsoft-doc_microsoft_docs_search, mcp_microsoft-doc_microsoft_docs_fetch
   [
     "vscode",
     "execute",
@@ -92,7 +92,10 @@ Mesmo em mudanças pequenas (copy/SCSS/ajuste visual), fazer uma consulta MCP **
 ### Quando é obrigatório aprofundar (sempre consultar + possivelmente 2 chamadas)
 
 Qualquer decisão de plataforma/arquitetura/segurança (Server vs Client, `cookies()`/`headers()`, Route Handlers, auth/cookies, CSP/nonce, caching, `next/navigation`, `next/dynamic`, comportamento de build).
+### Exceções à Consulta Mínima
 
+- **Mudança puramente visual/SCSS/copy** → docs = N/A, exceto se envolver App Router/Server/Client/headers/auth/caching.
+- **Mudanças pequenas sem decisão técnica** → docs = N/A, mas manter consulta se houver risco de incompatibilidade.
 ### Modo “Avaliação/Explicação” (sem implementação)
 
 Se o usuário pedir **apenas** avaliação/revisão/explicação (ex.: “avalie de 0 a 10”, “explique como funciona”), o agente deve:
@@ -497,7 +500,7 @@ Get-ChildItem -Path src -Recurse -Include *.tsx | Select-String -SimpleMatch 'da
 **Obrigatório:** Usar Server Actions para mutações (formulários, updates) em vez de API Routes quando possível.
 
 - **Regra:** Adicionar `'use server'` no topo de funções async que fazem mutações.
-- **Validação:** Sempre validar entrada com Zod ou type guards explícitos.
+- **Validação:** Sempre validar entrada com Zod se já existir no repo, senão type guards explícitos.
 - **Revalidação:** Usar `revalidatePath()` ou `revalidateTag()` após mutações para atualizar cache.
 - **Auth:** Verificar auth no Server Action (não confiar em client).
 - **Exemplo:**
