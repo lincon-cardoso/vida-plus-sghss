@@ -43,24 +43,54 @@ Este agente descreve e padroniza o comportamento para implementar mudanças Fron
 
 ## 0.0 — Consultar documentação oficial via MCP (OBRIGATÓRIO)
 
-> **Regra fundamental (nova):** Antes de qualquer análise/decisão técnica ou alteração de código, consultar a documentação oficial mais atual via MCP.
+> **Regra fundamental (nova):** Antes de qualquer análise/decisão técnica, alteração de código ou resposta a dúvidas técnicas, consultar a documentação oficial mais atual via MCP.
 
-**Objetivo:** Garantir comportamento **atualizado** e **estável** (evitar suposições sobre Next.js/App Router, React, cookies/headers, API Routes, etc.).
+**Objetivo:** Garantir comportamento **atualizado** e **estável** (evitar suposições sobre Next.js/App Router, React, cookies/headers, API Routes, etc.). Para dúvidas feitas, consultar docs oficiais primeiro para fornecer respostas precisas e baseadas em fontes autorizadas.
 
 **Como fazer (ordem recomendada):**
 
 1) Se for assunto de plataforma/infra Microsoft (Azure/.NET/Entra/headers etc.): usar `microsoft-docs/*`.
 2) Se for biblioteca/framework (Next.js/React/Prisma, etc.): usar `context7/*` quando houver docs; se não houver cobertura suficiente, usar `web` como fallback.
 
+**Regras práticas (para reduzir burocracia sem perder confiabilidade):**
+
+- **Preferência de fonte:** `context7/*` e `microsoft-docs/*` primeiro. Só usar `web` quando (a) não houver cobertura suficiente no MCP, ou (b) a pergunta for sobre um produto sem docs no MCP.
+
+### Consulta mínima (obrigatória)
+
+Mesmo em mudanças pequenas (copy/SCSS/ajuste visual), fazer uma consulta MCP **mínima** e rápida para reduzir risco de padrões desatualizados:
+
+- Preferir **1 chamada** em `context7/*` para a tecnologia central do trecho (ex.: Next.js App Router / React / CSS Modules) com foco no tópico específico.
+- Se o tema for claramente Microsoft/Azure, preferir **1 chamada** em `microsoft-docs/*`.
+
+### Timebox e limites (anti-burocracia)
+
+- **Timebox:** parar a pesquisa após **2 minutos** (ou assim que tiver 1-3 validações úteis).
+- **Limite de chamadas:** no máximo **2 chamadas MCP** por iteração (ex.: `search` + `fetch`, ou `resolve` + `get`).
+- Se ainda ficar ambíguo: fazer **até 2 perguntas objetivas** (regra geral do agente) ou seguir a opção mais conservadora e registrar a incerteza.
+
+### Quando é obrigatório aprofundar (sempre consultar + possivelmente 2 chamadas)
+
+Qualquer decisão de plataforma/arquitetura/segurança (Server vs Client, `cookies()`/`headers()`, Route Handlers, auth/cookies, CSP/nonce, caching, `next/navigation`, `next/dynamic`, comportamento de build).
+
+### Modo “Avaliação/Explicação” (sem implementação)
+
+Se o usuário pedir **apenas** avaliação/revisão/explicação (ex.: “avalie de 0 a 10”, “explique como funciona”), o agente deve:
+
+1) Executar a 0.0 normalmente (consulta MCP obrigatória, timebox e limites acima)
+2) Responder com análise e recomendações
+3) **Não** editar arquivos, rodar comandos ou criar commits, a menos que o usuário peça explicitamente
+
 **Saída obrigatória:**
 
 - `Docs consultadas (MCP): [ferramenta] — [título/url]`
 - `Validações extraídas: [1-3 bullets]`
+
 ### Validação de Lógica com Documentação (OBRIGATÓRIA para Decisões Lógicas)
 
 > **Regra adicional:** Para qualquer decisão lógica (ex.: como implementar uma API Route, usar hooks do React, configurar CSP/headers, ou escolher entre Server/Client Components), o agente DEVE validar a lógica proposta contra a documentação oficial mais recente via MCP.
 
-**Objetivo:** Evitar código desatualizado, incompatibilidades ou alucinações, garantindo que a implementação siga as melhores práticas atuais (ex.: Next.js 16+, React 18+).
+**Objetivo:** Evitar código desatualizado, incompatibilidades ou alucinações, garantindo que a implementação siga as melhores práticas atuais (na versão do Next.js/React usada pelo projeto).
 
 **Como fazer:**
 
@@ -85,10 +115,27 @@ Identificar o tipo de trabalho para determinar o fluxo correto:
 
 ## 0.2 — Verificar Pré-condições
 
-Responder cada pergunta antes de prosseguir:
+Preencher o checklist conforme o **modo de operação** (0.3). Isso evita redundância em tasks pequenas e mantém rigor em mudanças com risco.
 
 ```markdown
-### Checklist de Pré-condições
+### Checklist de Pré-condições (Pequeno — rápido)
+
+- [ ] **Escopo claro?**
+  - Se NÃO: fazer até 2 perguntas objetivas, então propor opção conservadora
+
+- [ ] **Mexe em `src/app/**` ou config de build/headers?**
+  - Se SIM: `npm run build` vira obrigatório no self-review
+
+- [ ] **Precisa de "use client"?**
+  - Se SIM: justificar por estado/evento/efeito/API do browser
+
+- [ ] **Precisa de dependência nova?**
+  - Se SIM: parar e pedir aprovação explícita
+
+- [ ] **Toca auth/cookies/headers/CSP/nonce?**
+  - Se SIM: 0.0 deixa de ser N/A (consultar MCP)
+
+### Checklist de Pré-condições (Médio/Grande — completo)
 
 - [ ] **Escopo claro?**
   - Se NÃO: fazer até 2 perguntas objetivas, então propor opção conservadora
@@ -104,6 +151,12 @@ Responder cada pergunta antes de prosseguir:
 
 - [ ] **Vai precisar de "use client"?**
   - Se SIM: já documentar o motivo (estado/evento/efeito/API browser)
+
+- [ ] **Mexe em `src/app/**` ou config de build/headers?**
+  - Se SIM: `npm run build` obrigatório
+
+- [ ] **Toca auth/cookies/headers/CSP/nonce?**
+  - Se SIM: registrar docs consultadas e validações extraídas (0.0)
 ````
 
 **Saída obrigatória:** Checklist preenchido com respostas
@@ -125,7 +178,7 @@ Usar a tabela para determinar o modo de operação:
 
 ## 0.4 — Criar Plano (TODO)
 
-Só após completar 0.1-0.3, criar plano usando a ferramenta `todo`:
+Só após completar 0.1-0.3, criar plano usando a ferramenta `todo` (aka `manage_todo_list`):
 
 - **Pequeno:** 2-3 itens
 - **Médio:** 3-5 itens
@@ -164,6 +217,33 @@ Quando for uma mudança de **baixo risco** (ex.: ajuste de SCSS, texto, ou fix v
 1. [ ] Ler contexto e aplicar mudança mínima
 2. [ ] Rodar `npm run lint` e `npm run typecheck` + self-review básico
 ```
+
+> Observação: no Fast-Path, a fase 0.0 ainda existe — mas pode ser `N/A` conforme as regras práticas acima.
+
+---
+
+# 📌 Regras por Modo (Obrigatórios)
+
+Use esta seção como “atalho mental” para executar com previsibilidade.
+
+## Pequeno
+
+- Pode usar 0.0 como `N/A` quando não há decisão de plataforma (conforme 0.0).
+- 0.2: preencher **Checklist Pequeno — rápido**.
+- Self-review mínimo: `npm run lint` + `npm run typecheck` + buscas PowerShell (console.log/any/inline/dangerously).
+- `npm run build`: obrigatório somente se tocar `src/app/**`, headers/CSP/proxy, rotas/layout, `next.config.*`.
+
+## Médio
+
+- 0.2: preencher **Checklist Médio/Grande — completo**.
+- Self-review: `npm run lint` + `npm run typecheck` + `npm run test` (quando aplicável) + buscas PowerShell.
+- `npm run build`: obrigatório quando tocar `src/app/**`/headers/CSP/proxy/rotas/layout/config.
+
+## Grande
+
+- Exigir **mapa de impacto** no plano (rotas afetadas, componentes compartilhados, risco e fallback).
+- Preferir dividir em PRs incrementais quando houver risco de regressão.
+- Self-review completo + validação manual guiada (passos de “Como Testar”).
 
 ---
 
@@ -320,11 +400,27 @@ npm run typecheck
 # 3. Build (quando aplicável)
 npm run build
 # Obrigatório se mexer em: src/app/**, next.config.*, headers/CSP/proxy, rotas/layout.
-# Opcional se for só SCSS/texto sem impacto em build.
+# Se não aplicável, registrar no handoff como: N/A (sem alterações que afetem build).
 
 # 4. Testes (quando aplicável)
 npm run test
 # Esperado: todos passando ou N/A
+```
+
+### Mínimo exigido por modo (resumo)
+
+- **Pequeno:** `lint` + `typecheck` + buscas PowerShell (itens 5-8). `build`/`test` conforme aplicabilidade.
+- **Médio/Grande:** `lint` + `typecheck` + (`build` quando aplicável) + `test` quando aplicável + buscas PowerShell (itens 5-8).
+
+### (Opcional) Comando único no PowerShell (execução sequencial)
+
+> Use quando quiser reduzir fricção e coletar um resultado único.
+
+```powershell
+npm run lint; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+npm run typecheck; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+# Rodar apenas se aplicável/esperado para a mudança
+npm run test; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 ```
 
 ```powershell
@@ -394,6 +490,14 @@ Se o self-review encontrar item que seria **[CRÍTICO]** ou **[ALTO]**:
 
 **Objetivo:** [1-2 frases]
 
+**Docs consultadas (MCP):**
+
+- [ferramenta] — [título/url] — [data]
+
+**Validações extraídas:**
+
+- [1-3 bullets]
+
 **Escopo negativo (o que NÃO foi feito):**
 
 - [item 1]
@@ -414,6 +518,7 @@ Se o self-review encontrar item que seria **[CRÍTICO]** ou **[ALTO]**:
 
 - [x] `npm run lint` → passou
 - [x] `npm run typecheck` → passou
+- [ ] `npm run build` → [passou/N/A]
 - [ ] `npm run test` → [passou/N/A]
 
 **Self-review:**
@@ -507,6 +612,7 @@ Emitir em momentos-chave:
 - [ ] Fix aplicado e testado
 - [ ] Sem regressão de a11y
 - [ ] lint/typecheck passam
+- [ ] build passou / N/A (conforme escopo)
 - [ ] Self-review completo
 - [ ] Handoff gerado
 
@@ -517,6 +623,7 @@ Emitir em momentos-chave:
 - [ ] "use client" justificado (se houver)
 - [ ] Testes quando há lógica
 - [ ] lint/typecheck/test passam
+- [ ] build passou / N/A (conforme escopo)
 - [ ] Self-review completo
 - [ ] Handoff gerado
 
@@ -527,6 +634,7 @@ Emitir em momentos-chave:
 - [ ] Status codes corretos
 - [ ] Sem stack trace em erros
 - [ ] lint/typecheck passam
+- [ ] build passou / N/A (conforme escopo)
 - [ ] Self-review completo
 - [ ] Handoff gerado
 
