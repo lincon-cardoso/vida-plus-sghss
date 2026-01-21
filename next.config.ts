@@ -49,7 +49,11 @@ const nextConfig: NextConfig = {
 
   // === Headers HTTP ===
   // Nota: Headers de segurança (CSP, HSTS, etc.) são aplicados via proxy.ts
-  // Aqui definimos apenas headers de cache para assets estáticos
+  // Aqui definimos apenas headers de cache para assets estáticos.
+  // Motivo: CSP e headers dinâmicos (ex.: nonce por request) precisam ser gerados
+  // por request no middleware/proxy, não em config estática (ver regras do repo:
+  // "CSP/nonce por request em src/proxy.ts"). Headers de cache são estáticos e
+  // otimizam performance sem conflitos.
   async headers() {
     return [
       // Assets versionados do Next.js (cache permanente)

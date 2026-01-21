@@ -37,6 +37,26 @@ Este agente descreve e padroniza o comportamento para implementar mudanças Fron
 
 ---
 
+## Regra Global (Obrigatória)
+
+Antes de responder QUALQUER dúvida técnica, propor solução ou escrever código,
+o agente DEVE automaticamente executar a Fase 0
+(incluindo consulta mínima à documentação oficial via MCP),
+mesmo que o usuário não mencione explicitamente.
+
+### Gatilho Automático
+
+Considera-se "dúvida técnica" qualquer pergunta que envolva:
+- APIs
+- comportamento de framework
+- arquitetura
+- boas práticas
+- decisões de implementação
+
+Nesses casos, a Fase 0 é executada automaticamente.
+
+---
+
 # 🧭 FASE 0: Plano de Orientação (OBRIGATÓRIO)
 
 > **Regra fundamental:** Antes de criar, editar ou remover QUALQUER arquivo, este agente DEVE executar as fases 0.0 a 0.4 na ordem. Pular qualquer fase é proibido.
@@ -467,6 +487,178 @@ Get-ChildItem -Path src -Recurse -Include *.tsx | Select-String -SimpleMatch 'da
 - [ ] Forms têm `<label htmlFor>` + `<input id>`
 - [ ] Imagens têm `alt`
 ```
+
+---
+
+# 🛠️ Regras Avançadas (Next.js App Router)
+
+## Server Actions
+
+**Obrigatório:** Usar Server Actions para mutações (formulários, updates) em vez de API Routes quando possível.
+
+- **Regra:** Adicionar `'use server'` no topo de funções async que fazem mutações.
+- **Validação:** Sempre validar entrada com Zod ou type guards explícitos.
+- **Revalidação:** Usar `revalidatePath()` ou `revalidateTag()` após mutações para atualizar cache.
+- **Auth:** Verificar auth no Server Action (não confiar em client).
+- **Exemplo:**
+
+  ```tsx
+  "use server";
+  async function updateProfile(formData: FormData) {
+    const session = await getServerSession(authOptions);
+    if (!session) throw new Error("Unauthorized");
+
+    const schema = z.object({ name: z.string().min(1) });
+    const { name } = schema.parse(Object.fromEntries(formData));
+
+    await db.user.update({ where: { id: session.user.id }, data: { name } });
+    revalidatePath("/profile");
+  }
+  ```
+
+- **Justificativa:** Server Actions são mais seguros e performáticos que API Routes para formulários (docs Next.js).
+
+## Caching e ISR
+
+**Obrigatório:** Implementar caching apropriado para performance.
+
+- **ISR:** Usar `export const revalidate = 3600` para time-based revalidation.
+- **On-demand:** Usar `revalidateTag()` em Server Actions para invalidar cache específico.
+- **Queries:** Usar `unstable_cache()` para queries custosas.
+- **Fetch:** Configurar `cache: 'no-store'` para dados dinâmicos.
+- **Exemplo:**
+
+  ```tsx
+  export const revalidate = 60; // ISR
+
+  export default async function Page() {
+    const data = await fetch("https://api.example.com/data", {
+      next: { revalidate: 300 },
+    });
+    return <div>{data.title}</div>;
+  }
+  ```
+
+- **Justificativa:** ISR reduz builds desnecessários e melhora performance (docs Next.js).
+
+## Testes Automáticos
+
+**Obrigatório:** `npm run test` deve passar para mudanças com lógica.
+
+- **Unitários:** Jest/Vitest para funções puras e hooks.
+- **Componentes:** @testing-library/react para comportamento.
+- **E2E:** Playwright para fluxos críticos (login, dashboards).
+- **Cobertura:** 80% mínimo para funções críticas.
+- **Exemplo:**
+
+  ```tsx
+  // Button.test.tsx
+  import { render, screen } from "@testing-library/react";
+  import userEvent from "@testing-library/user-event";
+
+  test("calls onClick when clicked", async () => {
+    const handleClick = jest.fn();
+    render(<Button onClick={handleClick}>Click me</Button>);
+    await userEvent.click(screen.getByRole("button"));
+    expect(handleClick).toHaveBeenCalled();
+  });
+  ```
+
+- **Justificativa:** Testes previnem regressões e garantem qualidade (docs Next.js/Testing).
+
+## Segurança Detalhada
+
+**Obrigatório:** Proteger contra vulnerabilidades comuns.
+
+- **CSP:** Usar nonce em headers para scripts/styles inline.
+- **Taint:** Marcar dados não-confiáveis com `experimental_taintUniqueValue()`.
+- **Server-only:** Importar secrets apenas em `'server-only'`.
+- **Headers:** Configurar `X-Frame-Options`, `X-Content-Type-Options`.
+- **Exemplo:**
+
+  ```tsx
+  // src/lib/server-only.ts
+  import "server-only";
+  export const SECRET_KEY = process.env.SECRET_KEY!;
+
+  // Em Server Action
+  import { experimental_taintUniqueValue } from "next/server";
+  experimental_taintUniqueValue("Cannot pass user input to client", userInput);
+  ```
+
+- **Justificativa:** Previne XSS, injeções e exposição de secrets (docs Next.js/Security).
+
+## Internacionalização (i18n)
+
+**Preparação:** Estruturar para i18n futura.
+
+- **Middleware:** Usar para redirecionar baseado em locale.
+- **Dicionários:** Server-only para traduções.
+- **URLs:** Sub-paths (`/pt-BR/dashboard`) ou domains.
+- **Formatação:** Usar `Intl` para datas/números.
+- **Exemplo:**
+
+  ```tsx
+  // middleware.ts
+  import { NextResponse } from "next/server";
+  import type { NextRequest } from "next";
+
+  export function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl;
+    if (pathname.startsWith("/api")) return NextResponse.next();
+
+    const locale = request.cookies.get("locale")?.value || "pt-BR";
+    if (!pathname.startsWith(`/${locale}`)) {
+      return NextResponse.redirect(
+        new URL(`/${locale}${pathname}`, request.url),
+      );
+    }
+  }
+  ```
+
+- **Justificativa:** Facilita expansão global sem refator massivo (docs Next.js/i18n).
+
+## Lazy Loading
+
+**Obrigatório:** Otimizar carregamento de componentes pesados.
+
+- **next/dynamic:** Usar para componentes grandes ou client-only.
+- **ssr: false:** Para componentes que precisam de browser APIs.
+- **Loading:** Suspense com fallback.
+- **Exemplo:**
+
+  ```tsx
+  import dynamic from "next/dynamic";
+
+  const HeavyComponent = dynamic(() => import("./HeavyComponent"), {
+    loading: () => <div>Loading...</div>,
+    ssr: false, // Se precisa de window/document
+  });
+  ```
+
+- **Justificativa:** Reduz bundle inicial e melhora LCP/FID (docs Next.js/Performance).
+
+## JSDoc
+
+**Obrigatório:** Documentar tipos em projetos sem TypeScript.
+
+- **@type:** Usar para tipar props e retornos.
+- **@param/@returns:** Descrever parâmetros e retornos.
+- **Exemplo:**
+  ```jsx
+  /**
+   * @param {Object} props
+   * @param {string} props.title - Título do componente
+   * @param {() => void} props.onClick - Callback do clique
+   * @returns {JSX.Element}
+   */
+  function Button({ title, onClick }) {
+    return <button onClick={onClick}>{title}</button>;
+  }
+  ```
+- **Justificativa:** Melhora type safety e manutenção em JS (docs JSDoc/TypeScript).
+
+---
 
 ## Regra de Bloqueio
 
