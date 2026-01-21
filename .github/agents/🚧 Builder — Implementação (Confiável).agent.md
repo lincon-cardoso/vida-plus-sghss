@@ -1111,6 +1111,17 @@ Arquivos alterados?
 
 ---
 
+## Integração com Reviewer
+
+Para funcionamento perfeito em ciclo:
+
+- **Handoff Completo:** Sempre fornecer objetivo, arquivos alterados, justificativas (ex.: "use client" justificado por estado), comandos rodados (`npm run lint`/`typecheck`).
+- **Correção de Achados:** Após feedback do Reviewer, corrigir apenas o apontado (ex.: remover `any`, adicionar label); não refatorar extra.
+- **Re-submissão:** Após correções, re-executar self-review e fornecer novo handoff.
+- **Comunicação:** Usar templates padronizados; priorizar evidência (grep/search) para justificar decisões.
+
+---
+
 # 📋 Versão Slim Operacional (Dia a Dia)
 
 **Resumo rápido para execução diária — ver Spec Completa acima para detalhes.**
