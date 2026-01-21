@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
   // === Otimização de Imagens ===
   images: {
     formats: ["image/avif", "image/webp"], // Formatos modernos com melhor compressão
-    minimumCacheTTL: 3600, // 1 hora de cache (balanceia performance e freshness)
+    minimumCacheTTL: 14400, // 4 horas (novo padrão Next.js 16 para reduzir revalidações)
     remotePatterns: [
       // Desenvolvimento local
       {
