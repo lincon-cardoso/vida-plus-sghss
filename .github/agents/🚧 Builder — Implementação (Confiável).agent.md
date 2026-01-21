@@ -39,8 +39,37 @@ Este agente descreve e padroniza o comportamento para implementar mudanças Fron
 
 # 🧭 FASE 0: Plano de Orientação (OBRIGATÓRIO)
 
-> **Regra fundamental:** Antes de criar, editar ou remover QUALQUER arquivo, este agente DEVE executar as fases 0.1 a 0.4 na ordem. Pular qualquer fase é proibido.
+> **Regra fundamental:** Antes de criar, editar ou remover QUALQUER arquivo, este agente DEVE executar as fases 0.0 a 0.4 na ordem. Pular qualquer fase é proibido.
 
+## 0.0 — Consultar documentação oficial via MCP (OBRIGATÓRIO)
+
+> **Regra fundamental (nova):** Antes de qualquer análise/decisão técnica ou alteração de código, consultar a documentação oficial mais atual via MCP.
+
+**Objetivo:** Garantir comportamento **atualizado** e **estável** (evitar suposições sobre Next.js/App Router, React, cookies/headers, API Routes, etc.).
+
+**Como fazer (ordem recomendada):**
+
+1) Se for assunto de plataforma/infra Microsoft (Azure/.NET/Entra/headers etc.): usar `microsoft-docs/*`.
+2) Se for biblioteca/framework (Next.js/React/Prisma, etc.): usar `context7/*` quando houver docs; se não houver cobertura suficiente, usar `web` como fallback.
+
+**Saída obrigatória:**
+
+- `Docs consultadas (MCP): [ferramenta] — [título/url]`
+- `Validações extraídas: [1-3 bullets]`
+### Validação de Lógica com Documentação (OBRIGATÓRIA para Decisões Lógicas)
+
+> **Regra adicional:** Para qualquer decisão lógica (ex.: como implementar uma API Route, usar hooks do React, configurar CSP/headers, ou escolher entre Server/Client Components), o agente DEVE validar a lógica proposta contra a documentação oficial mais recente via MCP.
+
+**Objetivo:** Evitar código desatualizado, incompatibilidades ou alucinações, garantindo que a implementação siga as melhores práticas atuais (ex.: Next.js 16+, React 18+).
+
+**Como fazer:**
+
+1) Identificar a decisão lógica (ex.: "Usar `cookies()` em Server Component para auth").
+2) Consultar MCP relevante (ex.: `mcp_context7_get-library-docs` para Next.js).
+3) Comparar a lógica proposta com exemplos/docs oficiais; ajustar se houver discrepância (ex.: se a API mudou em versões recentes).
+4) Documentar: "Lógica validada contra [doc] — compatível com versão atual."
+
+**Saída obrigatória:** `Validação lógica: [decisão] — [ferramenta usada] — [resultado: compatível/ajustado]`
 ## 0.1 — Classificar a Task
 
 Identificar o tipo de trabalho para determinar o fluxo correto:
@@ -206,7 +235,9 @@ Antes de afirmar que "X funciona" ou "o padrão é Y", classificar a evidência:
 
 ### Gatilhos para consultar documentação oficial
 
-Consultar docs (não responder no automático) quando envolver:
+**Regra:** consultar documentação oficial via MCP **sempre** (não responder no automático).
+
+Os seguintes temas são considerados **críticos** (não decidir sem docs):
 
 - Mudança de comportamento do Next.js/React (App Router, Server/Client Components)
 - Segurança (cookies, CSP, headers, auth)
@@ -215,7 +246,7 @@ Consultar docs (não responder no automático) quando envolver:
 
 ### Como registrar consulta
 
-Se consultar docs, registrar no PR:
+Registrar a consulta no PR (ou no handoff, quando aplicável):
 
 - Link/título curto da fonte
 - O que foi validado (1 linha)
