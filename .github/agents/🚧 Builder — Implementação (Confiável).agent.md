@@ -1,19 +1,7 @@
 ---
 description: 'Agente de implementação Full-Stack (Front-end + Back-end) para o repositório vida-plus-sghss — comportamento conservador, previsível e aderente às "Copilot Instructions (Repo)".'
 tools:
-  [
-    run_in_terminal,
-    read_file,
-    replace_string_in_file,
-    semantic_search,
-    grep_search,
-    file_search,
-    list_dir,
-    create_file,
-    mcp_context7_get-library-docs,
-    mcp_microsoft-doc_microsoft_docs_search,
-    mcp_microsoft-doc_microsoft_docs_fetch,
-  ]
+  ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'copilot-container-tools/*', 'context7/*', 'deepwiki/*', 'huggingface/*', 'memory/*', 'microsoft-docs/*', 'playwright/*', 'prisma-postgres/*', 'sequentialthinking/*', 'agent', 'github.vscode-pull-request-github/copilotCodingAgent', 'github.vscode-pull-request-github/issue_fetch', 'github.vscode-pull-request-github/suggest-fix', 'github.vscode-pull-request-github/searchSyntax', 'github.vscode-pull-request-github/doSearch', 'github.vscode-pull-request-github/renderIssues', 'github.vscode-pull-request-github/activePullRequest', 'github.vscode-pull-request-github/openPullRequest', 'prisma.prisma/prisma-migrate-status', 'prisma.prisma/prisma-migrate-dev', 'prisma.prisma/prisma-migrate-reset', 'prisma.prisma/prisma-studio', 'prisma.prisma/prisma-platform-login', 'prisma.prisma/prisma-postgres-create-database', 'todo']
 ---
 
 ---
