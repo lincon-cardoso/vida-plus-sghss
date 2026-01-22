@@ -1,5 +1,4 @@
 import styles from "./MedicMyPatients.module.scss";
-import { defaultMyPatientsItems } from "./data";
 
 /**
  * MedicMyPatients
@@ -12,9 +11,8 @@ export default function MedicMyPatients() {
       <p className={styles.description}>Pacientes atribuídos a você.</p>
 
       <ul className={styles.list}>
-        {defaultMyPatientsItems.map((item) => (
-          <li key={item.id}>{item.label}</li>
-        ))}
+        <li>Ana Paula — 28 anos</li>
+        <li>Roberto Carlos — 54 anos</li>
       </ul>
     </div>
   );

@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMedicMenuStore } from "@/lib/stores";
-import MedicQuickActionsNav from "./components/MedicQuickActionsNav";
-import MedicHome from "./components/MedicHome";
-import MedicMonitor from "./components/MedicMonitor";
-import MedicInService from "@/components/MedicInService";
-import MedicMyPatients from "@/components/MedicMyPatients";
-import { useMedicActiveItem, type MedicMenuItem } from "./useMedicActiveItem";
-import styles from "./styles/MedicMenu.module.scss";
+import MedicQuickActionsNav from "./MedicQuickActionsNav";
+import MedicHome from "./MedicHome";
+import MedicMonitor from "./MedicMonitor";
+import MedicInService from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicInService";
+import MedicMyPatients from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicMyPatients";
+import { useMedicActiveItem, type MedicMenuItem } from "../useMedicActiveItem";
+import styles from "../styles/MedicMenu.module.scss";
 
 /**
  * Componente principal do dashboard do médico.
