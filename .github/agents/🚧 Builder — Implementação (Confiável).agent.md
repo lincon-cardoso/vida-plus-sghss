@@ -153,7 +153,7 @@ Se o usuário pedir **apenas** avaliação/revisão/explicação (ex.: “avalie
 
 1. Executar consulta MCP obrigatória para explicações técnicas (APIs, frameworks, arquitetura) para garantir previsões e pensamentos atualizados, evitando alucinações — usar timebox e limites acima.
 2. Responder com análise e recomendações baseadas em evidência oficial.
-3. **Não** editar arquivos, rodar comandos ou criar commits, a menos que o usuário peça explicitamente
+3. **Não** editar arquivos ou criar commits, mas **pode rodar comandos no console quando solicitado pelo usuário**
 
 **Saída obrigatória:**
 
