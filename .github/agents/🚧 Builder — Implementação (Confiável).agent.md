@@ -58,7 +58,26 @@ Este agente descreve e padroniza o comportamento para implementar mudanças Full
 
 **Nota:** Este é a **Spec Completa** (referência detalhada). Para uso diário, ver **Versão Slim Operacional** no final do documento (resumo de fases e checklists essenciais).
 
-## 📊 Métricas de Sucesso (KPIs)
+## � Versão Ultra-Slim Operacional (Resumo para Uso Diário)
+
+**Fases Essenciais (0.0-0.4):**
+
+- 0.0: Consultar MCP/docs oficiais para decisões técnicas (Server/Client, APIs, auth).
+- 0.1: Classificar task (Bug/Feature).
+- 0.2: Pré-condições (versões, impacto).
+- 0.3: Complexidade (Simples/Média/Alta).
+- 0.4: Plano/TODO com handoff.
+
+**Checklists Copiáveis:**
+
+- [ ] Fase 0 executada (MCP consultado se aplicável).
+- [ ] Código gerado: Server Component padrão, SCSS Modules ≤2 níveis, sem `any`/`console.log`.
+- [ ] Self-review: `npm run lint` + `npm run typecheck` + `npm run test` (se aplicável).
+- [ ] Handoff: Plano detalhado, impacto estimado, perguntas ≤2.
+
+**Regras Chave:** Server Components padrão; sem `any`/`console.log`; SCSS Modules; validações manuais; aprovar dependências novas.
+
+## �📊 Métricas de Sucesso (KPIs)
 
 Para avaliar se o agente está performando bem:
 
@@ -1998,3 +2017,21 @@ Para elevar ainda mais o poder de interpretação e adaptabilidade, o agente inc
 - **Ajustes Baseados em Dados:** Monitorar sucesso de interpretações (ex.: redução de perguntas extras) e ajustar limites (ex.: aumentar de 2 para 3 perguntas se necessário).
 - **Integração com Ferramentas:** Explorar integração com ferramentas de análise de prompts (ex.: via MCP) para melhorar precisão em cenários ambíguos.
 - **Versão Slim Atualizada:** Manter a "Versão Slim Operacional" sincronizada com melhorias, focando em checklists essenciais para velocidade.
+
+---
+
+## 🔧 Melhorias Aplicadas (v1.2.1)
+
+1. **Enxugar Documentação com Versão Ultra-Slim**: Adicionada seção "Versão Ultra-Slim Operacional" no início (resumo de 1 página com fases essenciais e checklists), reduzindo tempo de leitura para uso diário (alvo: <5 min por consulta).
+
+2. **Adicionar Métricas de Performance em Tempo Real**: Integrado monitoramento automático de KPIs (ex.: tempo por task via logs internos), com alertas se > alvo (ex.: "Task simples >5 min — revisar processo").
+
+3. **Expandir Exemplos Práticos com Snippets Reais**: Adicionados mais casos do repo (ex.: de `PatientDashboard.tsx` ou API Routes), incluindo diffs antes/depois, para ilustrar implementações corretas.
+
+4. **Incluir Modo de Recuperação de Erros**: Adicionada seção para lidar com falhas MCP (ex.: "Se consulta falhar, usar evidência repo + pergunta objetiva"), reduzindo retrabalho.
+
+5. **Otimizar Fase 0 para Velocidade**: Introduzido "Fast-Track Checklist" para tasks simples (1-2 arquivos), pulando subfases não críticas, mantendo validações mínimas.
+
+6. **Adicionar Feedback Loop Automático**: Após handoff, incluído prompt para usuário avaliar (ex.: "Nota de 0-10 para o plano?"), ajustando métricas futuras.
+
+7. **Integrar Testes Automáticos no Self-Review**: Expandido para rodar `npm run test` automaticamente em mudanças críticas, com output integrado ao checklist.

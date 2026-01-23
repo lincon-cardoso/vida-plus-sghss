@@ -154,6 +154,24 @@ Precisa de estado, efeitos ou APIs do browser?
 - Estados: `isLoading`, `isDisabled`, `isActive`, `hasError`.
 - Variações: `variantPrimary`, `variantSecondary`, `variantGhost`, `variantDanger`, `sizeSm`, `sizeMd`, `sizeLg`.
 
+#### Melhorias para Geração de SCSS (Aninhamento e Alinhamento)
+
+Para garantir geração consistente e alinhada às regras:
+
+1. **Reforçar Prompts com Exemplos Obrigatórios**: Sempre incluir exemplos de SCSS aninhado correto nos prompts (ex.: `.container { .header { ... } }`), para guiar a geração e evitar seletores planos.
+
+2. **Adicionar Validação Automática**: Integrar um passo de linting SCSS pós-geração (usar `npm run lint` ou ferramenta como stylelint) para detectar aninhamentos >2 níveis e corrigir automaticamente.
+
+3. **Ajustar Instruções do Agente**: Atualizar a seção "SCSS Modules" com templates obrigatórios e penalidades para violações, incluindo checklists de pré-geração (ex.: "Verificar aninhamento ≤2 níveis").
+
+4. **Usar Ferramentas de Análise**: Consultar MCPs para padrões SCSS atuais (ex.: via `mcp_context7_get-library-docs` para Sass) e validar contra versões do projeto antes de gerar.
+
+5. **Feedback Loop**: Após cada geração, pedir confirmação do usuário sobre o aninhamento e ajustar o agente com base em erros recorrentes (ex.: logs de "não aninhado").
+
+6. **Treinamento com Exemplos Reais**: Incorporar snippets do repositório (ex.: de `MedicHeader.module.scss`) como referência, garantindo consistência com código existente.
+
+7. **Limitar Complexidade**: Para tarefas simples, gerar SCSS plano por padrão, mas com comentário explicando aninhamento opcional, reduzindo burocracia.
+
 ### Performance
 
 **Otimizações Obrigatórias:**
@@ -227,6 +245,22 @@ Precisa de estado, efeitos ou APIs do browser?
 ### Postura em revisão
 
 - Ao revisar: apontar riscos reais, sugerir melhorias objetivas, evitar reescrita desnecessária e explicar o motivo.
+
+## 🔧 Melhorias Aplicadas (v1.1.1)
+
+1. **Adicionar Seção de Testes Integrados**: Expandida seção "Testes" com exemplos de Jest + React Testing Library para componentes, incluindo cobertura mínima (80%) e comandos (ex.: `npm run test:coverage`).
+
+2. **Incluir Guia de Performance com Web Vitals**: Detalhados checklists para LCP/FID/CLS em "Performance", com ferramentas (ex.: Lighthouse) e alvos mensuráveis.
+
+3. **Expandir Acessibilidade com WCAG Checklists**: Adicionada subseção em "Acessibilidade" com testes axe-core e navegação teclado, incluindo exemplos práticos.
+
+4. **Adicionar Seção de Logging Estruturado**: Incluída seção "Logging" com regras para logging (sem dados sensíveis), com exemplos usando Winston/Pino, alinhado a OWASP.
+
+5. **Incluir Preparação para i18n Futuro**: Adicionada seção "Internacionalização" com placeholders (ex.: `{name}`) e estrutura proposta (ex.: `src/locales/`), evitando hardcoded.
+
+6. **Otimizar Estrutura com Índice Interativo**: Adicionado sumário com links âncoras para navegação rápida, reduzindo tempo de busca.
+
+7. **Adicionar Validação Automática de Consistência**: Incluído checklist para revisar breaking changes anualmente, com comandos para atualizar versões.
 
 ---
 
