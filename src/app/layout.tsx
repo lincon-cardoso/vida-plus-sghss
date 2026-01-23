@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next";
 
 // ─── Metadados SEO e Open Graph ───────────────────────────
 export const metadata: Metadata = {
+  metadataBase: new URL("https://vidaplus.com"), // Substitua pela URL real
   title: {
     default: "VidaPlus - Sistema de Gestão Hospitalar",
     template: "%s | VidaPlus",
@@ -41,18 +42,44 @@ export const metadata: Metadata = {
     title: "VidaPlus - Sistema de Gestão Hospitalar",
     description:
       "Plataforma moderna e segura para gestão de serviços de saúde, telemedicina e atendimento ao paciente.",
+    images: [
+      {
+        url: "/icons/icons.png", // Imagem Open Graph
+        width: 1200,
+        height: 630,
+        alt: "VidaPlus - Sistema de Gestão Hospitalar",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "VidaPlus - Sistema de Gestão Hospitalar",
     description:
       "Plataforma moderna e segura para gestão de serviços de saúde.",
+    images: ["/icons/icons.png"],
   },
-  manifest: "/manifest.json",
-  icons: {
-    // Usamos o arquivo que você enviou em public/icons/icons.png
-    icon: "/icons/icons.png",
-    apple: "/icons/icons.png",
+  alternates: {
+    canonical: "/", // Caminho relativo
+  },
+  other: {
+    "application/ld+json": JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "VidaPlus",
+      description: "Sistema de Gestão Hospitalar e Serviços de Saúde (SGHSS)",
+      url: "https://vidaplus.com",
+      logo: "/icons/icons.png",
+      sameAs: [
+        // Adicione URLs de redes sociais se houver
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+55-11-9999-9999", // Substitua pelo telefone real
+        contactType: "customer service",
+      },
+      medicalSpecialty: "Healthcare",
+      foundingDate: "2023", // Substitua pela data real
+    }),
   },
 };
 

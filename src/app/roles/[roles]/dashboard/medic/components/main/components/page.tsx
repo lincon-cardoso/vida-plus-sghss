@@ -8,6 +8,7 @@ import MedicHome from "./MedicHome";
 import MedicMonitor from "./MedicMonitor";
 import MedicInService from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicInService";
 import MedicMyPatients from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicMyPatients";
+import MedicTeleconsulta from "./MedicTeleconsulta";
 import { useMedicActiveItem, type MedicMenuItem } from "../useMedicActiveItem";
 import styles from "../styles/MedicMenu.module.scss";
 
@@ -104,14 +105,7 @@ export default function MedicDashboardMain() {
             </>
           )}
 
-          {activeItem === "Teleconsulta" && (
-            <div className={styles.dashboardContent}>
-              <h2 className={styles.title}>Teleconsulta</h2>
-              <p className={styles.description}>
-                Consultas remotas e telemedicina.
-              </p>
-            </div>
-          )}
+          {activeItem === "Teleconsulta" && <MedicTeleconsulta />}
 
           {activeItem === "Agenda" && (
             <div className={styles.dashboardContent}>

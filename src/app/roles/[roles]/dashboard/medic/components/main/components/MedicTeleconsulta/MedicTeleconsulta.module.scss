@@ -1,0 +1,336 @@
+/* MedicTeleconsulta.module.scss — mobile-first, max 2 levels nesting */
+
+.root {
+  padding: var(--space-2);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.header {
+  margin-bottom: var(--space-2);
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+.main {
+  width: 100%;
+}
+
+.videoCard {
+  background: #1f2326; /* darker video area */
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+  aspect-ratio: 16 / 9; /* keep closer to typical video ratio */
+  min-height: 320px;
+  z-index: 1; /* sit below controls */
+}
+
+.videoPlaceholder {
+  position: absolute; /* center regardless of controls */
+  inset: 0;
+  display: flex;
+  flex-direction: column; /* stack icon above text */
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.25rem;
+  gap: 0.75rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.95);
+  z-index: 10;
+}
+
+/* Ensure placeholder content doesn't get clipped by border radius */
+.videoCard {
+  overflow: visible;
+}
+
+.videoIcon {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.videoText {
+  color: #f3f4f6; /* light text */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.videoText strong {
+  color: #f9fafb;
+  font-size: 1.125rem;
+}
+
+.videoActive {
+  background: #111317; /* dark video background */
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+.callHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #e6eef0;
+}
+
+.callStatusIndicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--color-success);
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.08);
+}
+
+.callMeta strong {
+  color: #f3f4f6;
+}
+
+.videoStream {
+  flex: 1 1 auto;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.35));
+}
+
+.controlsBar {
+  margin-top: -1.75rem; /* smaller overlap so controls are clearly visible */
+  background: var(--card-bg);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+  display: block;
+  position: relative;
+  z-index: 20; /* ensure controls are on top of video */
+}
+
+.controlsInner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 980px;
+  margin: 0 auto;
+  justify-content: center; /* center controls on small screens */
+}
+
+/* first icon group aligns left and grows, last aligns right */
+.controlsInner > .iconGroup:first-child {
+  justify-content: flex-start;
+  flex: 1 1 0;
+}
+
+.controlsInner > .iconGroup:last-child {
+  justify-content: flex-end;
+  flex: 1 1 0;
+}
+
+.iconGroup {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.roundButton {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid transparent;
+  transition:
+    transform 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.roundButton:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+.roundButton:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.roundButton:focus-visible {
+  outline: 3px solid rgba(14, 165, 166, 0.12);
+  outline-offset: 2px;
+}
+
+.primaryGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.primaryButton {
+  display: inline-flex;
+  gap: 0.6rem;
+  align-items: center;
+  background: var(--color-primary);
+  color: #ffffff;
+  padding: 0.6rem 1.5rem;
+  height: 48px;
+  border-radius: 999px;
+  box-shadow: 0 8px 22px rgba(34, 197, 94, 0.12);
+  font-weight: 700;
+  transition: transform 0.12s ease;
+}
+
+.primaryButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.primaryButton svg {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  padding: 3px;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.endCall {
+  background: var(--color-danger);
+}
+
+.aside {
+  width: 100%;
+}
+
+.patientCard {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.patientTop {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.patientAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e6f4f2, #dff3ef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #065f46; /* dark green */
+}
+
+.patientName {
+  font-size: 1rem;
+}
+
+.patientMeta {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.patientDetails {
+  margin-top: 0.25rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.patientDetails dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.patientDetails dd {
+  font-size: 0.95rem;
+  margin-top: 0.125rem;
+}
+
+.historyCard {
+  margin-top: var(--space-2);
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  box-shadow: var(--shadow);
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.historyItem {
+  background: #f8fafb;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.historyMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.historyType {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.historyBody p {
+  color: #6b7280;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.footerSpacing {
+  height: 3rem;
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 360px;
+    align-items: start;
+    gap: 1.25rem;
+  }
+
+  .videoCard {
+    min-height: 420px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+  }
+
+  .videoPlaceholder {
+    padding: 4rem 2rem;
+  }
+
+  .controlsInner {
+    justify-content: center;
+  }
+}
