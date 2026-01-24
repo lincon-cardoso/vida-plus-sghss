@@ -1,0 +1,209 @@
+.container {
+  padding: 1rem;
+
+  .header {
+    margin-bottom: 0.75rem;
+
+    .title {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0;
+      color: #111827;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      color: #111827;
+    }
+
+    .sectionBody {
+      color: #6b7280;
+      margin: 0.25rem 0 0;
+      font-size: 0.95rem;
+    }
+  }
+
+  .separator {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+    margin: 1.25rem 0;
+  }
+
+  .languageGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-top: 0.75rem;
+  }
+
+  .languageCard {
+    width: 100%;
+    text-align: left;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition:
+      border-color 150ms ease,
+      background-color 150ms ease,
+      box-shadow 150ms ease;
+
+    &:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    }
+
+    &:focus-visible {
+      outline: 3px solid rgba(37, 99, 235, 0.25);
+      outline-offset: 2px;
+    }
+
+    .cardFlag {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      font-size: 1.25rem;
+      flex: 0 0 auto;
+    }
+
+    .cardContent {
+      display: grid;
+      gap: 0.15rem;
+      min-width: 0;
+      flex: 1 1 auto;
+
+      .cardTitle {
+        font-size: 0.98rem;
+        font-weight: 600;
+        color: #111827;
+        line-height: 1.2;
+      }
+
+      .cardSubtitle {
+        font-size: 0.875rem;
+        color: #6b7280;
+        line-height: 1.2;
+      }
+    }
+
+    .cardCheck {
+      margin-left: auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #2563eb;
+      flex: 0 0 auto;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .selected {
+    background: #eef4ff;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.08);
+
+    .cardFlag {
+      background: #ffffff;
+      border-color: rgba(37, 99, 235, 0.25);
+    }
+  }
+
+  .section {
+    .sectionHeading {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .icon {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .formRow {
+      display: grid;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+
+      .label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .select {
+        width: 100%;
+        padding: 0.8rem 0.9rem;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        background: #ffffff;
+        color: #111827;
+        font-size: 0.95rem;
+        outline: none;
+
+        &:focus {
+          border-color: rgba(37, 99, 235, 0.7);
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+        }
+      }
+
+      .currentTime {
+        margin-top: 0.5rem;
+        padding-top: 0.6rem;
+        border-top: 1px solid #e5e7eb;
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
+    }
+
+    .optionGrid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .optionCard {
+      cursor: pointer;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 0.95rem 1rem;
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      column-gap: 0.75rem;
+      row-gap: 0.25rem;
+      align-items: start;
+      transition:
+        border-color 150ms ease,
+        background-color 150ms ease,
+        box-shadow 150ms ease;
+
+      &:hover {
+        border-color: #cbd5e1;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+}

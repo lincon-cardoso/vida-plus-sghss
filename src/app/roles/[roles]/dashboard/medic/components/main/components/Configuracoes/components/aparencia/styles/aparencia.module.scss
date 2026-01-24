@@ -1,0 +1,275 @@
+/* Aparencia.module.scss - estilo aninhado para o componente Aparência
+   Implementado com aninhamento SCSS seguindo as imagens de referência.
+*/
+
+.container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #f6f8fa;
+
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .section {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 1px 8px rgba(16, 24, 40, 0.04);
+
+    .sectionTitle {
+      font-size: 15px;
+      color: #111827;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .optionGrid {
+      display: flex;
+      gap: 16px;
+      align-items: stretch;
+
+      .optionCard {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        text-align: center;
+        padding: 28px 20px;
+        min-height: 140px;
+        border-radius: 12px;
+        border: 1px solid #e6e9ef;
+        background: #ffffff;
+        cursor: pointer;
+        transition:
+          box-shadow 0.18s ease,
+          border-color 0.18s ease,
+          transform 0.12s ease;
+
+        &:hover {
+          box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+          transform: translateY(-2px);
+        }
+
+        &.active {
+          border-color: #2b6dde;
+          box-shadow: 0 12px 36px rgba(43, 109, 222, 0.12);
+          background: #eaf3ff;
+        }
+
+        .optionIcon {
+          font-size: 32px;
+          width: 64px;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 12px;
+          background: #f3f7ff;
+
+          svg {
+            width: 36px;
+            height: 36px;
+            color: #6b7280; /* default icon color (grey) */
+          }
+        }
+
+        .optionContent {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          align-items: center;
+
+          .optionTitle {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+          }
+
+          .optionDescription {
+            font-size: 13px;
+            color: #6b7280;
+            max-width: 220px;
+          }
+
+          .optionStatus {
+            font-size: 12px;
+            color: #0ea5e9;
+            margin-top: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+
+            .statusIcon {
+              display: inline-flex;
+
+              svg {
+                width: 14px;
+                height: 14px;
+                color: #2b6dde;
+              }
+            }
+          }
+        }
+
+        /* ícone amarelo do sol quando estiver ativo */
+        &.active {
+          .optionIcon {
+            background: #fff8e6;
+
+            svg {
+              color: #f59e0b;
+            }
+          }
+        }
+      }
+    }
+
+    .fontSizeGroup {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+
+      .fontSizeButton {
+        flex: 1 0 auto;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid #e6e9ef;
+        background: #ffffff;
+        cursor: pointer;
+        text-align: center;
+        font-weight: 600;
+        color: #111827;
+
+        &.active {
+          border-color: #2b6dde;
+          background: #eef6ff;
+        }
+      }
+    }
+
+    .divider {
+      height: 1px;
+      background: #eef2f6;
+      border: none;
+      margin: 16px 0;
+    }
+
+    .toggleRow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+
+      .toggleText {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .toggleLabel {
+          font-weight: 600;
+          color: #0f172a;
+        }
+
+        .toggleDescription {
+          font-size: 13px;
+          color: #6b7280;
+        }
+      }
+
+      .toggleSwitch {
+        display: flex;
+        align-items: center;
+
+        input[type="checkbox"] {
+          appearance: none;
+          width: 46px;
+          height: 28px;
+          border-radius: 999px;
+          background: #e6e9ef;
+          position: relative;
+          cursor: pointer;
+          outline: none;
+          transition:
+            background-color 0.18s ease,
+            box-shadow 0.18s ease;
+          box-shadow: inset 0 0 0 1px rgba(16, 24, 40, 0.03);
+        }
+
+        input[type="checkbox"]::after {
+          content: "";
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #ffffff;
+          position: absolute;
+          top: 50%;
+          left: 4px;
+          transform: translateY(-50%);
+          box-shadow: 0 2px 6px rgba(2, 6, 23, 0.12);
+          transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease;
+        }
+
+        input[type="checkbox"]:checked {
+          background: #1976d2; /* estado ativo azul */
+        }
+
+        input[type="checkbox"]:checked::after {
+          transform: translateY(-50%) translateX(18px);
+        }
+
+        input[type="checkbox"]:focus-visible {
+          box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.12);
+          border-radius: 999px;
+        }
+
+        input[type="checkbox"]:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  .saveRow {
+    display: flex;
+    justify-content: flex-end;
+
+    .saveButton {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 20px;
+      background: #1976d2;
+      color: #ffffff;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(25, 118, 210, 0.16);
+
+      .saveIcon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &:hover {
+        filter: brightness(0.98);
+      }
+    }
+  }
+}

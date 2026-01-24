@@ -87,7 +87,7 @@ export default function MedicTeleconsulta() {
                 </div>
               </div>
             ) : (
-              <div className={styles.videoActive} aria-hidden>
+              <div className={styles.videoActive}>
                 <div className={styles.callHeader}>
                   <div className={styles.callStatusIndicator} aria-hidden />
                   <div className={styles.callMeta}>

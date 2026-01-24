@@ -9,6 +9,8 @@ import MedicMonitor from "./MedicMonitor";
 import MedicInService from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicInService";
 import MedicMyPatients from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicMyPatients";
 import MedicTeleconsulta from "./MedicTeleconsulta";
+import MedicAgenda from "./MedicAgenda";
+import Configuracoes from "./Configuracoes/Configuracoes";
 import { useMedicActiveItem, type MedicMenuItem } from "../useMedicActiveItem";
 import styles from "../styles/MedicMenu.module.scss";
 
@@ -107,23 +109,9 @@ export default function MedicDashboardMain() {
 
           {activeItem === "Teleconsulta" && <MedicTeleconsulta />}
 
-          {activeItem === "Agenda" && (
-            <div className={styles.dashboardContent}>
-              <h2 className={styles.title}>Agenda</h2>
-              <p className={styles.description}>
-                Gerencie seus horários e consultas.
-              </p>
-            </div>
-          )}
+          {activeItem === "Agenda" && <MedicAgenda />}
 
-          {activeItem === "Configurações" && (
-            <div className={styles.dashboardContent}>
-              <h2 className={styles.title}>Configurações</h2>
-              <p className={styles.description}>
-                Ajustes de conta e preferências.
-              </p>
-            </div>
-          )}
+          {activeItem === "Configurações" && <Configuracoes />}
         </section>
       </div>
     </div>

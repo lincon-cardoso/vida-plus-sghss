@@ -95,9 +95,7 @@ export default function MedicMonitor({
         <div className={styles.leftPanel}>
           <div className={styles.panelTop}>
             <div className={styles.panelLeft}>
-              <span className={styles.panelIcon} aria-hidden>
-                <Monitor size={22} />
-              </span>
+              <span className={styles.panelIcon} aria-hidden="true"></span>
               <div className={styles.panelText}>
                 <h3 className={styles.panelTitle}>PAINEL DE CHAMADAS</h3>
                 <p className={styles.panelSubtitle}>SGHSS VidaPlus</p>

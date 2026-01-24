@@ -66,7 +66,7 @@ export default function MedicMyPatients({
         </div>
       </div>
 
-      <div className={styles.statsRow} aria-hidden>
+      <div className={styles.statsRow}>
         <div className={styles.statCard}>
           <div className={styles.statNumber}>{patients.length}</div>
           <div className={styles.statLabel}>Total de Pacientes</div>
@@ -86,7 +86,7 @@ export default function MedicMyPatients({
       </div>
 
       <div className={styles.tableHead} role="row">
-        <div aria-hidden className={styles.colAvatar} />
+        <div aria-hidden="true" className={styles.colAvatar} />
         <div className={styles.colPaciente}>Paciente</div>
         <div>CPF</div>
         <div>Data Nasc.</div>
@@ -99,7 +99,7 @@ export default function MedicMyPatients({
       <ul className={styles.list} role="list">
         {patients.map((p) => (
           <li key={p.id} className={styles.item} role="listitem">
-            <div className={styles.avatar} aria-hidden>
+            <div className={styles.avatar} aria-hidden="true">
               <span className={styles.initials}>{getInitials(p.name)}</span>
             </div>
 

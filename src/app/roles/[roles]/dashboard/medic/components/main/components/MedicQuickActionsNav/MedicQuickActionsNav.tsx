@@ -207,14 +207,14 @@ export default function MedicQuickActionsNav({
                       : undefined
                   }
                 >
-                  <span className={styles.iconWrap} aria-hidden>
+                  <span className={styles.iconWrap} aria-hidden="true">
                     {Icon ? <Icon className={styles.icon} /> : null}
                   </span>
                   {isExpanded ? (
                     <>
                       <span className={styles.label}>{label}</span>
                       {subItems && subItems.length > 0 ? (
-                        <span className={styles.chevron} aria-hidden>
+                        <span className={styles.chevron} aria-hidden="true">
                           <ChevronRight className={styles.chevronIcon} />
                         </span>
                       ) : null}

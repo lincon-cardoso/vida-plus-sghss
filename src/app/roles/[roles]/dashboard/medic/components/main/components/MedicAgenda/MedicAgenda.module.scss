@@ -1,0 +1,375 @@
+.root {
+  padding: 1rem;
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.subtitle {
+  margin: 0.35rem 0 0 0;
+  color: #6b7280;
+}
+
+.statsSection {
+  margin-top: 1.25rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.statIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+}
+
+.statIconPrimary {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.statIconSuccess {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.statIconWarning {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.statIconDanger {
+  background: #fff1f2;
+  color: #dc2626;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.statValue {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+.statTitle {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #6b7280;
+}
+
+.dateSection {
+  margin-top: 1rem;
+}
+
+.dateCard {
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dateLabel {
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.dateInputWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.dateInput {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 0.55rem 2.25rem 0.55rem 0.9rem;
+  font-size: 0.95rem;
+  color: #111827;
+  background: #ffffff;
+}
+
+.dateInputIcon {
+  position: absolute;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  pointer-events: none;
+}
+
+.shiftsSection {
+  margin-top: 1.25rem;
+}
+
+.shiftsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.shiftCard {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+  padding: 1.25rem;
+  padding-top: 5rem; /* espaço extra para badge */
+  padding-bottom: 3.5rem; /* espaço extra para status/ações */
+  min-height: 160px;
+  box-sizing: border-box;
+}
+
+.shiftBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 12px;
+  z-index: 3; /* ficar acima do conteúdo */
+}
+
+.shiftBadgeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shiftBadgeText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.shiftBadgeLabel {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.shiftBadgeTime {
+  font-size: 0.78rem;
+  opacity: 0.9;
+}
+
+.shiftMorning {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+.shiftAfternoon {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.shiftNight {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.shiftDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.shiftDoctor {
+  margin: 0;
+  font-weight: 700;
+  color: #111827;
+}
+
+.shiftSpecialty {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.shiftStatus {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 2; /* ficar acima do conteúdo, abaixo do badge */
+}
+
+.statusConfirmed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.refreshButton {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #6b7280;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 4; /* ícone de ação por cima de tudo */
+}
+
+.refreshButton:hover {
+  background: #f9fafb;
+  color: #374151;
+}
+
+.refreshButton:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.monthSection {
+  margin-top: 1.5rem;
+}
+
+.monthHeader {
+  margin-bottom: 0.75rem;
+}
+
+.monthTitle {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.calendarWrapper {
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.weekdayRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.weekdayCell {
+  text-align: left;
+  font-size: 0.85rem;
+  color: #6b7280;
+  padding: 0 0.4rem;
+}
+
+.monthGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+}
+
+.dayCell {
+  min-height: 140px; /* aumentar para evitar sobreposição visual */
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 0.85rem;
+  background: #ffffff;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.emptyCell {
+  height: 100%;
+}
+
+.dayNumber {
+  font-size: 0.9rem;
+  color: #111827;
+  font-weight: 600;
+}
+
+.eventDots {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.dotGreen {
+  background: #10b981;
+}
+
+.dotBlue {
+  background: #3b82f6;
+}
+
+.dotPurple {
+  background: #8b5cf6;
+}
+
+@media (max-width: 1024px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dateCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .shiftsGrid {
+    grid-template-columns: 1fr;
+  }
+}

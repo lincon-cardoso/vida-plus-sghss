@@ -89,7 +89,7 @@ export default function MedicHome({
               <div className={styles.statIcon} aria-hidden="true">
                 {(() => {
                   const Icon = s.icon;
-                  return <Icon size={20} aria-hidden />;
+                  return <Icon size={20} aria-hidden="true" />;
                 })()}
               </div>
 
