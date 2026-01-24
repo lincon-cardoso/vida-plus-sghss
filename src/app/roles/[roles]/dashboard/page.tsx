@@ -3,6 +3,7 @@ import { verifyToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import PatientDashboard from "./patient/PatientDashboard";
 import MedicDashboard from "./medic/MedicDashboard";
+import AdminDashboard from "./admin/AdminDashboard";
 
 export default async function DashboardPage({
   params,
@@ -34,6 +35,10 @@ export default async function DashboardPage({
     return <MedicDashboard payload={payload} />;
   }
 
-  // Fallback para roles não suportadas (ex.: admin) - redireciona para dashboard apropriado
+  if (payload.role === "admin") {
+    return <AdminDashboard payload={payload} />;
+  }
+
+  // Fallback para roles não suportadas - redireciona para dashboard apropriado
   redirect(`/roles/${payload.role}/dashboard`);
 }

@@ -1,5 +1,15 @@
 import type { LucideIcon } from "lucide-react";
-import { User, Bell, Shield, Globe, Moon, Mail, Smartphone, Phone, Sun } from "lucide-react";
+import {
+  User,
+  Bell,
+  Shield,
+  Globe,
+  Moon,
+  Mail,
+  Smartphone,
+  Phone,
+  Sun,
+} from "lucide-react";
 
 /**
  * Tipos e dados estáticos para a seção de Configurações.

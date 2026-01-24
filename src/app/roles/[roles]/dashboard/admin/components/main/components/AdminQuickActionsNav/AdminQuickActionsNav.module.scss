@@ -5,6 +5,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.75rem;
   padding: 0.5rem;
   width: 64px;
@@ -15,7 +16,7 @@
   transition: width 0.3s ease;
 
   &.expanded {
-    width: 200px; /* Ajuste conforme necessário para acomodar o texto */
+    width: 200px;
     max-width: 200px;
 
     .iconList {
@@ -43,6 +44,7 @@
     flex-direction: column;
     gap: 0.5rem;
     overflow: visible;
+    flex: 1 1 auto;
   }
 
   .separator {
@@ -88,9 +90,8 @@
       background: rgba(0, 0, 0, 0.08);
     }
 
-    /* when parent opens submenu */
     &[aria-expanded="true"] {
-      background: #f3f4f6; /* light gray */
+      background: #f3f4f6;
 
       .icon {
         color: var(--gray-900, #111827);
@@ -104,7 +105,6 @@
         transform: rotate(90deg);
       }
 
-      /* Keep vertical alignment for collapsed chevron (translateY) */
       .chevronCollapsed .chevronIcon {
         transform: rotate(90deg);
       }
@@ -121,7 +121,7 @@
     }
 
     &.logout {
-      color: #ef4444; /* red for logout */
+      color: #ef4444;
 
       .icon {
         background: rgba(239, 68, 68, 0.06);
@@ -130,7 +130,6 @@
         color: #ef4444;
         width: 28px;
         height: 28px;
-        /* Usar prop `size` e CSS como fallback; aumentamos para 28px */
       }
     }
   }
@@ -146,12 +145,11 @@
   }
 
   .icon {
-    /* dimensão controlada por CSS; override em .iconButton.logout */
     width: 18px;
     height: 18px;
     color: var(--gray-700, #374151);
     display: inline-block;
-    flex-shrink: 0; /* evita escalar em layouts */
+    flex-shrink: 0;
   }
 
   .label {
@@ -189,14 +187,12 @@
     transition: transform 150ms ease;
   }
 
-  /* Adjust sizes and spacing when the whole nav is collapsed */
   &:not(.expanded) {
     .icon {
       width: 18px;
       height: 18px;
     }
 
-    /* Deixa o ícone de logout ligeiramente maior quando o menu estiver recolhido - controlado por lucide-react */
     .iconButton.logout .icon {
       padding: 6px;
       width: 28px;
@@ -216,14 +212,13 @@
   .submenu {
     margin-top: 0.25rem;
     list-style: none;
-    padding: 0 0 0 1.25rem; /* increased indent under label */
+    padding: 0 0 0 1.25rem;
     margin: 0;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     width: 100%;
 
-    /* collapsed state (hidden but present for animation) */
     max-height: 0;
     overflow: hidden;
     opacity: 0;
@@ -236,7 +231,7 @@
   }
 
   .submenu.open {
-    max-height: 400px; /* large enough for a few items */
+    max-height: 400px;
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
@@ -290,7 +285,6 @@
     flex: 1 1 auto;
   }
 
-  /* Flyout de subitens no modo recolhido (ícone-only) */
   &:not(.expanded) {
     .iconList > li {
       position: relative;

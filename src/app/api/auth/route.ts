@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   const ok =
     email === "linkon789@gmail.com" &&
     senha === "link2502" &&
-    (role === "patient" || role === "doctor");
+    (role === "patient" || role === "doctor" || role === "admin");
 
   if (!ok) {
     return NextResponse.json(
