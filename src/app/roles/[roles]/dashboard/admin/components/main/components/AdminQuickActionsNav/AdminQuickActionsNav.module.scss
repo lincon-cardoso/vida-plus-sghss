@@ -50,7 +50,9 @@
   .separator {
     height: 1px;
     background: #e5e7eb;
-    margin: 0.5rem 0;
+    /* Puxa a divisória para junto da barra inferior (perto do botão Sair) */
+    margin-top: auto;
+    margin-bottom: 0.25rem;
     width: 100%;
   }
 

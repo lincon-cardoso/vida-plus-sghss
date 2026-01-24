@@ -23,6 +23,7 @@ export default function BarraNavegacao({
             onClick={toggleMenu}
             aria-expanded={isMenuOpen}
             aria-controls="patient-menu"
+            aria-label="Abrir/fechar menu"
           >
             <Menu />
           </button>

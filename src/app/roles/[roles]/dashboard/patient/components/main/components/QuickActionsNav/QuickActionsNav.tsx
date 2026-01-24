@@ -2,7 +2,7 @@
 
 import { Calendar, Home, LogOut, Settings, Users } from "lucide-react";
 import type { RefObject } from "react";
-import styles from "../../styles/PatientMenu.module.scss";
+import styles from "./QuickActionsNav.module.scss";
 
 export type QuickActionKey =
   | "nav_dashboard"
@@ -23,6 +23,7 @@ type Props = {
   menuRef?: RefObject<HTMLElement | null>;
   activeLabel?: string;
   onActionClick?: (action: QuickAction) => void;
+  isExpanded?: boolean;
 };
 
 export default function QuickActionsNav({
@@ -31,6 +32,7 @@ export default function QuickActionsNav({
   menuRef,
   activeLabel,
   onActionClick,
+  isExpanded = false,
 }: Props) {
   function getActionIcon(itemKey: QuickActionKey) {
     switch (itemKey) {
@@ -47,41 +49,70 @@ export default function QuickActionsNav({
     }
   }
 
+  const topActions = actions.filter((a) => a.itemKey !== "nav_logout");
+  const logoutAction = actions.find((a) => a.itemKey === "nav_logout");
+
   return (
     <nav
       id={id ?? "patient-menu"}
       ref={menuRef}
       tabIndex={-1}
-      className={styles.sidebarIcons}
+      className={`${styles.root} ${isExpanded ? styles.expanded : ""}`}
       aria-label="Navegação rápida"
     >
-      <ul className={styles.iconList}>
-        {actions.map((action) => {
-          const { label, color } = action;
-          const Icon = getActionIcon(action.itemKey);
-          const isActive = activeLabel === label;
+      <div className={styles.top}>
+        <ul className={styles.iconList}>
+          {topActions.map((action) => {
+            const { label } = action;
+            const Icon = getActionIcon(action.itemKey);
+            const isActive = activeLabel === label;
 
-          return (
-            <li key={action.itemKey}>
+            return (
+              <li key={action.itemKey}>
+                <button
+                  type="button"
+                  className={styles.iconButton}
+                  aria-label={label}
+                  title={!isExpanded ? label : undefined}
+                  data-active={isActive ? "true" : undefined}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => onActionClick?.(action)}
+                >
+                  {Icon ? <Icon className={styles.icon} aria-hidden /> : null}
+
+                  {isExpanded ? (
+                    <span className={styles.label}>{label}</span>
+                  ) : null}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      <div className={styles.separator} aria-hidden />
+
+      <div className={styles.bottom}>
+        <ul className={styles.iconList}>
+          {logoutAction ? (
+            <li>
               <button
                 type="button"
-                className={styles.iconButton}
-                aria-label={label}
-                data-active={isActive ? "true" : undefined}
-                aria-current={isActive ? "page" : undefined}
-                onClick={() => onActionClick?.(action)}
+                className={`${styles.iconButton} ${styles.logout}`}
+                aria-label={logoutAction.label}
+                title={!isExpanded ? logoutAction.label : undefined}
+                onClick={() => onActionClick?.(logoutAction)}
               >
-                {Icon ? (
-                  <Icon
-                    className={styles.icon}
-                    style={color ? { color } : undefined}
-                  />
+                <LogOut className={styles.icon} aria-hidden />
+
+                {isExpanded ? (
+                  <span className={styles.label}>{logoutAction.label}</span>
                 ) : null}
               </button>
             </li>
-          );
-        })}
-      </ul>
+          ) : null}
+        </ul>
+      </div>
     </nav>
   );
 }

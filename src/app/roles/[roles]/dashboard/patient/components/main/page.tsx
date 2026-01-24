@@ -71,7 +71,7 @@ export default function PatientDashboardMain() {
   const [activeItem, setActiveItem] = useState<PatientMenuItem>(() => {
     try {
       const raw = sessionStorage.getItem(
-        "vida-plus:patient-dashboard:activeItem"
+        "vida-plus:patient-dashboard:activeItem",
       );
       if (
         raw === "Meu Dashboard" ||
@@ -99,7 +99,7 @@ export default function PatientDashboardMain() {
       { itemKey: "nav_config", label: "Configurações" },
       { itemKey: "nav_logout", label: "Sair", color: "#ff0000" },
     ],
-    []
+    [],
   );
 
   // Fecha com Esc
@@ -123,7 +123,7 @@ export default function PatientDashboardMain() {
     try {
       sessionStorage.setItem(
         "vida-plus:patient-dashboard:activeItem",
-        String(activeItem)
+        String(activeItem),
       );
     } catch {
       // ignore
@@ -141,7 +141,6 @@ export default function PatientDashboardMain() {
     }
 
     setActiveItem(label);
-    closeMenu();
   }
 
   return (
@@ -152,6 +151,7 @@ export default function PatientDashboardMain() {
           menuRef={menuRef}
           activeLabel={activeItem}
           onActionClick={handleActionClick}
+          isExpanded={isMenuOpen}
         />
 
         <section className={styles.content} aria-label="Conteúdo principal">

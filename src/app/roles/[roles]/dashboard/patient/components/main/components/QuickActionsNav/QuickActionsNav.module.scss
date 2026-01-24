@@ -1,0 +1,128 @@
+.root {
+  flex: 0 0 auto;
+  background-color: #ffffff;
+  box-shadow: 0 8px 9px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  width: 64px;
+  min-width: 64px;
+  box-sizing: border-box;
+  overflow: visible;
+  will-change: width;
+  transition: width 0.3s ease;
+}
+
+.expanded {
+  width: 200px;
+  max-width: 200px;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: visible;
+  flex: 1 1 auto;
+}
+
+.separator {
+  height: 1px;
+  background: #e5e7eb;
+  margin-top: auto;
+  margin-bottom: 0.25rem;
+  width: 100%;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.iconList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.expanded .iconList {
+  align-items: flex-start;
+  width: 100%;
+}
+
+.expanded .iconList > li {
+  width: 100%;
+}
+
+.iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background-color 120ms,
+    color 120ms,
+    transform 120ms;
+}
+
+.expanded .iconButton {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  gap: 0.75rem;
+}
+
+.iconButton[data-active="true"] {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.iconButton:hover {
+  background: rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.iconButton:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  color: var(--gray-700, #374151);
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: var(--gray-700, #374151);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 56px);
+}
+
+.logout {
+  color: #ef4444;
+}
+
+.logout .icon {
+  background: rgba(239, 68, 68, 0.06);
+  border-radius: 8px;
+  padding: 6px;
+  color: #ef4444;
+  width: 28px;
+  height: 28px;
+}
