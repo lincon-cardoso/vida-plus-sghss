@@ -1,19 +1,22 @@
 .dashboardContent {
   padding: 1rem;
-  .contentWrapper {
-    .title {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #1f2937;
-    }
+}
 
-    .description {
-      margin: 0;
-      color: #6b7280;
-      line-height: 1.5;
-    }
-  }
+.contentWrapper {
+  // Container para título e descrição
+}
+
+.contentTitle {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.contentDescription {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.5;
 }
 
 .statsSection {

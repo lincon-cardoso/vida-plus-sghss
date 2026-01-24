@@ -7,6 +7,9 @@ $muted-400: #e5e7eb;
 $text-700: #111827;
 $border: rgba(0, 0, 0, 0.06);
 
+// Estilos do MedicMonitor (SCSS Modules)
+// Regra do repo: aninhamento no máximo 2 níveis.
+
 .medicMonitor {
   width: 100%;
   display: block;
@@ -44,32 +47,32 @@ $border: rgba(0, 0, 0, 0.06);
   display: flex;
   gap: 0.75rem;
   align-items: center;
-}
 
-.primaryActions button {
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 700;
-  height: 52px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0 1.15rem;
-}
+  button {
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0 1.15rem;
+  }
 
-.primaryActions button[aria-label="Chamar próximo paciente"] {
-  flex: 1;
-  background: linear-gradient(180deg, $blue-500 0%, $blue-600 100%);
-  color: white;
-  box-shadow: 0 10px 22px rgba(31, 110, 242, 0.14);
-}
+  button[aria-label="Chamar próximo paciente"] {
+    flex: 1;
+    background: linear-gradient(180deg, $blue-500 0%, $blue-600 100%);
+    color: white;
+    box-shadow: 0 10px 22px rgba(31, 110, 242, 0.14);
+  }
 
-.primaryActions button[aria-label="Adicionar paciente"] {
-  width: 140px;
-  background: $green-500;
-  color: white;
+  button[aria-label="Adicionar paciente"] {
+    width: 140px;
+    background: $green-500;
+    color: white;
+  }
 }
 
 .filtersCard {
@@ -96,20 +99,6 @@ $border: rgba(0, 0, 0, 0.06);
 .filtersIcon {
   display: inline-grid;
   place-items: center;
-}
-
-.visuallyHidden {
-  border: 0 !important;
-  clip: rect(1px, 1px, 1px, 1px) !important;
-  -webkit-clip-path: inset(50%);
-  clip-path: inset(50%);
-  height: 1px !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  position: absolute !important;
-  width: 1px !important;
-  white-space: nowrap !important;
 }
 
 .columns {
@@ -143,14 +132,6 @@ $border: rgba(0, 0, 0, 0.06);
     align-items: center;
     gap: 0.5rem;
     color: rgba(255, 255, 255, 0.95);
-  }
-
-  /* smaller priority dot in the queue area and aligned right */
-  .priority {
-    width: 10px;
-    height: 10px;
-    margin-left: auto;
-    border-radius: 999px;
   }
 }
 
@@ -192,10 +173,6 @@ $border: rgba(0, 0, 0, 0.06);
   place-items: center;
   font-weight: 700;
   color: white;
-}
-
-.info {
-  flex: 1;
 }
 
 .queueInfo {
@@ -308,7 +285,7 @@ $border: rgba(0, 0, 0, 0.06);
   margin-top: 0.25rem;
 }
 
-/* Icon background and value color per card (matches image order) */
+// Fundo do ícone e cor do valor por card (segue a ordem dos cards)
 .iconWaiting {
   background: #eef2ff;
   color: $blue-700;
@@ -361,10 +338,11 @@ $border: rgba(0, 0, 0, 0.06);
   margin-left: 0;
   display: flex;
   align-items: center;
-}
 
-.actions button {
-  display: none; /* do not display the button in the card version as in the image */
+  // No layout atual, este botão não é exibido.
+  button {
+    display: none;
+  }
 }
 
 @media (max-width: 1100px) {
@@ -379,7 +357,7 @@ $border: rgba(0, 0, 0, 0.06);
   }
 }
 
-/* Painel de Chamadas (lado esquerdo) */
+// Painel de chamadas (lado esquerdo)
 .panelTop {
   display: flex;
   align-items: center;
@@ -513,7 +491,7 @@ $border: rgba(0, 0, 0, 0.06);
   gap: 0.6rem;
 }
 
-/* Filtros (lado direito) */
+// Filtros (lado direito)
 .searchRow {
   display: flex;
   align-items: center;
@@ -521,20 +499,20 @@ $border: rgba(0, 0, 0, 0.06);
   background: $muted-300;
   border-radius: 12px;
   padding: 0.75rem 0.85rem;
+
+  input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0;
+  }
 }
 
 .searchIcon {
   display: inline-grid;
   place-items: center;
   color: #6b7280;
-}
-
-.searchRow input {
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 0;
 }
 
 .selectRow {
@@ -567,25 +545,7 @@ $border: rgba(0, 0, 0, 0.06);
   color: #6b7280;
 }
 
-.filterPills {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
-  flex-wrap: wrap;
-}
-
-.pill {
-  font-size: 0.95rem;
-  padding: 0.65rem 0.9rem;
-  border-radius: 12px;
-  font-weight: 500;
-  border: none;
-  background: $muted-300;
-  color: #111827;
-  cursor: pointer;
-}
-
-/* Lista de atendimento */
+// Lista de atendimento
 .serviceCard {
   background: white;
   border-radius: 14px;

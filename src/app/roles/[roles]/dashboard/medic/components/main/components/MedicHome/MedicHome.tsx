@@ -15,13 +15,19 @@ import {
   mockDoctorName,
 } from "./data";
 
+/**
+ * Componente principal do dashboard do médico, exibindo estatísticas, agenda, pendências e ações rápidas.
+ * Usa "use client" devido ao estado para atualização em tempo real da data/hora.
+ */
 export default function MedicHome({
   nome = mockDoctorName,
 }: {
   nome?: string;
 }) {
+  // Estado para manter a data atualizada em tempo real
   const [currentDate, setCurrentDate] = useState(new Date());
 
+  // Efeito para atualizar a data a cada minuto, simulando relógio em tempo real
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentDate(new Date());
@@ -65,8 +71,8 @@ export default function MedicHome({
   return (
     <div className={styles.dashboardContent}>
       <div className={styles.contentWrapper}>
-        <h2 className={styles.title}>Bom dia, {nome}!</h2>
-        <p className={styles.description}>
+        <h2 className={styles.contentTitle}>Bom dia, {nome}!</h2>
+        <p className={styles.contentDescription}>
           Hoje é {diaSemana}, {diaMes} de {mesAno} de {ano} às {hora}:{minuto}.
         </p>
       </div>

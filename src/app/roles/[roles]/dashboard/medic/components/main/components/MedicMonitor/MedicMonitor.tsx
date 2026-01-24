@@ -12,12 +12,22 @@ import type { ReactElement } from "react";
 import styles from "./MedicMonitor.module.scss";
 import { type MedicMonitorProps, defaultStats, defaultQueue } from "./data";
 
+/**
+ * Monitor do médico (fila + painel de chamadas).
+ *
+ * Aceita `stats` e `queue` via props para facilitar preview/testes,
+ * mas usa dados padrão quando não forem fornecidos.
+ */
 export default function MedicMonitor({
   stats: propStats,
   queue: propQueue,
 }: MedicMonitorProps = {}): ReactElement {
   const stats = propStats || defaultStats;
   const queue = propQueue || defaultQueue;
+
+  function capitalizeFirst(value: string): string {
+    return `${value.charAt(0).toUpperCase()}${value.slice(1)}`;
+  }
 
   return (
     <section
@@ -40,8 +50,9 @@ export default function MedicMonitor({
       >
         {stats.map((s) => {
           const Icon = s.Icon;
-          const iconClass = `${styles.icon} ${styles[`icon${s.id.charAt(0).toUpperCase() + s.id.slice(1)}`]}`;
-          const statValueClass = `${styles.statValue} ${styles[`statValue${s.id.charAt(0).toUpperCase() + s.id.slice(1)}`]}`;
+          const idSuffix = capitalizeFirst(s.id);
+          const iconClass = `${styles.icon} ${styles[`icon${idSuffix}`]}`;
+          const statValueClass = `${styles.statValue} ${styles[`statValue${idSuffix}`]}`;
           return (
             <li
               key={s.id}
