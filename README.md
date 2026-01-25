@@ -1,70 +1,65 @@
-# VidaPlus — Sistema de Gestão Hospitalar (SGHSS) ✅
+# VidaPlus — Sistema de Gestão Hospitalar (SGHSS)
 
-**VidaPlus** é uma plataforma web para gestão hospitalar e serviços de saúde (SGHSS), com foco em agendamento, prontuário do paciente e interfaces separadas por perfis (Paciente, Profissional e Gestor). Este repositório contém uma aplicação frontend e rotas API implementadas em **Next.js + TypeScript**.
-
----
-
-## 🔍 Visão Geral
-
-- Projeto: VidaPlus — Sistema de Gestão Hospitalar (SGHSS)
-- Stack principal: **Next.js 16**, **React 19**, **TypeScript**, **Prisma** (cliente), **Postgres (pg)**
-- Autenticação básica via **JWT** (API: `/api/auth`) — atualmente usa credenciais de desenvolvimento hardcoded
-- Foco inicial: Dashboard de paciente com agendamento, visualização de prontuário e componentes reutilizáveis
+**VidaPlus** é um protótipo de plataforma web para gestão hospitalar desenvolvido com Next.js e TypeScript. O objetivo é oferecer funcionalidades principais para pacientes, profissionais e gestores: login por perfis, dashboards por role, agendamentos, prontuário e componentes reutilizáveis.
 
 ---
 
-## ✨ Recursos implementados (visíveis no código)
+## 🚀 Stack
 
-- Tela de login com seleção de perfil (Paciente / Profissional / Gestor)
-- API de autenticação: `POST /api/auth` que gera JWT e define cookie `token` (httpOnly)
-- Dashboard do paciente com componentes:
-  - Prontuário (exames, histórico)
-  - Agendamento de consultas (diálogo de agendamento)
-  - Cartões de compromissos e notificações
-- Estrutura de layout com metadados SEO / Open Graph e gerenciamento de nonce CSP
+- **Next.js 16** (App Router) • **React 19** • **TypeScript**
+- **Prisma** (client) — planejado para persistência (schema ainda não definido)
+- **PostgreSQL** (opcional)
+- SCSS Modules, SWR, Zod/Joi, Jest + Testing Library
 
 ---
 
-## 🧰 Tecnologias
+## ✅ Estado atual — O que já foi implementado
 
-- Next.js (app router)
-- React
-- TypeScript
-- Prisma (client) — schema/BD ainda não incluídos no repositório
-- PostgreSQL (via `pg`)
-- SWR, Zod, Joi (validações), Sass para estilos
-- Testes: Jest + Testing Library
-
----
-
-## 🚀 Pré-requisitos
-
-- Node.js >= 18
-- npm / yarn / pnpm
-- (Opcional) PostgreSQL se for usar persistência com Prisma
+- Tela de **login** com seleção de perfil (Paciente / Profissional / Gestor). (`src/app/login`)
+- Rota de **autenticação (DEV)**: `POST /api/auth` — gera JWT e seta cookie `token` (httpOnly). (`src/app/api/auth/route.ts`)
+- **Proteção de rotas** e redirecionamento para dashboards por role (`src/app/roles/[roles]/dashboard/*`).
+- Dashboards com componentes de interface: prontuário, diálogo de agendamento, notificações e cards.
+- Helpers essenciais: `src/lib/auth.ts` (sign/verify JWT) e `src/lib/nonce.ts` (CSP nonce).
+- Componentes acessíveis (ex.: `Modal` com trap de foco, ESC e clique no overlay).
 
 ---
 
-## ⚙️ Configuração local
+## ⚠️ Pendências (o que falta implementar)
 
-1. Clone o repositório
+Prioridade alta
+
+- Definir e implementar **Prisma schema** (Users, Roles, Appointments, MedicalRecords) e **migrations**.
+- Substituir autenticação hardcoded por **autenticação contra DB** com senhas hasheadas (argon2).
+
+Prioridade média
+
+- Implementar **API Routes** para agendamento, prontuário, preferências e exportações.
+- Adicionar **testes** (unit, integration e E2E) para fluxos críticos (login, agendamento).
+- Implementar **autorização no servidor** (middleware, checagens de role).
+
+Baixa prioridade / melhorias
+
+- Documentação para avaliadores (passos de verificação, credenciais DEV bem documentadas).
+- Configurar **CI/CD** e checks automáticos (lint, typecheck, test, security checks).
+
+---
+
+## 📋 Como rodar localmente (resumo)
+
+1. Clonar o repositório
 
 ```bash
 git clone <repo-url>
 cd vida-plus-sghss
 ```
 
-2. Instale dependências
+2. Instalar dependências
 
 ```bash
 npm install
-# ou
-# pnpm install
-# ou
-# yarn
 ```
 
-3. Crie um arquivo `.env` na raiz com as variáveis mínimas:
+3. Criar `.env` com no mínimo:
 
 ```env
 NODE_ENV=development
@@ -72,84 +67,43 @@ JWT_SECRET=uma_chave_secreta_segura
 # DATABASE_URL=postgresql://user:password@host:5432/dbname
 ```
 
-> Observação: **o projeto atualmente não inclui schema Prisma** (arquivo `prisma/schema.prisma` está vazio). Você precisará definir o schema e executar `prisma migrate` / `prisma generate` caso queira usar banco de dados.
-
-4. Rodar em modo de desenvolvimento
+4. Rodar em dev
 
 ```bash
 npm run dev
 ```
 
-Abra http://localhost:3000
+Abrir: http://localhost:3000
 
 ---
 
-## 📋 Scripts úteis
+## 🔒 Notas de segurança e credenciais DEV
 
-- `npm run dev` — iniciar ambiente de desenvolvimento (Next)
-- `npm run build` — gera build (executa `prisma generate` antes)
-- `npm run start` — iniciar em produção
-- `npm run lint` — rodar ESLint
-- `npm run typecheck` — checar tipos TypeScript
-- `npm run test` — executar testes com Jest
-- `npm run db:generate` — `prisma generate`
-- `npm run db:migrate` — `prisma migrate dev`
-- `npm run db:studio` — `prisma studio`
+- **Credenciais de desenvolvimento (DEV)** atualmente em uso para facilitar avaliação:
+  - Email: `usuario@gmail.com`
+  - Senha: `usuario123`
+  - Role: `patient` / `doctor` / `admin`
+- Estas credenciais são **temporárias** e devem ser removidas assim que a autenticação com DB estiver disponível.
+- **JWT_SECRET** deve estar em `.env` (não comitar valores reais no repositório).
 
 ---
 
-## 🔒 Observações de segurança / estado atual (importante)
+## ✅ Checklist rápida de próximas tarefas
 
-> **Credenciais de desenvolvimento** (DEV):
->
-> - **Email:** `linkon789@gmail.com`
-> - **Senha:** `link2502`
-> - **Role:** `patient`
->
-> Essas credenciais estão **hardcoded** em `src/app/api/auth/route.ts` apenas para facilitar desenvolvimento. Substitua por uma integração real (banco de dados e verificação segura) antes de ir a produção.
-
-- O JWT é assinado usando `JWT_SECRET` (ver `src/lib/auth.ts`). Certifique-se de definir `JWT_SECRET` em `.env` em ambiente real.
-- Cookie `token` é setado como `httpOnly` e `secure` quando `NODE_ENV === 'production'`.
+- [ ] Criar `schema.prisma` e seeds iniciais (User, Role, Appointment, MedicalRecord)
+- [ ] Implementar login contra DB e remover credenciais hardcoded
+- [ ] Criar endpoints para agendamento e prontuário
+- [ ] Adicionar testes automatizados (unit/integration/E2E)
+- [ ] Documentar passos de avaliação e critérios de aceitação
 
 ---
 
-## 🧭 Estrutura do projeto (resumo)
+## 🤝 Como contribuir
 
-- `src/app` – rotas do Next (páginas e layouts)
-  - `login/` – UI de login
-  - `roles/[roles]/dashboard/...` – dashboards por perfil (patient, doctor, admin)
-  - `api/auth/route.ts` – endpoint de autenticação (POST)
-- `src/lib` – utilitários (auth, nonce, prisma client)
-- `public/` – ícones, imagens
-- `prisma/` – schema e migrations (vazio atualmente)
+1. Fork → branch `feature/...` → PR com descrição e checklist
+2. Execute `npm run lint` e `npm run typecheck`
+3. Inclua testes para mudanças críticas
 
 ---
 
-## ✅ Pontos pendentes / Sugestões de melhoria
-
-- Implementar persistência real (Prisma schema + migrations + seeds)
-- Remover credenciais hardcoded e criar rota de autenticação com banco (hash de senha / argon2)
-- Implementar roles e autorização no servidor (middleware/route guards)
-- Adicionar testes e coverage para APIs e componentes importantes
-- Configurar CI/CD e checklist de segurança (rotas, CSP, HSTS)
-
----
-
-## 🤝 Contribuição
-
-1. Fork → branch feature → PR com descrição clara
-2. Siga as regras de ESLint / TypeScript
-3. Adicione testes para alterações críticas
-
----
-
-## 📄 Licença
-
-Defina a licença do projeto (ex: MIT) adicionando um arquivo `LICENSE` na raiz.
-
----
-
-Se quiser, eu posso:
-
-- Gerar um template de `schema.prisma` e script de seed inicial ✅
-- Remover as credenciais hardcoded e substituir por um fluxo de autenticação com SQLite/Postgres e Prisma ✅
+Se desejar, eu posso gerar um **template inicial de `schema.prisma`** e um **script de seed** (User + Role + admin) para acelerar as próximas tarefas. Deseja que eu crie isso agora? ✅
