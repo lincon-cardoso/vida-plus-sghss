@@ -29,8 +29,13 @@ const ADMIN_ACTIONS: AdminAction[] = [
     label: "Assistencial",
     icon: ACTION_ICONS.nav_assistance,
     subItems: [
-      { key: "atendimentos", label: "Atendimentos" },
-      { key: "prontuarios", label: "Prontuários" },
+      { key: "gestao_leitos", label: "Gestão de Leitos" },
+      { key: "triagem", label: "Triagem" },
+      { key: "laboratorio", label: "Laboratório" },
+      { key: "cuidados_enfermagem", label: "Cuidados de Enfermagem" },
+      { key: "banco_sangue", label: "Banco de Sangue" },
+      { key: "centro_cirurgico", label: "Centro Cirúrgico" },
+      { key: "vacinacao", label: "Vacinação" },
     ],
   },
   {
@@ -38,19 +43,34 @@ const ADMIN_ACTIONS: AdminAction[] = [
     label: "Gestão",
     icon: ACTION_ICONS.nav_management,
     subItems: [
-      { key: "relatorios", label: "Relatórios" },
-      { key: "cadastros", label: "Cadastros" },
+      { key: "profissionais", label: "Profissionais" },
+      { key: "agendamentos", label: "Agendamentos" },
+      { key: "escalas_plantao", label: "Escalas/Plantões" },
+      { key: "estoque_farmacia", label: "Estoque/Farmácia" },
+      { key: "gestao_financeira", label: "Gestão Financeira" },
+      { key: "relatorios_fluxo", label: "Relatórios de Fluxo" },
+      { key: "regras_fluxo", label: "Regras de Fluxo" },
     ],
   },
   {
     itemKey: "nav_quality",
     label: "Qualidade",
     icon: ACTION_ICONS.nav_quality,
+    subItems: [
+      { key: "indicadores", label: "Indicadores" },
+      { key: "satisfacao", label: "Satisfação" },
+      { key: "auditoria", label: "Auditoria" },
+      { key: "same_arquivo", label: "SAME (Arquivo)" },
+    ],
   },
   {
     itemKey: "nav_billing",
     label: "Faturamento",
     icon: ACTION_ICONS.nav_billing,
+    subItems: [
+      { key: "relatorios_faturamento", label: "Relatórios" },
+      { key: "tiss_operadoras", label: "TISS (Operadoras)" },
+    ],
   },
   { itemKey: "nav_system", label: "Sistema", icon: ACTION_ICONS.nav_system },
 ];

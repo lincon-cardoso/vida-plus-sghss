@@ -6,6 +6,21 @@ import {
   FileText,
   Users,
   Activity,
+  Bed,
+  TestTube,
+  Heart,
+  Droplet,
+  Scissors,
+  Syringe,
+  Calendar,
+  Clock,
+  Box,
+  DollarSign,
+  Settings,
+  TrendingUp,
+  Star,
+  Shield,
+  Folder,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent, RefObject } from "react";
@@ -147,6 +162,46 @@ export default function AdminQuickActionsNav({
 
   function getSubIcon(key: string) {
     switch (key) {
+      case "profissionais":
+        return Users;
+      case "agendamentos":
+        return Calendar;
+      case "escalas_plantao":
+        return Clock;
+      case "estoque_farmacia":
+        return Box;
+      case "gestao_financeira":
+        return DollarSign;
+      case "relatorios_fluxo":
+        return BarChart2;
+      case "regras_fluxo":
+        return Settings;
+      case "indicadores":
+        return TrendingUp;
+      case "satisfacao":
+        return Star;
+      case "auditoria":
+        return Shield;
+      case "same_arquivo":
+        return Folder;
+      case "relatorios_faturamento":
+        return BarChart2;
+      case "tiss_operadoras":
+        return DollarSign;
+      case "gestao_leitos":
+        return Bed;
+      case "triagem":
+        return Activity;
+      case "laboratorio":
+        return TestTube;
+      case "cuidados_enfermagem":
+        return Heart;
+      case "banco_sangue":
+        return Droplet;
+      case "centro_cirurgico":
+        return Scissors;
+      case "vacinacao":
+        return Syringe;
       case "atendimentos":
         return Activity;
       case "prontuarios":
