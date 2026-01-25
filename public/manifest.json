@@ -1,0 +1,37 @@
+{
+  "name": "VidaPlus - Sistema de Gestão Hospitalar",
+  "short_name": "VidaPlus",
+  "description": "Sistema de Gestão Hospitalar e Serviços de Saúde (SGHSS)",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0066cc",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "medical", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Login",
+      "short_name": "Login",
+      "description": "Acessar o sistema",
+      "url": "/login",
+      "icons": [{ "src": "/icons/icons.png", "sizes": "96x96" }]
+    }
+  ]
+}

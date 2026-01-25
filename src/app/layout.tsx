@@ -4,7 +4,7 @@ import type { Metadata, Viewport } from "next";
 
 // ─── Metadados SEO e Open Graph ───────────────────────────
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vidaplus.com"), // Substitua pela URL real
+  metadataBase: new URL("https://vidaplus.devlincon.com.br"),
   title: {
     default: "VidaPlus - Sistema de Gestão Hospitalar",
     template: "%s | VidaPlus",
@@ -67,18 +67,18 @@ export const metadata: Metadata = {
       "@type": "Organization",
       name: "VidaPlus",
       description: "Sistema de Gestão Hospitalar e Serviços de Saúde (SGHSS)",
-      url: "https://vidaplus.com",
+      url: "https://vidaplus.devlincon.com.br",
       logo: "/icons/icons.png",
       sameAs: [
         // Adicione URLs de redes sociais se houver
       ],
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: "+55-11-9999-9999", // Substitua pelo telefone real
+        telephone: "+55-11-0000-0000",
         contactType: "customer service",
       },
       medicalSpecialty: "Healthcare",
-      foundingDate: "2023", // Substitua pela data real
+      foundingDate: "2024",
     }),
   },
 };
@@ -106,6 +106,33 @@ export default async function RootLayout({
       <head>
         {/* Nonce disponível para scripts inline se necessário */}
         <meta name="csp-nonce" content={nonce} />
+
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+
+        {/* Apple Touch Icons */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/icons.png" />
+
+        {/* Favicons */}
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/icons/icons.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/icons/icons.png"
+        />
+
+        {/* Safari Pinned Tab */}
+        <link rel="mask-icon" href="/icons/icons.png" color="#0066cc" />
+
+        {/* MS Application */}
+        <meta name="msapplication-TileColor" content="#0066cc" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>
       <body className="app-root">{children}</body>
     </html>

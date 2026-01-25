@@ -4,10 +4,20 @@ const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000");
+    : "https://vidaplus.devlincon.com.br");
 
 module.exports = {
   siteUrl,
   generateRobotsTxt: true,
   exclude: ["/api/*", "/roles/*", "/_not-found"],
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/roles/*/dashboard/"],
+      },
+    ],
+    additionalSitemaps: [`${siteUrl}/sitemap.xml`],
+  },
 };
