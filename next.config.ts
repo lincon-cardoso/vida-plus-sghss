@@ -88,6 +88,31 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // === CORS para API Routes ===
+      // Permite chamadas Cross-Origin para endpoints de API a partir de origens confiáveis.
+      // Controlado via variável de ambiente ALLOWED_API_ORIGINS (ex.: https://vidaplus.devlincon.com.br).
+      // Se ALLOWED_API_ORIGINS estiver vazio, por segurança usamos a origem do site (NEXT_PUBLIC_SITE_URL) como default.
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "Access-Control-Allow-Origin",
+            value:
+              process.env.ALLOWED_API_ORIGINS ||
+              process.env.NEXT_PUBLIC_SITE_URL ||
+              "*",
+          },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET, POST, PUT, DELETE, OPTIONS",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
+            value: "Content-Type, Authorization",
+          },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+        ],
+      },
     ];
   },
 

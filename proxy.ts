@@ -138,8 +138,12 @@ export function proxy(request: NextRequest) {
     },
   });
 
-  // Aplica CSP com nonce dinâmico
-  response.headers.set("Content-Security-Policy", generateCSP(nonce));
+  // Aplica CSP com nonce dinâmico (inclui Trusted Types condicionalmente)
+  const enableTrustedTypes = process.env.ENABLE_TRUSTED_TYPES === "true";
+  const cspValue =
+    generateCSP(nonce) +
+    (enableTrustedTypes ? "; require-trusted-types-for 'script'" : "");
+  response.headers.set("Content-Security-Policy", cspValue);
 
   // Aplica headers de segurança
   for (const [key, value] of Object.entries(securityHeaders)) {

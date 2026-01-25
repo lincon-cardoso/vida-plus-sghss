@@ -135,6 +135,56 @@ h6 {
   outline-offset: 3px;
 }
 
+/* Skip-link visible on focus for keyboard users */
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+}
+
+/* Visual skip-link style to be noticeable when focused */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background: var(--primary-blue);
+  color: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  z-index: 1000;
+  transform: translateY(-120%);
+  transition: transform 120ms ease-in-out;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Links: ensure adequate contrast and visible indicator (not color-only) */
+a {
+  color: var(--primary-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:focus,
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Ensure interactive elements show a visible focus ring */
+:focus-visible {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: 3px;
+}
+
 /* App root and container utilities */
 .app-root {
   min-height: 100vh;

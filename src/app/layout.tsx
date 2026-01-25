@@ -114,18 +114,7 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/icons.png" />
 
         {/* Favicons */}
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/icons/icons.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/icons/icons.png"
-        />
+        <link rel="icon" href="/favicon.ico" />
 
         {/* Safari Pinned Tab */}
         <link rel="mask-icon" href="/icons/icons.png" color="#0066cc" />
@@ -134,7 +123,15 @@ export default async function RootLayout({
         <meta name="msapplication-TileColor" content="#0066cc" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>
-      <body className="app-root">{children}</body>
+      <body className="app-root">
+        {/* Acessibilidade: Skip link para pular direto ao conteúdo principal */}
+        <a href="#main-content" className="sr-only sr-only-focusable skip-link">
+          Pular para o conteúdo
+        </a>
+        <main id="main-content" role="main">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
