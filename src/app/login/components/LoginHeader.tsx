@@ -1,6 +1,11 @@
-"use client";
+/**
+ * LoginHeader — Server Component (padrão).
+ * Componente estático de apresentação.
+ * Motivo: não usa estado nem efeitos do browser; mantido como Server Component para performance.
+ */
 import styles from "./styles/loginStyle.module.scss";
-import { Heart, Stethoscope, Shield, Calendar } from "lucide-react";
+import { Heart } from "lucide-react";
+import { features } from "./data";
 
 export default function LoginHeader() {
   return (
@@ -34,39 +39,20 @@ export default function LoginHeader() {
         role="list"
         aria-label="Recursos do sistema"
       >
-        <div className={styles.informationItem} role="listitem">
-          <div className={styles.informationImage} aria-hidden="true">
-            <Stethoscope />
-          </div>
-          <div className={styles.informationText}>
-            <h3 className={styles.informationTitle}>Telemedicina Integrada</h3>
-            <p className={styles.informationDescription}>
-              Consultas online seguras e eficientes
-            </p>
-          </div>
-        </div>
-        <div className={styles.informationItem} role="listitem">
-          <div className={styles.informationImage} aria-hidden="true">
-            <Shield />
-          </div>
-          <div className={styles.informationText}>
-            <h3 className={styles.informationTitle}>Segurança Avançada</h3>
-            <p className={styles.informationDescription}>
-              Dados protegidos com criptografia LGPD
-            </p>
-          </div>
-        </div>
-        <div className={styles.informationItem} role="listitem">
-          <div className={styles.informationImage} aria-hidden="true">
-            <Calendar />
-          </div>
-          <div className={styles.informationText}>
-            <h3 className={styles.informationTitle}>Agendamento Inteligente</h3>
-            <p className={styles.informationDescription}>
-              Gestão completa de consultas e exames
-            </p>
-          </div>
-        </div>
+        {features.map((f) => {
+          const Icon = f.icon;
+          return (
+            <div className={styles.informationItem} role="listitem" key={f.id}>
+              <div className={styles.informationImage} aria-hidden="true">
+                <Icon />
+              </div>
+              <div className={styles.informationText}>
+                <h3 className={styles.informationTitle}>{f.title}</h3>
+                <p className={styles.informationDescription}>{f.description}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,7 +1,17 @@
 "use client";
+/**
+ * LoginForm — Client Component.
+ * Justificativa: usa `useState`, `useRef` e `useRouter` (navegação client-side).
+ * Responsabilidade: gerenciar formulário de login e interações do usuário.
+ *
+ * Observação: consome `roles` a partir de `./data` para evitar duplicação
+ * e permitir testes/mocks centralizados.
+ */
 import style from "./styles/FormStyle.module.scss";
 import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
+import type { Role } from "./data";
+import { roles } from "./data";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -12,7 +22,20 @@ export default function LoginForm() {
   const [success, setSuccess] = useState("");
   const errorRef = useRef<HTMLDivElement | null>(null);
 
-  const [role, setRole] = useState<"patient" | "doctor" | "admin">("patient");
+  const [role, setRole] = useState<Role["id"]>(roles[0].id);
+
+  const handleRoleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const order: Array<Role["id"]> = roles.map((r) => r.id);
+    const index = order.indexOf(role);
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      setRole(order[(index + 1) % order.length]);
+      e.preventDefault();
+    }
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      setRole(order[(index - 1 + order.length) % order.length]);
+      e.preventDefault();
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +57,7 @@ export default function LoginForm() {
 
       if (!res.ok) {
         setError(
-          data?.message || "Falha na autenticação. Verifique suas credenciais."
+          data?.message || "Falha na autenticação. Verifique suas credenciais.",
         );
         errorRef.current?.focus();
         setLoading(false); // libera só no erro
@@ -42,7 +65,9 @@ export default function LoginForm() {
       }
 
       setSuccess("Login bem-sucedido! Redirecionando...");
+      setLoading(false);
 
+      // Redirecionar rapidamente (0.5s) para não confundir o usuário
       setTimeout(() => {
         const serverRole = data?.role as
           | "patient"
@@ -54,7 +79,7 @@ export default function LoginForm() {
         } else {
           router.replace(`/roles/${role}`);
         }
-      }, 5000);
+      }, 500);
     } catch {
       setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
       errorRef.current?.focus();
@@ -79,88 +104,31 @@ export default function LoginForm() {
               Selecione seu perfil
             </label>
 
-            <div className={style["role-grid"]}>
-              <button
-                type="button"
-                onClick={() => setRole("patient")}
-                disabled={loading}
-                aria-pressed={role === "patient"}
-                className={`${style["role-btn"]} ${
-                  role === "patient" ? style["is-active"] : ""
-                }`}
-              >
-                <svg
-                  className={style["role-btn__icon"]}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                  />
-                </svg>
-                <span className={style["role-btn__label"]}>Paciente</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRole("doctor")}
-                disabled={loading}
-                aria-pressed={role === "doctor"}
-                className={`${style["role-btn"]} ${
-                  role === "doctor" ? style["is-active"] : ""
-                }`}
-              >
-                <svg
-                  className={style["role-btn__icon"]}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.8}
-                    d="M4.8 10.2a4.2 4.2 0 108.4 0 4.2 4.2 0 00-8.4 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.8}
-                    d="M9 14.4v3.6a3 3 0 003 3v0a3 3 0 003-3v-1.5"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.8}
-                    d="M15 13.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"
-                  />
-                </svg>
-                <span className={style["role-btn__label"]}>Profissional</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setRole("admin")}
-                disabled={loading}
-                aria-pressed={role === "admin"}
-                className={`${style["role-btn"]} ${
-                  role === "admin" ? style["is-active"] : ""
-                }`}
-              >
-                <svg
-                  className={style["role-btn__icon"]}
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  stroke="none"
-                >
-                  <path d="M12 2l7 4v6c0 5-3.5 9.27-7 10.5-3.5-1.23-7-5.5-7-10.5V6l7-4z" />
-                </svg>
-                <span className={style["role-btn__label"]}>Gestor</span>
-              </button>
+            <div
+              className={style["role-grid"]}
+              role="radiogroup"
+              aria-label="Seleção de perfil"
+              onKeyDown={handleRoleKeyDown}
+            >
+              {roles.map((r) => {
+                const Icon = r.icon;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={role === r.id}
+                    tabIndex={role === r.id ? 0 : -1}
+                    onClick={() => setRole(r.id)}
+                    disabled={loading}
+                    className={`${style["role-btn"]} ${role === r.id ? style["is-active"] : ""}`}
+                    aria-label={r.label}
+                  >
+                    <Icon className={style["role-btn__icon"]} />
+                    <span className={style["role-btn__label"]}>{r.label}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -201,15 +169,25 @@ export default function LoginForm() {
           {/* Lembrar e recuperar */}
           <div className={style["form-row"]}>
             <label className={style["checkbox"]}>
-              <input type="checkbox" className={style["checkbox__input"]} />
+              <input
+                id="remember"
+                name="remember"
+                type="checkbox"
+                className={style["checkbox__input"]}
+              />
               <span className={style["checkbox__label"]}>
                 Manter-me conectado
               </span>
             </label>
 
-            <a href="#" className={style["link"] + " " + style["link--muted"]}>
+            <button
+              type="button"
+              className={style["link"] + " " + style["link--muted"]}
+              onClick={() => void router.push("/login/recuperar-senha")}
+              aria-label="Recuperar senha"
+            >
               Recuperar senha
-            </a>
+            </button>
           </div>
           {/* Mensagem de erro */}
           {error && (
@@ -255,12 +233,14 @@ export default function LoginForm() {
         <footer className={style["login-card__footer"]}>
           <p className={style["login-card__foottext"]}>
             Primeiro acesso?{" "}
-            <a
-              href="#"
+            <button
+              type="button"
               className={style["link"] + " " + style["link--primary"]}
+              onClick={() => void router.push("/login/solicitar-credenciais")}
+              aria-label="Solicitar credenciais"
             >
               Solicite suas credenciais
-            </a>
+            </button>
           </p>
         </footer>
       </div>
