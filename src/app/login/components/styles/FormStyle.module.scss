@@ -52,6 +52,14 @@ $bg-hover: #f0f9ff;
       align-items: flex-start;
       margin-bottom: 0.5rem;
 
+      .login-card__headerTop {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
       .login-card__title {
         font-size: 24px;
         font-weight: 700;

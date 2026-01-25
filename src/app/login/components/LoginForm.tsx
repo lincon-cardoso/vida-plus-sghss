@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
 import type { Role } from "./data";
 import { roles } from "./data";
+import Modal from "@/components/Modal";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -21,6 +22,8 @@ export default function LoginForm() {
   const router = useRouter();
   const [success, setSuccess] = useState("");
   const errorRef = useRef<HTMLDivElement | null>(null);
+
+  const [isHelpOpen, setIsHelpOpen] = useState(true);
 
   const [role, setRole] = useState<Role["id"]>(roles[0].id);
 
@@ -91,7 +94,17 @@ export default function LoginForm() {
     <div className={style["login-card"]}>
       <div className={style["login-card__container"]}>
         <header className={style["login-card__header"]}>
-          <h2 className={style["login-card__title"]}>Bem-vindo de volta</h2>
+          <div className={style["login-card__headerTop"]}>
+            <h2 className={style["login-card__title"]}>Bem-vindo de volta</h2>
+            <button
+              type="button"
+              className={style["link"] + " " + style["link--muted"]}
+              onClick={() => setIsHelpOpen(true)}
+              aria-label="Abrir ajuda de entrada"
+            >
+              Ajuda
+            </button>
+          </div>
           <p className={style["login-card__subtitle"]}>
             Entre com suas credenciais para acessar o sistema
           </p>
@@ -244,6 +257,21 @@ export default function LoginForm() {
           </p>
         </footer>
       </div>
+
+      <Modal
+        isOpen={isHelpOpen}
+        onClose={() => setIsHelpOpen(false)}
+        title="Como entrar no VidaPlus"
+      >
+        <p>
+          Para acessar: selecione seu perfil, preencha seu e-mail corporativo e
+          senha, e clique em <strong>Acessar Plataforma</strong>.
+        </p>
+        <p>
+          Se tiver dificuldades, utilize <em>Recuperar senha</em> ou solicite
+          credenciais.
+        </p>
+      </Modal>
 
       {/* Conteúdo adicional (rodapé abaixo do card) */}
       <div className={style["login-card__additional"]}>
