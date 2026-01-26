@@ -69,7 +69,9 @@ export default function LoginForm() {
       }
 
       setSuccess("Login bem-sucedido! Redirecionando...");
-      setLoading(false);
+      // Mantém o botão desabilitado até o redirecionamento para evitar
+      // que o botão seja liberado momentaneamente antes da navegação.
+      // Observação: o componente será desmontado após o `router.replace`.
 
       // Redirecionar rapidamente (0.5s) para não confundir o usuário
       setTimeout(() => {
