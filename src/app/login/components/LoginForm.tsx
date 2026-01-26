@@ -266,145 +266,86 @@ export default function LoginForm() {
       >
         <section>
           <p>
-            Resumo rápido: este repositório contém um protótipo funcional da
-            interface do VidaPlus (SGHSS). A interface de login e os dashboards
-            por perfil estão implementados, mas a persistência e APIs de domínio
-            ainda precisam ser concluídas para virar uma solução integrada.
+            <strong>Resumo do Projeto:</strong> Protótipo do SGHSS Vida Plus,
+            sistema de gestão hospitalar em Next.js 16 + TypeScript. Foco em
+            dashboards acessíveis por perfis (paciente, médico, admin), com
+            autenticação DEV e UI funcional. Persistência e APIs pendentes para
+            integração completa.
           </p>
 
-          <h3>O que já está pronto</h3>
+          <h3>✅ Implementado</h3>
           <ul>
             <li>
-              UI de Login com seleção de perfil (patient / doctor / admin).
+              UI de login com seleção de perfil (patient/doctor/admin) e
+              validação.
             </li>
             <li>
-              `POST /api/auth` em modo DEV — gera JWT e seta cookie httpOnly.
+              API `/api/auth` (DEV): valida credenciais hardcoded, gera JWT,
+              seta cookie httpOnly.
             </li>
             <li>
-              Layouts e componentes dos dashboards (patient, medic, admin).
+              Dashboards por perfil: componentes UI (agendamentos, prontuário,
+              navegação), acessíveis (WCAG, teclado).
             </li>
             <li>
-              Componentes acessíveis (modais, formulários, navegação por
-              teclado).
+              Helpers: JWT (sign/verify), nonce (CSP), stores (Zustand),
+              devCredentials.
             </li>
             <li>
-              Helpers: `src/lib/auth.ts` (JWT helpers),
-              `src/lib/devCredentials.ts`.
+              Qualidade: SCSS Modules, Server Components padrão, lint/typecheck
+              OK, sem `any`/`console.log`.
             </li>
           </ul>
 
-          <h3>O que falta (resumo por prioridade)</h3>
+          <h3>❌ Pendências (Prioridade)</h3>
           <ul>
             <li>
-              <strong>Alta:</strong> <code>prisma/schema.prisma</code> está
-              vazio → criar modelos (User, Role, Appointment, MedicalRecord) e
-              rodar migrations; implementar login contra DB com senhas hasheadas
-              (argon2) e seeds iniciais.
+              <strong>Alta:</strong> Schema Prisma vazio → modelos (User, Role,
+              Appointment, MedicalRecord), migrations, auth contra DB (argon2),
+              seeds.
             </li>
             <li>
-              <strong>Média:</strong> implementar endpoints de domínio (CRUD de
-              Agendamentos, Prontuário, Usuários/Perfis), validação de entrada e
-              autorização (checagem de roles / middleware server-side).
+              <strong>Média:</strong> APIs de domínio (CRUD
+              agendamentos/prontuário), validação (Zod), autorização
+              (middleware/roles).
             </li>
             <li>
-              <strong>Média:</strong> testar e integrar front → API (ex.: fazer
-              o diálogo de agendamento persistir via API em vez de simulação).
+              <strong>Média:</strong> Integração front-API (ex.: agendamento
+              persistente), testes (unit/integration/E2E, Jest).
             </li>
             <li>
-              <strong>Média/Alta:</strong> adicionar testes automatizados (unit,
-              integração e E2E para fluxos críticos: login, agendamento); criar
-              scripts de seed para ambiente de avaliação.
-            </li>
-            <li>
-              <strong>Baixa:</strong> CI/CD, documentação completa (RFs,
-              diagramas UML, plano de testes), monitoramento e pequenas
-              melhorias de segurança (CSP, headers adicionais).
+              <strong>Baixa:</strong> CI/CD, documentação (diagramas UML, plano
+              de testes), deploy (Vercel), monitoramento.
             </li>
           </ul>
 
-          <h3>Critérios práticos de aceitação</h3>
+          <h3>Critérios de Aceitação</h3>
           <ol>
-            <li>
-              Login com credenciais DEV redireciona ao dashboard e cria cookie{" "}
-              <code>token</code> (httpOnly).
-            </li>
-            <li>Ao limpar cookies, rotas protegidas redirecionam ao login.</li>
-            <li>
-              Após implementar Prisma: é possível criar usuário no DB e
-              autenticar via DB (senha comparada com argon2).
-            </li>
-            <li>
-              Criar um agendamento via UI → gravação na base (endpoint criado).
-            </li>
-            <li>
-              Testes automatizados cobrem autenticação e fluxo de agendamento.
-            </li>
+            <li>Login DEV → redireciona dashboard, cookie `token` criado.</li>
+            <li>Cookies limpos → rotas protegidas redirecionam login.</li>
+            <li>Prisma implementado → criar usuário DB, auth com argon2.</li>
+            <li>Agendamento UI → persiste via API criada.</li>
+            <li>Testes cobrem login e agendamento (80% cobertura).</li>
           </ol>
 
-          <h3>Passos recomendados (prioridade imediata)</h3>
-          <ol>
-            <li>
-              Definir <code>schema.prisma</code> com modelos essenciais e criar
-              migration.
-            </li>
-            <li>
-              Adicionar script de seed (admin + patient + doctor + amostras).
-            </li>
-            <li>
-              Trocar login DEV para checagem no DB (argon2 para senhas) mantendo
-              JWT cookie.
-            </li>
-            <li>
-              Implementar APIs mínimas: criar/consultar agendamentos e
-              prontuários.
-            </li>
-            <li>
-              Adicionar testes (unit + integração) e CI básico
-              (lint/typecheck/test).
-            </li>
-          </ol>
-
-          <h3>Como validar rapidamente</h3>
-          <ol>
-            <li>
-              Executar: <code>npm install</code> e <code>npm run dev</code>.
-            </li>
-            <li>
-              Testar login com credenciais DEV — use os botões{" "}
-              <em>Copiar credenciais</em> ou <em>Usar credenciais</em> quando
-              disponíveis.
-            </li>
-            <li>
-              Verificar o cookie <code>token</code> no response (httpOnly).
-            </li>
-            <li>
-              Tentar acessar rota protegida sem cookie — deve redirecionar ao
-              login.
-            </li>
-          </ol>
-
-          <h3>Checklist atual</h3>
+          <h3>Checklist Atual</h3>
           <ul>
-            <li>✅ UI de Login e Dashboards</li>
-            <li>✅ Rota de login (DEV)</li>
-            <li>
-              ❌ <code>prisma/schema.prisma</code> e migrations
-            </li>
-            <li>❌ Autenticação contra DB (argon2)</li>
-            <li>❌ Endpoints persistentes (Agendamentos / Prontuário)</li>
-            <li>❌ Testes automatizados e seeds</li>
+            <li>✅ UI Login/Dashboards</li>
+            <li>✅ Auth DEV</li>
+            <li>❌ Schema Prisma/Migrations</li>
+            <li>❌ Auth DB</li>
+            <li>❌ APIs Domínio</li>
+            <li>❌ Testes/Seeds</li>
           </ul>
 
           <div style={{ marginTop: 8 }}>
-            <h4>Credenciais de avaliação (DEV) — uso temporário</h4>
+            <h4>Credenciais DEV (Temporário)</h4>
             <p style={{ margin: 0 }}>
-              <code>email:</code>&nbsp; <strong>{DEV_CREDENTIALS.email}</strong>
-              &nbsp;•&nbsp;
-              <code>senha:</code>&nbsp; <strong>{DEV_CREDENTIALS.senha}</strong>
+              <code>Email:</code> <strong>{DEV_CREDENTIALS.email}</strong> •{" "}
+              <code>Senha:</code> <strong>{DEV_CREDENTIALS.senha}</strong>
             </p>
             <p style={{ margin: 0, marginTop: 6 }}>
-              <strong>Acesso aos perfis:</strong>&nbsp;{" "}
-              <strong>{DEV_ROLES.join(" • ")}</strong>
+              <strong>Perfis:</strong> {DEV_ROLES.join(" • ")}
             </p>
           </div>
         </section>

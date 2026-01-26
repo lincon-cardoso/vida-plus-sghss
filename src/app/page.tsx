@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import styles from "./page.module.scss";
 
 export const metadata: Metadata = {
   title: "VidaPlus - Plataforma de Gestão Hospitalar",
@@ -20,15 +21,17 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main style={{ padding: "4rem", textAlign: "center" }}>
-      <h1>VidaPlus</h1>
-      <p>
+    <main className={styles.main}>
+      <h1 className={styles.title}>VidaPlus</h1>
+      <p className={styles.description}>
         Plataforma de Gestão Hospitalar (SGHSS) — soluções para hospitais,
         clínicas e profissionais de saúde. Acesse sua conta para gerenciar
         agendamentos, prontuários e teleconsulta.
       </p>
       <p>
-        <Link href="/login">Acessar Minha Conta</Link>
+        <Link href="/login" className={styles.link}>
+          Acessar Minha Conta
+        </Link>
       </p>
     </main>
   );
