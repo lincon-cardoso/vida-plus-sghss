@@ -2,12 +2,6 @@
 
 Este repositório segue um conjunto estrito de regras para manter previsibilidade, acessibilidade e consistência.
 
-## Fonte de verdade
-
-- Regras do repo: veja .github/copilot-instructions.md
-- Padrões de implementação (Builder): .github/agents/🚧 Builder — Implementação (Confiável).agent.md
-- Padrões de auditoria (Reviewer): .github/agents/🔍 Reviewer — Auditoria (Conservador).agent.md
-
 ## Fluxo recomendado (solo ou em time)
 
 1. Abra/atualize uma issue com escopo e critérios.
