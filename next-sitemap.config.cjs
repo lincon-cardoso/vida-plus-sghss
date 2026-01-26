@@ -15,9 +15,8 @@ module.exports = {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/roles/*/dashboard/"],
+        disallow: ["/api/", "/roles/"],
       },
     ],
-    additionalSitemaps: [`${siteUrl}/sitemap.xml`],
   },
 };

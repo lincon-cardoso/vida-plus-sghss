@@ -3,13 +3,32 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMedicMenuStore } from "@/lib/stores";
+import dynamic from "next/dynamic";
 import MedicQuickActionsNav from "./MedicQuickActionsNav";
 import MedicHome from "./MedicHome";
-import MedicMonitor from "./MedicMonitor";
-import MedicInService from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicInService";
-import MedicMyPatients from "@/app/roles/[roles]/dashboard/medic/components/main/components/MedicMyPatients";
-import MedicTeleconsulta from "./MedicTeleconsulta";
-import MedicAgenda from "./MedicAgenda";
+// Lazy-load heavy or rarely-used components to reduce initial JS bundle
+const MedicMonitor = dynamic(() => import("./MedicMonitor"), {
+  loading: () => <div>Carregando Monitor...</div>,
+  ssr: false,
+});
+const MedicInService = dynamic(
+  () =>
+    import("@/app/roles/[roles]/dashboard/medic/components/main/components/MedicInService"),
+  { loading: () => <div>Carregando Atendimento...</div>, ssr: false },
+);
+const MedicMyPatients = dynamic(
+  () =>
+    import("@/app/roles/[roles]/dashboard/medic/components/main/components/MedicMyPatients"),
+  { loading: () => <div>Carregando Pacientes...</div>, ssr: false },
+);
+const MedicTeleconsulta = dynamic(() => import("./MedicTeleconsulta"), {
+  loading: () => <div>Carregando Teleconsulta...</div>,
+  ssr: false,
+});
+const MedicAgenda = dynamic(() => import("./MedicAgenda"), {
+  loading: () => <div>Carregando Agenda...</div>,
+  ssr: false,
+});
 import Configuracoes from "./Configuracoes/Configuracoes";
 import { useMedicActiveItem, type MedicMenuItem } from "../useMedicActiveItem";
 import styles from "../styles/MedicMenu.module.scss";

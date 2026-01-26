@@ -2,7 +2,7 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /roles/*/dashboard/
+Disallow: /roles/
 
 # Host
 Host: https://vidaplus.devlincon.com.br
