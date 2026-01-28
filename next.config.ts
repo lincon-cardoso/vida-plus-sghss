@@ -88,6 +88,21 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      // Service Worker (cache curto para atualizações)
+      {
+        source: "/sw.js",
+        headers: [
+          {
+            key: "Cache-Control",
+            value:
+              "public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60",
+          },
+          {
+            key: "Content-Type",
+            value: "application/javascript; charset=utf-8",
+          },
+        ],
+      },
       // === CORS para API Routes ===
       // Permite chamadas Cross-Origin para endpoints de API a partir de origens confiáveis.
       // Controlado via variável de ambiente ALLOWED_API_ORIGINS (ex.: https://vidaplus.devlincon.com.br).

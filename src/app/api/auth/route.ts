@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { signToken } from "@/lib/auth";
-import { DEV_CREDENTIALS } from "@/lib/devCredentials";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -18,8 +17,8 @@ export async function POST(request: Request) {
 
   // DEV: credenciais centralizadas (substituir em prod)
   const ok =
-    email === DEV_CREDENTIALS.email &&
-    senha === DEV_CREDENTIALS.senha &&
+    email === process.env.DEV_EMAIL &&
+    senha === process.env.DEV_SENHA &&
     (role === "patient" || role === "doctor" || role === "admin");
 
   if (!ok) {

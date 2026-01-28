@@ -64,21 +64,36 @@ export default function AdminQuickActionsNav({
 
   const effectiveOpenSubmenuKey = openSubmenuKey;
 
+  // Reabre/auto-abre o submenu do primeiro item sempre que o menu for aberto (isExpanded)
   useEffect(() => {
-    if (effectiveOpenSubmenuKey && isExpanded) {
-      const focusMode = openFocusModeRef.current;
-      if (focusMode === "none") return;
+    if (!actions || actions.length === 0) return;
+    const first = actions[0];
+    if (!first.subItems || first.subItems.length === 0) return;
 
-      const items = submenuItemRefs.current[effectiveOpenSubmenuKey] || [];
-      if (items.length > 0) {
-        const index = focusMode === "last" ? items.length - 1 : 0;
-        openFocusModeRef.current = "none";
+    // sinaliza que queremos focar o primeiro item
+    openFocusModeRef.current = "first";
 
-        const t = setTimeout(() => items[index]?.focus(), 0);
-        return () => clearTimeout(t);
-      }
-    }
-    return undefined;
+    // agendar setState de forma assíncrona para evitar render em cascata
+    const t = setTimeout(() => {
+      setOpenSubmenuKey(first.itemKey);
+    }, 0);
+
+    return () => clearTimeout(t);
+  }, [isExpanded, actions]);
+
+  useEffect(() => {
+    if (!effectiveOpenSubmenuKey) return;
+    const focusMode = openFocusModeRef.current;
+    if (focusMode === "none") return;
+
+    const items = submenuItemRefs.current[effectiveOpenSubmenuKey] || [];
+    if (items.length === 0) return;
+    const index = focusMode === "first" ? 0 : items.length - 1;
+
+    openFocusModeRef.current = "none";
+
+    const t = setTimeout(() => items[index]?.focus(), 0);
+    return () => clearTimeout(t);
   }, [effectiveOpenSubmenuKey, isExpanded]);
 
   function handleSubmenuKeyDown(
@@ -259,9 +274,14 @@ export default function AdminQuickActionsNav({
                   onKeyDown={(e) => handleParentKeyDown(e, action, !!subItems)}
                   onClick={() => {
                     if (subItems && subItems.length > 0) {
-                      setOpenSubmenuKey((prev) =>
-                        prev === action.itemKey ? null : action.itemKey,
-                      );
+                      setOpenSubmenuKey((prev) => {
+                        const next =
+                          prev === action.itemKey ? null : action.itemKey;
+                        if (next === action.itemKey) {
+                          openFocusModeRef.current = "first";
+                        }
+                        return next;
+                      });
                       onActionClick?.(action);
                       return;
                     }
@@ -355,12 +375,17 @@ export default function AdminQuickActionsNav({
                     aria-label={`${label} submenu`}
                     onKeyDown={(e) => handleSubmenuKeyDown(e, action.itemKey)}
                   >
-                    {subItems.map((s) => {
+                    {subItems.map((s, idx) => {
                       const SubIcon = getSubIcon(s.key);
 
                       return (
                         <li key={s.key}>
                           <button
+                            ref={(el: HTMLButtonElement | null) => {
+                              submenuItemRefs.current[action.itemKey] =
+                                submenuItemRefs.current[action.itemKey] || [];
+                              submenuItemRefs.current[action.itemKey][idx] = el;
+                            }}
                             type="button"
                             className={styles.submenuItem}
                             role="menuitem"

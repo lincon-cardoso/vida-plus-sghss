@@ -7,6 +7,7 @@ import styles from "./AdminMain.module.scss";
 import AdminQuickActionsNav from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav";
 import type { AdminAction } from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav";
 import { ACTION_ICONS } from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav/data";
+import AdminHome from "./components/AdminHome";
 
 const ADMIN_ACTIONS: AdminAction[] = [
   {
@@ -81,7 +82,22 @@ export default function AdminDashboardMain() {
   const closeMenu = useMedicMenuStore((s) => s.closeMenu);
   const menuRef = useRef<HTMLElement | null>(null);
 
-  const [activeLabel, setActiveLabel] = useState<string>("Início");
+  const [activeLabel, setActiveLabel] = useState<string>(() => {
+    try {
+      const raw = sessionStorage.getItem(
+        "vida-plus:admin-dashboard:activeLabel",
+      );
+      // valida apenas rótulos válidos presentes em ADMIN_ACTIONS
+      if (raw) {
+        const validLabels = ADMIN_ACTIONS.map((a) => a.label);
+        if (validLabels.includes(raw)) return raw;
+      }
+    } catch {
+      // ignore
+    }
+    return ADMIN_ACTIONS[0]?.label ?? "Início";
+  });
+
   const [activeSubLabel, setActiveSubLabel] = useState<string | undefined>(
     undefined,
   );
@@ -97,6 +113,18 @@ export default function AdminDashboardMain() {
   useEffect(() => {
     if (isMenuOpen) setTimeout(() => menuRef.current?.focus(), 0);
   }, [isMenuOpen]);
+
+  // persist selected label across refresh
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(
+        "vida-plus:admin-dashboard:activeLabel",
+        activeLabel,
+      );
+    } catch {
+      // ignore
+    }
+  }, [activeLabel]);
 
   function handleActionClick(action: {
     itemKey: string;
@@ -135,10 +163,7 @@ export default function AdminDashboardMain() {
           className={styles.content}
           aria-label="Conteúdo principal do Admin"
         >
-          <div className={styles.placeholder}>
-            <h2>{activeSubLabel ? activeSubLabel : activeLabel}</h2>
-            <p>Área administrativa — conteúdo a ser implementado.</p>
-          </div>
+          {activeLabel === "Dashboard Executivo" && <AdminHome />}
         </section>
       </div>
     </div>

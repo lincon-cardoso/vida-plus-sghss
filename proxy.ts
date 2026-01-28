@@ -65,6 +65,9 @@ function generateCSP(nonce: string): string {
 
     // Força HTTPS em requisições
     "upgrade-insecure-requests",
+
+    // Reportar violações CSP (opcional, configure endpoint se necessário)
+    // "report-uri /api/csp-report",
   ];
 
   return directives.join("; ");

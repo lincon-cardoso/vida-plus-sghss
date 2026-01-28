@@ -7,8 +7,3 @@
 export type RoleId = "patient" | "doctor" | "admin";
 
 export const DEV_ROLES: RoleId[] = ["patient", "doctor", "admin"];
-
-export const DEV_CREDENTIALS = {
-  email: "usuario@gmail.com",
-  senha: "usuario123",
-};
