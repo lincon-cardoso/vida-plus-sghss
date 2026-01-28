@@ -7,7 +7,7 @@ import styles from "./AdminMain.module.scss";
 import AdminQuickActionsNav from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav";
 import type { AdminAction } from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav";
 import { ACTION_ICONS } from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav/data";
-import AdminHome from "./components/AdminHome";
+import AdminHome from "./components/AdminHome/AdminHome";
 
 const ADMIN_ACTIONS: AdminAction[] = [
   {
