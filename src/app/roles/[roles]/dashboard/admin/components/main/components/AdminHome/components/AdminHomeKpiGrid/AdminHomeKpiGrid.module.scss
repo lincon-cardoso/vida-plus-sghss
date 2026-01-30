@@ -1,0 +1,94 @@
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.kpiCard {
+  background: var(--surface, #ffffff);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+  padding: 1rem 1.1rem;
+}
+
+.kpiCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.kpiIconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.kpiIconWrapper[data-tone="monthly_revenue"] {
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.12);
+}
+
+.kpiIconWrapper[data-tone="active_patients"] {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.kpiIconWrapper[data-tone="bed_occupancy"] {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.kpiIconWrapper[data-tone="nps"] {
+  color: #7c3aed;
+  background: rgba(124, 58, 237, 0.12);
+}
+
+.kpiIcon {
+  flex: 0 0 auto;
+}
+
+.kpiTrend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.kpiTrendUp {
+  color: #16a34a;
+}
+
+.kpiTrendDown {
+  color: #ef4444;
+}
+
+.kpiTrendIcon {
+  flex: 0 0 auto;
+}
+
+.kpiValue {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.95);
+}
+
+.kpiTitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+@media (max-width: 640px) {
+  .kpiGrid {
+    grid-template-columns: 1fr;
+  }
+}

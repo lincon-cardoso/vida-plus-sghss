@@ -268,7 +268,7 @@ export default function LoginForm() {
         onClose={() => setIsHelpOpen(false)}
         title="Caro avaliador"
       >
-        <section>
+        <section className={style["helpModalContent"]}>
           <p>
             <strong>Resumo do Projeto:</strong> Protótipo do SGHSS Vida Plus,
             sistema de gestão hospitalar em Next.js 16 + TypeScript. Foco em
@@ -297,7 +297,7 @@ export default function LoginForm() {
             </li>
             <li>
               Qualidade: SCSS Modules, Server Components padrão, lint/typecheck
-              OK, sem `any`/`console.log`.
+              OK, sem `any` e sem logs no código final.
             </li>
           </ul>
 
@@ -342,13 +342,13 @@ export default function LoginForm() {
             <li>❌ Testes/Seeds</li>
           </ul>
 
-          <div style={{ marginTop: 8 }}>
+          <div className={style["devCredentials"]}>
             <h4>Credenciais DEV (Temporário)</h4>
-            <p style={{ margin: 0 }}>
+            <p className={style["devCredentialsLine"]}>
               <code>Email:</code> <strong>{DEV_EMAIL}</strong> •{" "}
               <code>Senha:</code> <strong>{DEV_SENHA}</strong>
             </p>
-            <p style={{ margin: 0, marginTop: 6 }}>
+            <p className={style["devCredentialsLineSecondary"]}>
               <strong>Perfis:</strong> {DEV_ROLES.join(" • ")}
             </p>
           </div>
