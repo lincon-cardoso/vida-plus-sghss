@@ -30,7 +30,12 @@ export default function AdminHomeChart({ data }: Props) {
         />
         <XAxis dataKey="day" stroke="rgba(15,23,42,0.6)" />
         <YAxis stroke="rgba(15,23,42,0.6)" />
-        <Tooltip formatter={(v: number | string | undefined) => [v ?? "-", "Atendimentos"]} />
+        <Tooltip
+          formatter={(v: number | string | undefined) => [
+            v ?? "-",
+            "Atendimentos",
+          ]}
+        />
         <Bar dataKey="value" fill="#2563eb" radius={[8, 8, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
