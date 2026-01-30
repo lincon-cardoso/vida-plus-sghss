@@ -41,6 +41,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "vidaplus.devlincon.com.br",
       },
+      // Placeholder para desenvolvimento
+      {
+        protocol: "https",
+        hostname: "via.placeholder.com",
+      },
       // Adicione outros domínios conforme necessário (CDN, avatars, etc.)
       // Exemplo:
       // {
@@ -62,6 +67,17 @@ const nextConfig: NextConfig = {
   // otimizam performance sem conflitos.
   async headers() {
     return [
+      // Preload de fontes para melhorar LCP (Google Fonts Inter)
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Link",
+            value:
+              "<https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap>; rel=preload",
+          },
+        ],
+      },
       // Assets versionados do Next.js (cache permanente)
       {
         source: "/_next/static/:path*",

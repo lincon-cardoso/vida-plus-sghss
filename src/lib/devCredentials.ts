@@ -7,3 +7,6 @@
 export type RoleId = "patient" | "doctor" | "admin";
 
 export const DEV_ROLES: RoleId[] = ["patient", "doctor", "admin"];
+
+export const DEV_EMAIL = "usuario@gmail.com";
+export const DEV_SENHA = "senha123";

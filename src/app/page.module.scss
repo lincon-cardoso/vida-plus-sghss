@@ -25,6 +25,12 @@
   line-height: 1.6;
 }
 
+.image {
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 .link {
   color: var(--primary-blue);
   text-decoration: none;

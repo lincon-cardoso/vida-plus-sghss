@@ -12,8 +12,10 @@ import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
 import type { Role } from "./data";
 import { roles } from "./data";
-import Modal from "@/components/Modal";
-import { DEV_ROLES } from "@/lib/devCredentials";
+import dynamic from "next/dynamic";
+import { DEV_ROLES, DEV_EMAIL, DEV_SENHA } from "@/lib/devCredentials";
+
+const Modal = dynamic(() => import("@/components/Modal"), { ssr: false });
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -343,8 +345,8 @@ export default function LoginForm() {
           <div style={{ marginTop: 8 }}>
             <h4>Credenciais DEV (Temporário)</h4>
             <p style={{ margin: 0 }}>
-              <code>Email:</code> <strong>{process.env.DEV_EMAIL}</strong> •{" "}
-              <code>Senha:</code> <strong>{process.env.DEV_SENHA}</strong>
+              <code>Email:</code> <strong>{DEV_EMAIL}</strong> •{" "}
+              <code>Senha:</code> <strong>{DEV_SENHA}</strong>
             </p>
             <p style={{ margin: 0, marginTop: 6 }}>
               <strong>Perfis:</strong> {DEV_ROLES.join(" • ")}

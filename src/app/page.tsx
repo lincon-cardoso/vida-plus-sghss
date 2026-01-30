@@ -28,6 +28,19 @@ export default function Home() {
         clínicas e profissionais de saúde. Acesse sua conta para gerenciar
         agendamentos, prontuários e teleconsulta.
       </p>
+      <div
+        style={{
+          width: "800px",
+          height: "400px",
+          background: "#f0f0f0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "8px",
+        }}
+      >
+        <p>VidaPlus Logo Placeholder</p>
+      </div>
       <p>
         <Link href="/login" className={styles.link}>
           Acessar Minha Conta
