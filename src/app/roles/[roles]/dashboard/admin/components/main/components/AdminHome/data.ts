@@ -94,3 +94,49 @@ export const ADMIN_HOME_ALERTS: AdminHomeAlert[] = [
     variant: "warning",
   },
 ];
+
+import { CheckCircle, UserPlus, AlertTriangle } from "lucide-react";
+
+export type AdminHomeActivity = {
+  key: string;
+  title: string;
+  subtitle?: string;
+  time: string;
+  icon?: AdminHomeIcon;
+  variant?: "success" | "info" | "warning" | "muted";
+};
+
+export const ADMIN_HOME_ACTIVITIES: AdminHomeActivity[] = [
+  {
+    key: "activity_shift_end",
+    title: "Dr. João finalizou o plantão na UTI",
+    subtitle: "",
+    time: "15 min atrás",
+    icon: CheckCircle,
+    variant: "success",
+  },
+  {
+    key: "activity_admission",
+    title: "Nova admissão: Maria Silva (Convênio Unimed)",
+    subtitle: "",
+    time: "42 min atrás",
+    icon: UserPlus,
+    variant: "info",
+  },
+  {
+    key: "activity_stock_alert",
+    title: "Alerta de estoque: Paracetamol abaixo do mínimo",
+    subtitle: "",
+    time: "1h atrás",
+    icon: AlertTriangle,
+    variant: "warning",
+  },
+  {
+    key: "activity_billing",
+    title: "Faturamento do dia fechado parcialmente",
+    subtitle: "",
+    time: "2h atrás",
+    icon: DollarSign,
+    variant: "muted",
+  },
+];

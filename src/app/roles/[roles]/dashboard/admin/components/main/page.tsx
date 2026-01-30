@@ -102,6 +102,8 @@ export default function AdminDashboardMain() {
     undefined,
   );
 
+  const [activeHomeKey, setActiveHomeKey] = useState<string>("overview");
+
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") closeMenu();
@@ -163,7 +165,9 @@ export default function AdminDashboardMain() {
           className={styles.content}
           aria-label="Conteúdo principal do Admin"
         >
-          {activeLabel === "Dashboard Executivo" && <AdminHome />}
+          {activeLabel === "Dashboard Executivo" && (
+            <AdminHome activeKey={activeHomeKey} onSelect={setActiveHomeKey} />
+          )}
         </section>
       </div>
     </div>

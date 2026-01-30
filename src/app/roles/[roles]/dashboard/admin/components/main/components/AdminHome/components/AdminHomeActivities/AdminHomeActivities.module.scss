@@ -1,0 +1,108 @@
+.panel {
+  background: var(--surface, #ffffff);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: rgba(15, 23, 42, 0.95);
+}
+
+.viewAll {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.activityList {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(15, 23, 42, 0.03);
+}
+
+.iconWrap {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.03);
+}
+
+/* Variantes de cor conforme design */
+.iconWrapSuccess {
+  background: rgba(16, 185, 129, 0.08); /* verde claro */
+  color: #10b981; /* verde */
+}
+
+.iconWrapInfo {
+  background: rgba(37, 99, 235, 0.06); /* azul claro */
+  color: #2563eb; /* azul */
+}
+
+.iconWrapWarning {
+  background: rgba(245, 158, 11, 0.08); /* amarelo claro */
+  color: #f59e0b; /* amarelo */
+}
+
+.iconWrapMuted {
+  background: rgba(15, 23, 42, 0.03); /* neutro */
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.icon {
+  color: currentColor; /* garante que o ícone herde a cor */
+}
+.title {
+  margin: 0;
+  font-weight: 600;
+  color: rgba(15, 23, 42, 0.9);
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+
+.content {
+  flex: 1 1 auto;
+}
+
+.time {
+  flex: 0 0 auto;
+  color: rgba(15, 23, 42, 0.55);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .activityItem {
+    padding: 0.6rem 0.8rem;
+  }
+}

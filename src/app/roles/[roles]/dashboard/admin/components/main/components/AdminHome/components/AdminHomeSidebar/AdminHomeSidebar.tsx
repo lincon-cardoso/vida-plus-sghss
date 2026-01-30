@@ -5,12 +5,14 @@ interface AdminHomeSidebarProps {
   navItems: AdminHomeNavItem[];
   activeKey: string;
   alerts: AdminHomeAlert[];
+  onSelect?: (key: string) => void;
 }
 
 export default function AdminHomeSidebar({
   navItems,
   activeKey,
   alerts,
+  onSelect,
 }: AdminHomeSidebarProps) {
   return (
     <aside className={styles.sidebar} aria-label="Menu do painel executivo">
@@ -24,6 +26,7 @@ export default function AdminHomeSidebar({
               <li key={item.key} className={styles.navListItem}>
                 <button
                   type="button"
+                  onClick={() => onSelect?.(item.key)}
                   className={`${styles.navItem} ${
                     isActive ? styles.navItemActive : ""
                   }`}
