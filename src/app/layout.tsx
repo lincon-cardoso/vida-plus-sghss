@@ -116,6 +116,9 @@ export default async function RootLayout({
         {/* Favicons */}
         <link rel="icon" href="/favicon.ico" />
 
+        {/* Preload recursos críticos */}
+        <link rel="preload" href="/icons/icons.png" as="image" />
+
         {/* Safari Pinned Tab */}
         <link rel="mask-icon" href="/icons/icons.png" color="#0066cc" />
 

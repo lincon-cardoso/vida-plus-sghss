@@ -7,8 +7,8 @@ const AdminHomeChart = dynamic(() => import("./AdminHomeChart"), {
 });
 
 export default function AdminHomeFlowPanel() {
-  const mockValues = [20, 35, 50, 40, 60, 30, 55];
-  const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+  const mockValues = [20, 35, 50, 40, 60];
+  const days = ["Seg", "Ter", "Qua", "Qui", "Sex"];
 
   return (
     <section className={styles.panel} aria-label="Fluxo de atendimentos">

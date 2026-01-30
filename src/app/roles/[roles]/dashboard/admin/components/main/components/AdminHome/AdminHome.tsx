@@ -1,8 +1,7 @@
 import styles from "./AdminHome.module.scss";
+import dynamic from "next/dynamic";
 import AdminHomeFlowPanel from "./components/AdminHomeFlowPanel";
 import AdminHomeHeader from "./components/AdminHomeHeader";
-import AdminHomeKpiGrid from "./components/AdminHomeKpiGrid";
-import AdminHomeActivities from "./components/AdminHomeActivities";
 import AdminHomeSidebar from "./components/AdminHomeSidebar";
 import AdminHomeClinical from "./components/AdminHomeClinical";
 import {
@@ -11,6 +10,22 @@ import {
   ADMIN_HOME_NAV_ITEMS,
   ADMIN_HOME_ACTIVITIES,
 } from "./data";
+
+const AdminHomeKpiGrid = dynamic(
+  () => import("./components/AdminHomeKpiGrid"),
+  {
+    ssr: false,
+    loading: () => <div>Carregando KPIs...</div>,
+  },
+);
+
+const AdminHomeActivities = dynamic(
+  () => import("./components/AdminHomeActivities"),
+  {
+    ssr: false,
+    loading: () => <div>Carregando atividades...</div>,
+  },
+);
 
 interface AdminHomeProps {
   activeKey: string;
