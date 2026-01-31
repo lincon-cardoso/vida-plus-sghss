@@ -7,6 +7,7 @@ import AdminHomeClinical from "./components/AdminHomeClinical";
 import AdminHomePatients from "./components/AdminHomePatients";
 import AdminHomeResources from "./components/AdminHomeResources";
 import AdminHomeFinance from "./components/AdminHomeFinance";
+import AdminHomeReports from "./AdminHomeReports";
 import {
   ADMIN_HOME_ALERTS,
   ADMIN_HOME_KPIS,
@@ -71,6 +72,8 @@ export default function AdminHome({ activeKey, onSelect }: AdminHomeProps) {
             <>
               <AdminHomeKpiGrid kpis={ADMIN_HOME_KPIS} />
 
+              <AdminHomeReports />
+
               <AdminHomeFlowPanel />
 
               <AdminHomeActivities activities={ADMIN_HOME_ACTIVITIES} />
@@ -84,6 +87,8 @@ export default function AdminHome({ activeKey, onSelect }: AdminHomeProps) {
           {activeKey === "beds" && <AdminHomeResources />}
 
           {activeKey === "finance" && <AdminHomeFinance />}
+
+          {activeKey === "reports" && <AdminHomeReports />}
         </section>
       </div>
     </div>
