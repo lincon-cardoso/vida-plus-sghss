@@ -5,76 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { useMedicMenuStore } from "@/lib/stores";
 import styles from "./AdminMain.module.scss";
 import AdminQuickActionsNav from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav";
-import type { AdminAction } from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav";
-import { ACTION_ICONS } from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav/data";
 import AdminHome from "./components/AdminHome/AdminHome";
-
-const ADMIN_ACTIONS: AdminAction[] = [
-  {
-    itemKey: "nav_dashboard",
-    label: "Dashboard Executivo",
-    icon: ACTION_ICONS.nav_dashboard,
-  },
-  {
-    itemKey: "nav_reception",
-    label: "Recepção & Check-in",
-    icon: ACTION_ICONS.nav_reception,
-  },
-  {
-    itemKey: "nav_patients",
-    label: "Pacientes",
-    icon: ACTION_ICONS.nav_patients,
-  },
-  {
-    itemKey: "nav_assistance",
-    label: "Assistencial",
-    icon: ACTION_ICONS.nav_assistance,
-    subItems: [
-      { key: "gestao_leitos", label: "Gestão de Leitos" },
-      { key: "triagem", label: "Triagem" },
-      { key: "laboratorio", label: "Laboratório" },
-      { key: "cuidados_enfermagem", label: "Cuidados de Enfermagem" },
-      { key: "banco_sangue", label: "Banco de Sangue" },
-      { key: "centro_cirurgico", label: "Centro Cirúrgico" },
-      { key: "vacinacao", label: "Vacinação" },
-    ],
-  },
-  {
-    itemKey: "nav_management",
-    label: "Gestão",
-    icon: ACTION_ICONS.nav_management,
-    subItems: [
-      { key: "profissionais", label: "Profissionais" },
-      { key: "agendamentos", label: "Agendamentos" },
-      { key: "escalas_plantao", label: "Escalas/Plantões" },
-      { key: "estoque_farmacia", label: "Estoque/Farmácia" },
-      { key: "gestao_financeira", label: "Gestão Financeira" },
-      { key: "relatorios_fluxo", label: "Relatórios de Fluxo" },
-      { key: "regras_fluxo", label: "Regras de Fluxo" },
-    ],
-  },
-  {
-    itemKey: "nav_quality",
-    label: "Qualidade",
-    icon: ACTION_ICONS.nav_quality,
-    subItems: [
-      { key: "indicadores", label: "Indicadores" },
-      { key: "satisfacao", label: "Satisfação" },
-      { key: "auditoria", label: "Auditoria" },
-      { key: "same_arquivo", label: "SAME (Arquivo)" },
-    ],
-  },
-  {
-    itemKey: "nav_billing",
-    label: "Faturamento",
-    icon: ACTION_ICONS.nav_billing,
-    subItems: [
-      { key: "relatorios_faturamento", label: "Relatórios" },
-      { key: "tiss_operadoras", label: "TISS (Operadoras)" },
-    ],
-  },
-  { itemKey: "nav_system", label: "Sistema", icon: ACTION_ICONS.nav_system },
-];
+import {
+  ADMIN_ACTIONS,
+  ADMIN_DASHBOARD_ACTIVE_LABEL_KEY,
+  DEFAULT_ACTIVE_LABEL,
+  DEFAULT_ACTIVE_HOME_KEY,
+} from "./data";
 
 export default function AdminDashboardMain() {
   const router = useRouter();
@@ -84,9 +21,7 @@ export default function AdminDashboardMain() {
 
   const [activeLabel, setActiveLabel] = useState<string>(() => {
     try {
-      const raw = sessionStorage.getItem(
-        "vida-plus:admin-dashboard:activeLabel",
-      );
+      const raw = sessionStorage.getItem(ADMIN_DASHBOARD_ACTIVE_LABEL_KEY);
       // valida apenas rótulos válidos presentes em ADMIN_ACTIONS
       if (raw) {
         const validLabels = ADMIN_ACTIONS.map((a) => a.label);
@@ -95,14 +30,16 @@ export default function AdminDashboardMain() {
     } catch {
       // ignore
     }
-    return ADMIN_ACTIONS[0]?.label ?? "Início";
+    return DEFAULT_ACTIVE_LABEL;
   });
 
   const [activeSubLabel, setActiveSubLabel] = useState<string | undefined>(
     undefined,
   );
 
-  const [activeHomeKey, setActiveHomeKey] = useState<string>("overview");
+  const [activeHomeKey, setActiveHomeKey] = useState<string>(
+    DEFAULT_ACTIVE_HOME_KEY,
+  );
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -119,10 +56,7 @@ export default function AdminDashboardMain() {
   // persist selected label across refresh
   useEffect(() => {
     try {
-      sessionStorage.setItem(
-        "vida-plus:admin-dashboard:activeLabel",
-        activeLabel,
-      );
+      sessionStorage.setItem(ADMIN_DASHBOARD_ACTIVE_LABEL_KEY, activeLabel);
     } catch {
       // ignore
     }

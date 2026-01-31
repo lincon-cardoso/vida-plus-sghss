@@ -88,7 +88,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 720px;
+  min-width: 640px;
 }
 
 .table thead th {
@@ -105,8 +105,8 @@
   vertical-align: middle;
 }
 
-.professional {
-  width: 38%;
+.patientCell {
+  width: 50%;
 }
 
 .nameWrap {
@@ -131,40 +131,20 @@
   font-weight: 600;
 }
 
-.specialty {
+.muted {
+  color: var(--muted, #6b7280);
+  font-size: 0.875rem;
+}
+
+.record {
   color: var(--muted, #6b7280);
 }
 
-.badge {
-  display: inline-block;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.75rem;
+.age {
+  color: var(--muted, #6b7280);
 }
 
-.badgeInfo {
-  background: #eef2ff;
-  color: #1e40af;
-}
-
-.badgeSuccess {
-  background: #ecfdf5;
-  color: #059669;
-}
-
-.badgeDanger {
-  background: #fff1f2;
-  color: #be123c;
-}
-
-.badgePrimary {
-  background: #eef2ff;
-  color: #3b82f6;
-}
-
-.patients {
-  text-align: center;
+.lastVisit {
   color: var(--muted, #6b7280);
 }
 
