@@ -4,6 +4,9 @@ import AdminHomeFlowPanel from "./components/AdminHomeFlowPanel";
 import AdminHomeHeader from "./components/AdminHomeHeader";
 import AdminHomeSidebar from "./components/AdminHomeSidebar";
 import AdminHomeClinical from "./components/AdminHomeClinical";
+import AdminHomePatients from "./components/AdminHomePatients";
+import AdminHomeResources from "./components/AdminHomeResources";
+import AdminHomeFinance from "./components/AdminHomeFinance";
 import {
   ADMIN_HOME_ALERTS,
   ADMIN_HOME_KPIS,
@@ -75,6 +78,12 @@ export default function AdminHome({ activeKey, onSelect }: AdminHomeProps) {
           )}
 
           {activeKey === "clinical" && <AdminHomeClinical />}
+
+          {activeKey === "patients" && <AdminHomePatients />}
+
+          {activeKey === "beds" && <AdminHomeResources />}
+
+          {activeKey === "finance" && <AdminHomeFinance />}
         </section>
       </div>
     </div>

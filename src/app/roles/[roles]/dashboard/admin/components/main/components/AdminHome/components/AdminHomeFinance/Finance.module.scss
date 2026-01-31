@@ -1,0 +1,126 @@
+.root {
+  padding: 1rem 0;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.kpiRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px; /* Espaçamento entre os cards de KPI aumentado */
+  margin-bottom: 32px; /* maior espaçamento entre KPI row e large card */
+}
+
+.kpiCard {
+  background: var(--color-surface, #fff);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 28px; /* Espaçamento interno maior para clareza */
+}
+
+.kpiTitle {
+  font-size: 0.875rem;
+  color: var(--muted, #6b7280);
+  margin-bottom: 0.5rem;
+}
+
+.kpiValue {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.kpiTrend {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.trendUp {
+  color: #16a34a;
+}
+
+.trendDown {
+  color: #dc2626;
+}
+
+.largeCard {
+  background: var(--color-surface, #fff);
+  border-radius: 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 56px 40px; /* Mais respiro vertical como na referência */
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.04);
+}
+
+.largeContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px; /* espaçamento entre ícone e bloco de texto */
+  text-align: center;
+  min-height: 360px; /* mais área “em branco” no card */
+}
+
+.largeIcon {
+  color: #e5e7eb; /* ícone mais claro, conforme referência */
+  margin-bottom: 0;
+}
+
+.largeText {
+  flex: none;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px; /* controla título → descrição → botão */
+}
+
+.largeTitle {
+  font-weight: 700;
+  margin-bottom: 0;
+  font-size: 1.125rem;
+}
+
+.largeDescription {
+  color: var(--muted, #6b7280);
+  margin-bottom: 0;
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+.ctaButton {
+  background: transparent;
+  border: 1px solid #0b74ff;
+  color: #0b74ff;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0;
+}
+
+@media (max-width: 768px) {
+  .kpiRow {
+    grid-template-columns: 1fr;
+  }
+  .largeCard {
+    padding: 40px 20px;
+  }
+  .largeContent {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+  }
+  .largeText {
+    align-items: center;
+  }
+}
