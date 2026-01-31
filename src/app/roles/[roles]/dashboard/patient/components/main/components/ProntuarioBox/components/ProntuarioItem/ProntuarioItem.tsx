@@ -1,6 +1,5 @@
 "use client";
 import { Activity, AlertCircle, CheckCircle, Clock } from "lucide-react";
-import type { CSSProperties } from "react";
 import type {
   ProntuarItem,
   ProntuarioItemKey,
@@ -37,21 +36,13 @@ export default function ProntuarioItem({ items }: Props) {
           {items.map((it, i) => {
             const Icon = getItemIcon(it.itemKey);
 
-            type ItemStyle = CSSProperties & { "--item-accent"?: string };
-
-            const itemStyle: ItemStyle | undefined = it.color
-              ? {
-                  "--item-accent": it.color,
-                }
-              : undefined;
-
             return (
               <button
                 key={it.label ?? i}
                 type="button"
                 className={styles.item}
                 onClick={it.onClick}
-                style={itemStyle}
+                data-color={it.color}
                 aria-label={it.label ?? "Ação"}
               >
                 <span className={styles.itemContent}>
