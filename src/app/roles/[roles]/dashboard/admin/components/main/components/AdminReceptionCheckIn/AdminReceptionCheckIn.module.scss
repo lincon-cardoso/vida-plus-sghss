@@ -1,0 +1,240 @@
+.container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.subtitle {
+  margin: 4px 0 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.quickAction {
+  background: #0b74ff;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.cardIcon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardNumber {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.cardLabel {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.searchWrapper {
+  margin-top: 8px;
+}
+
+.searchInput {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.searchIcon {
+  color: #9ca3af;
+}
+
+.input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+}
+
+.list {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0 0 12px 0;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.listTitle {
+  margin: 0;
+  padding: 16px;
+  border-bottom: 1px solid #eef2f6;
+  font-size: 16px;
+}
+
+.items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-top: 1px solid #f3f4f6;
+  align-items: center;
+}
+
+/* remove top border on first item to match design */
+.items > .item:first-child {
+  border-top: none;
+}
+
+.itemLeft {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0; /* allow truncation */
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #eef2ff;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  color: #0b74ff;
+}
+
+.nameRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 420px;
+}
+
+.badge {
+  background: #e6f0ff;
+  color: #0b74ff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.meta {
+  display: flex;
+  gap: 16px;
+  color: #6b7280;
+  margin-top: 6px;
+  font-size: 13px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #6b7280;
+}
+
+.metaIcon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+}
+
+.clinic {
+  color: #374151;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.itemRight {
+  display: flex;
+  align-items: center;
+}
+
+.actionButton {
+  background: #10b981;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.actionButtonDone {
+  background: #6b7280;
+  opacity: 0.8;
+  cursor: default;
+}
+
+/* Variant styles for stat cards */
+.cardPrimary .cardIcon {
+  background: #e6f0ff;
+  color: #0b74ff;
+}
+.cardSuccess .cardIcon {
+  background: #ecfdf5;
+  color: #10b981;
+}
+.cardWarning .cardIcon {
+  background: #fff7ed;
+  color: #f59e0b;
+}
+.cardSuccessAlt .cardIcon {
+  background: #dff6ec;
+  color: #059669;
+}

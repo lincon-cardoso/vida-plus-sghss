@@ -6,6 +6,8 @@ import { useMedicMenuStore } from "@/lib/stores";
 import styles from "./AdminMain.module.scss";
 import AdminQuickActionsNav from "@/app/roles/[roles]/dashboard/admin/components/main/components/AdminQuickActionsNav";
 import AdminHome from "./components/AdminHome/AdminHome";
+import AdminReceptionCheckIn from "./components/AdminReceptionCheckIn";
+import AdminPatients from "./components/AdminPatients";
 import {
   ADMIN_ACTIONS,
   ADMIN_DASHBOARD_ACTIVE_LABEL_KEY,
@@ -102,6 +104,8 @@ export default function AdminDashboardMain() {
           {activeLabel === "Dashboard Executivo" && (
             <AdminHome activeKey={activeHomeKey} onSelect={setActiveHomeKey} />
           )}
+          {activeLabel === "Recepção & Check-in" && <AdminReceptionCheckIn />}
+          {activeLabel === "Pacientes" && <AdminPatients />}
         </section>
       </div>
     </div>
