@@ -1,6 +1,6 @@
 import styles from "./Resources.module.scss";
 import type { Sector, Supply } from "./data";
-import { SECTORS, SUPPLIES } from './data';
+import { SECTORS, SUPPLIES } from "./data";
 import { Box, Activity } from "lucide-react";
 
 /**

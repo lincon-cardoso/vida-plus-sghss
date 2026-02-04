@@ -71,24 +71,56 @@
 }
 
 /* Width helpers (multiples of 10%) - applied via class e.g. styles.w50 */
-.w0  { width: 0%; }
-.w10 { width: 10%; }
-.w20 { width: 20%; }
-.w30 { width: 30%; }
-.w40 { width: 40%; }
-.w50 { width: 50%; }
-.w60 { width: 60%; }
-.w70 { width: 70%; }
-.w80 { width: 80%; }
-.w90 { width: 90%; }
-.w100 { width: 100%; }
+.w0 {
+  width: 0%;
+}
+.w10 {
+  width: 10%;
+}
+.w20 {
+  width: 20%;
+}
+.w30 {
+  width: 30%;
+}
+.w40 {
+  width: 40%;
+}
+.w50 {
+  width: 50%;
+}
+.w60 {
+  width: 60%;
+}
+.w70 {
+  width: 70%;
+}
+.w80 {
+  width: 80%;
+}
+.w90 {
+  width: 90%;
+}
+.w100 {
+  width: 100%;
+}
 
 /* Sector color mappings (classes added dynamically from sector.key) */
-.uti_adulto { background: #ef4444; }
-.uti_neonatal { background: #f59e0b; }
-.enfermaria_a { background: #10b981; }
-.enfermaria_b { background: #16a34a; }
-.centro_cirurgico { background: #2563eb; }
+.uti_adulto {
+  background: #ef4444;
+}
+.uti_neonatal {
+  background: #f59e0b;
+}
+.enfermaria_a {
+  background: #10b981;
+}
+.enfermaria_b {
+  background: #16a34a;
+}
+.centro_cirurgico {
+  background: #2563eb;
+}
 
 .supplies {
   display: flex;
