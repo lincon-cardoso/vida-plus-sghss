@@ -40,8 +40,7 @@ export default function Resources() {
                   aria-valuenow={s.percent}
                 >
                   <div
-                    className={styles.progressBar}
-                    style={{ width: `${s.percent}%`, background: s.color }}
+                    className={`${styles.progressBar} ${styles[`w${Math.round(s.percent / 10) * 10}`]} ${styles[s.key]}`}
                   />
                 </div>
               </div>

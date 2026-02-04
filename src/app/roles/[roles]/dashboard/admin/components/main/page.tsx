@@ -8,6 +8,7 @@ import AdminQuickActionsNav from "@/app/roles/[roles]/dashboard/admin/components
 import AdminHome from "./components/AdminHome/AdminHome";
 import AdminReceptionCheckIn from "./components/AdminReceptionCheckIn";
 import AdminPatients from "./components/AdminPatients";
+import AdminAssistencial from "./components/AdminAssistencial";
 import {
   ADMIN_ACTIONS,
   ADMIN_DASHBOARD_ACTIVE_LABEL_KEY,
@@ -68,15 +69,26 @@ export default function AdminDashboardMain() {
     itemKey: string;
     label: string;
     subKey?: string;
+    subItems?: { key: string; label: string }[];
   }) {
     if (action.itemKey === "nav_logout" || action.label === "Sair") {
       router.push("/login");
       return;
     }
 
+    // Se um subitem específico foi clicado
     if (action.subKey) {
-      setActiveLabel("Cadastros");
+      const parent = ADMIN_ACTIONS.find((a) => a.itemKey === action.itemKey);
+      setActiveLabel(parent?.label ?? action.label);
       setActiveSubLabel(action.label);
+      return;
+    }
+
+    // Se um item pai com subitems foi clicado, direcionar para o primeiro subitem
+    if (action.subItems && action.subItems.length > 0) {
+      const parent = ADMIN_ACTIONS.find((a) => a.itemKey === action.itemKey);
+      setActiveLabel(parent?.label ?? action.label);
+      setActiveSubLabel(action.subItems[0].label);
       return;
     }
 
@@ -106,6 +118,9 @@ export default function AdminDashboardMain() {
           )}
           {activeLabel === "Recepção & Check-in" && <AdminReceptionCheckIn />}
           {activeLabel === "Pacientes" && <AdminPatients />}
+          {activeLabel === "Assistencial" && (
+            <AdminAssistencial activeSubLabel={activeSubLabel} />
+          )}
         </section>
       </div>
     </div>
