@@ -1,11 +1,176 @@
-.root {
-  padding: 0.5rem 0;
+:root {
+  --triage-emergencia: #ef4444; /* vermelho */
+  --triage-muito-urgente: #ff6a00; /* laranja */
+  --triage-urgente: #f59e0b; /* amarelo */
+  --triage-pouco-urgente: #22c55e; /* verde */
+  --triage-nao-urgente: #1e6df6; /* azul */
 }
+
+.root {
+  padding: 1.5rem;
+}
+
+.headerRow {
+  margin-bottom: 1rem;
+}
+
 .title {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.titleIconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.titleIcon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: var(--primary-blue, #1a73e8);
+  /* ajuste visual leve para bater com o centro ótico do texto */
+  transform: translateY(1px);
+}
+.subtitle {
+  color: var(--gray-600, #6b7280);
+  margin: 0.25rem 0 1rem 0;
+}
+
+.infoBoxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.infoBox {
+  border-radius: 0.5rem;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+
+.infoBoxTop {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.infoNumber {
+  font-size: 1.5rem;
   font-weight: 600;
 }
-.content {
+
+.infoLabel {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+.infoLabelTitle {
+  font-weight: 600;
+}
+
+.infoLabelSub {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
+}
+
+/* severity classes */
+.emergencia {
+  background: linear-gradient(
+    180deg,
+    var(--triage-emergencia),
+    color-mix(in srgb, var(--triage-emergencia) 75%, black 5%)
+  );
+}
+.muito_urgente {
+  background: linear-gradient(
+    180deg,
+    var(--triage-muito-urgente),
+    color-mix(in srgb, var(--triage-muito-urgente) 75%, black 5%)
+  );
+}
+.urgente {
+  background: linear-gradient(
+    180deg,
+    var(--triage-urgente),
+    color-mix(in srgb, var(--triage-urgente) 75%, black 5%)
+  );
+  color: #111827;
+}
+.pouco_urgente {
+  background: linear-gradient(
+    180deg,
+    var(--triage-pouco-urgente),
+    color-mix(in srgb, var(--triage-pouco-urgente) 75%, black 5%)
+  );
+}
+.nao_urgente {
+  background: linear-gradient(
+    180deg,
+    var(--triage-nao-urgente),
+    color-mix(in srgb, var(--triage-nao-urgente) 75%, black 5%)
+  );
+}
+
+.card {
+  background: var(--card-bg, white);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
   margin-top: 0.5rem;
-  color: #444;
+}
+
+.cardHeader {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.cardSubtitle {
+  margin: 0.25rem 0 0 0;
+  color: var(--gray-600, #6b7280);
+  font-size: 0.9rem;
+}
+
+.cardBody {
+  padding: 2rem;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--gray-500, #9ca3af);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emptyIcon {
+  color: var(--gray-300, #d1d5db);
+}
+
+.emptyText {
+  margin-top: 0.75rem;
 }

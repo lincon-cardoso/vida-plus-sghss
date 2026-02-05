@@ -1,11 +1,435 @@
-.root {
-  padding: 0.5rem 0;
+:root {
+  --muted: #6b7280;
+  --bg: #fff;
+  --panel-bg: #ffffff;
+  --border: #e6e9ec;
+  --success: #16a34a;
+  --primary: #2563eb;
+  --muted-2: #9ca3af;
 }
+
+.root {
+  padding: 1rem 0;
+  color: #222;
+}
+
+.header {
+  display: flex;
+  flex-direction: column; /* título acima dos cards */
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
 .title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.subtitle {
+  margin: 2px 0 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.summaryRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: stretch; /* garante que os cards tenham mesma altura */
+}
+
+.summaryCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100px; /* fixa altura para consistência como na imagem */
+  box-shadow: 0 1px 0 rgba(16, 24, 40, 0.02);
+}
+
+@media (max-width: 960px) {
+  .summaryRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* removed redundant flex-wrap to keep vertical stacking */
+
+.smallBadge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: transparent;
+  border: none;
+  color: #1f2937;
+}
+
+.summaryIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+/* Caixa colorida do ícone — variantes para cada cartão */
+.iconBox {
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 10px;
+  color: white;
+}
+
+.iconPrimary {
+  background: #fffbeb; /* suave amarelo */
+  color: #92400e;
+  border: 1px solid #f3e8c9;
+}
+
+.iconInfo {
+  background: #eef2ff; /* azul suave */
+  color: #3730a3;
+  border: 1px solid #dbeafe;
+}
+
+.iconSuccess {
+  background: #ecfdf5; /* verde suave */
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.summaryNumber {
   font-size: 1rem;
+  font-weight: 700;
+}
+
+.summaryLabel {
+  font-size: 0.8rem;
+  color: var(--muted-2);
+}
+
+.listWrapper {
+  margin-top: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
   font-weight: 600;
 }
-.content {
+
+.sectionSubtitle {
+  margin: 0 0 0.5rem 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.panelHeader {
+  padding: 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-bg);
+}
+
+.panelBody {
+  padding: 0; /* itens já têm padding individual */
+}
+
+.itemRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+
+.itemRow:hover {
+  background: #ffffff;
+}
+
+.btnPrimary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(37, 99, 235, 0.06);
+}
+
+.btnPrimary:hover {
+  filter: brightness(0.95);
+}
+
+.btnSuccess {
+  background: var(--success);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(22, 163, 74, 0.06);
+}
+
+.btnSuccess:hover {
+  filter: brightness(0.95);
+}
+
+.resultBox {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: #f0fff4;
+  border: 1px solid #d1fae5;
+  color: #0f5132;
+}
+
+.itemLeft {
+  flex: 1 1 auto;
+}
+
+.itemRight {
+  display: flex;
+  align-items: flex-start; /* align button to top */
+  gap: 0.5rem;
+  flex: 0 0 180px;
+  justify-content: flex-end;
+}
+
+.actionWrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.patientRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.patientName {
+  font-weight: 600;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.badgeStatus {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  color: #1f2937;
+}
+
+.status_aguardando {
+  background: #fff7e6;
+  border: 1px solid #f3e8c9;
+}
+
+.status_em_analise {
+  background: #eef2ff;
+  border: 1px solid #dbeafe;
+}
+
+.status_concluido {
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+}
+
+.badgePriority {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: #eef2ff;
+  color: #1e3a8a;
+}
+
+.smallBadge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: #1f2937;
+}
+
+.priorityBadge {
+  background: #fff3cd;
+  color: #92400e;
+}
+
+.typeTag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.05rem 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.typeLabel {
+  font-size: 0.85rem;
+  color: var(--muted-2);
+}
+
+/* Pequena caixa colorida para o ícone do tipo */
+.typeIconBox {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-grid;
+  place-items: center;
+  color: white;
+}
+
+.typeIcon {
+  width: 16px;
+  height: 16px;
+  color: inherit;
+}
+
+/* variações por tipo */
+.type_sangue .typeIconBox {
+  background: #fef2f2; /* very light red */
+  color: #dc2626;
+  border: 1px solid #fee2e2;
+}
+
+.type_imagem .typeIconBox {
+  background: #eff6ff; /* light blue */
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.type_cardio .typeIconBox {
+  background: #fff7ed; /* light orange */
+  color: #ea580c;
+  border: 1px solid #fee7d6;
+}
+
+.btnConcluded {
+  background: #e6f4ea;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Botões concluídos ficam visualmente não interativos */
+.btnConcluded[disabled] {
+  opacity: 0.95;
+  cursor: default;
+}
+
+.btnSvg {
+  width: 18px;
+  height: 18px;
+  color: inherit;
+}
+
+.btnIcon {
+  margin-right: 0.5rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-top: 0.5rem;
-  color: #444;
+}
+
+.typeIcon {
+  color: #ef4444; /* destaque para tipo (sangue/imagem) */
+}
+
+.testTitle {
+  font-weight: 500;
+}
+
+.metaLine {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.metaSep {
+  margin: 0 0.5rem;
+  color: var(--muted-2);
+}
+
+.justification {
+  margin-top: 0.5rem;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.resultBox {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: #f0fff4;
+  border: 1px solid #d1fae5;
+  color: #0f5132;
+}
+
+.btnPrimary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnSuccess {
+  background: var(--success);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnDisabled {
+  background: #e6f4ea;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  padding: 0.5rem 0.85rem;
+  border-radius: 8px;
+}
+
+/* Last item without bottom border */
+.itemRow:last-child {
+  border-bottom: none;
 }
