@@ -1,11 +1,281 @@
 .root {
-  padding: 0.5rem 0;
+  --border: #d9dee7;
+  --panel-bg: #ffffff;
+  --muted: #64748b;
+  --text: #132238;
+  --surface: #f4f7fb;
+  --primary: #2570ea;
+  --info-bg: #eaf1ff;
+  --info-fg: #2d72ec;
+  --warning-bg: #fff6df;
+  --warning-fg: #e2a007;
+  --success-bg: #e6f3e9;
+  --success-fg: #32a65a;
+  --purple-bg: #f1e5ff;
+  --purple-fg: #9b59f6;
+  padding: 1rem 0;
+  color: var(--text);
 }
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .title {
-  font-size: 1rem;
-  font-weight: 600;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.15;
 }
-.content {
+
+.subtitle {
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.summaryCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 98px;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+.summaryIconBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex: 0 0 48px;
+}
+
+.info {
+  background: var(--info-bg);
+  color: var(--info-fg);
+}
+
+.warning {
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+}
+
+.success {
+  background: var(--success-bg);
+  color: var(--success-fg);
+}
+
+.purple {
+  background: var(--purple-bg);
+  color: var(--purple-fg);
+}
+
+.summaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.summaryValue {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.summaryLabel {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.panel {
+  margin-top: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.05);
+}
+
+.panelHeader {
+  padding: 1.45rem 1.5rem 0;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 500;
+}
+
+.scheduleList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.surgeryCard {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  padding: 1.15rem;
+}
+
+.surgeryHeading {
+  min-width: 0;
+}
+
+.titleLine {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0.35rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.em_andamento {
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+}
+
+.agendada {
+  background: #dde8ff;
+  color: #2d72ec;
+}
+
+.surgeryTitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.metaLine {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
   margin-top: 0.5rem;
-  color: #444;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.infoBox {
+  padding: 0.95rem 1rem;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.infoLabel {
+  display: inline-block;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.45rem;
+}
+
+.infoValue {
+  display: block;
+  font-size: 1.08rem;
+  font-weight: 500;
+}
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.95rem;
+  flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.primaryButton {
+  border: none;
+  background: var(--primary);
+  color: #fff;
+}
+
+.secondaryButton {
+  border: 1px solid #cfd7e3;
+  background: #fff;
+  color: var(--text);
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  filter: brightness(0.98);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 1200px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .title {
+    font-size: 1.65rem;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .panelHeader,
+  .scheduleList {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .surgeryCard {
+    padding: 1rem;
+  }
 }
