@@ -1,11 +1,404 @@
 .root {
-  padding: 0.5rem 0;
+  --border: #d9dee7;
+  --panel-bg: #ffffff;
+  --muted: #64748b;
+  --text: #132238;
+  --surface: #f4f7fb;
+  --surface-soft: #eef3f8;
+  --danger-bg: #feebea;
+  --danger-fg: #ef5448;
+  --warning-bg: #fff6df;
+  --warning-fg: #e2a007;
+  --critical-bg: #f8e6e3;
+  --critical-fg: #e45439;
+  --info-bg: #eaf1ff;
+  --info-fg: #2d72ec;
+  --ok-bg: #e7f5eb;
+  --ok-fg: #32a65a;
+  --low-bg: #feeceb;
+  --low-fg: #ef5448;
+  --primary: #2570ea;
+  padding: 1rem 0;
+  color: var(--text);
 }
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .title {
-  font-size: 1rem;
-  font-weight: 600;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.15;
 }
-.content {
-  margin-top: 0.5rem;
-  color: #444;
+
+.subtitle {
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.summaryCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 98px;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+.summaryIconBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex: 0 0 48px;
+}
+
+.danger {
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+}
+
+.warning {
+  background: var(--warning-bg);
+  color: var(--warning-fg);
+}
+
+.critical {
+  background: var(--critical-bg);
+  color: var(--critical-fg);
+}
+
+.info {
+  background: var(--info-bg);
+  color: var(--info-fg);
+}
+
+.summaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.summaryValue {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.summaryLabel {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.panel {
+  margin-top: 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.05);
+}
+
+.panelHeader {
+  padding: 1.45rem 1.5rem 0;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 1.55rem;
+  font-weight: 500;
+}
+
+.stockGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.4rem 1.5rem 1.5rem;
+}
+
+.stockCard {
+  min-height: 124px;
+  padding: 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.stockCardCritical {
+  border-color: #ef5448;
+  background: #fff7f7;
+}
+
+.stockCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.stockTypeWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.stockTypeIcon,
+.requestBloodIcon {
+  color: #2d72ec;
+}
+
+.stockAlertIcon {
+  color: #ef5448;
+}
+
+.stockType {
+  font-size: 1.9rem;
+  font-weight: 500;
+}
+
+.stockValue {
+  display: block;
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.stockLabel {
+  display: block;
+  margin-top: 0.55rem;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.tableWrap {
+  overflow-x: auto;
+  padding: 1.2rem 1.5rem 1.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 860px;
+}
+
+.table thead th {
+  padding: 1rem 1rem;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #55657b;
+  background: var(--surface);
+}
+
+.table tbody td {
+  padding: 1.1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1rem;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tableRowLow td {
+  background: #fff7f7;
+}
+
+.expiringCell {
+  color: #ef5448;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.ok {
+  background: var(--ok-bg);
+  color: var(--ok-fg);
+}
+
+.low {
+  background: var(--low-bg);
+  color: var(--low-fg);
+}
+
+.requestsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem 1.5rem;
+}
+
+.requestCard {
+  padding: 1rem 1.1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.requestTopRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.requestIdentity {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.requestId {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.requestTags {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.requestTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.purple {
+  background: #eeddfd;
+  color: #8b3dff;
+}
+
+.blue {
+  background: #dce8ff;
+  color: #2d72ec;
+}
+
+.success {
+  background: #dfeee3;
+  color: #32a65a;
+}
+
+.processButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.processButton:hover {
+  filter: brightness(0.97);
+  transform: translateY(-1px);
+}
+
+.requestGrid {
+  display: grid;
+  grid-template-columns: 1.15fr 1.1fr 1.2fr 0.6fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.requestInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.requestLabel {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.requestValue,
+.requestValueBlood {
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+.requestValueBlood {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+@media (max-width: 1200px) {
+  .summaryGrid,
+  .stockGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .requestGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .title {
+    font-size: 1.65rem;
+  }
+
+  .summaryGrid,
+  .stockGrid,
+  .requestGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .requestTopRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .processButton {
+    width: fit-content;
+  }
+
+  .panelHeader,
+  .stockGrid,
+  .tableWrap,
+  .requestsList {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
