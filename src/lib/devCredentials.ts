@@ -4,7 +4,9 @@
  * - Remover/substituir quando a autenticação contra DB estiver pronta.
  */
 
-export type RoleId = "patient" | "doctor" | "admin";
+import type { AppRole } from "@/lib/roles";
+
+export type RoleId = AppRole;
 
 export const DEV_ROLES: RoleId[] = ["patient", "doctor", "admin"];
 

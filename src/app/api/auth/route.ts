@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { signToken } from "@/lib/auth";
+import { isAppRole } from "@/lib/roles";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -10,7 +11,8 @@ export async function POST(request: Request) {
     !email ||
     !senha ||
     !role ||
-    !["patient", "doctor", "admin"].includes(role)
+    typeof role !== "string" ||
+    !isAppRole(role)
   ) {
     return NextResponse.json({ message: "Dados inválidos" }, { status: 400 });
   }
@@ -19,7 +21,7 @@ export async function POST(request: Request) {
   const ok =
     email === process.env.DEV_EMAIL &&
     senha === process.env.DEV_SENHA &&
-    (role === "patient" || role === "doctor" || role === "admin");
+    isAppRole(role);
 
   if (!ok) {
     return NextResponse.json(

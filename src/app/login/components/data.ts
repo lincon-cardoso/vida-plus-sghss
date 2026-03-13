@@ -1,12 +1,13 @@
 import type { LucideIcon } from "lucide-react";
 import { User, Stethoscope, Shield, Calendar } from "lucide-react";
+import type { AppRole } from "@/lib/roles";
 
 /**
  * Dados estáticos e tipos para a área de login.
  * Mantido fora dos componentes para facilitar testes e reuso.
  */
 export type Role = {
-  id: "patient" | "doctor" | "admin";
+  id: AppRole;
   label: string;
   icon: LucideIcon;
   description?: string;

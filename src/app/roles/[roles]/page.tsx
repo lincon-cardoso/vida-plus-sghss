@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { getDashboardRoute, isAppRole } from "@/lib/roles";
 
 export default async function RolesIndex({
   params,
@@ -6,5 +7,9 @@ export default async function RolesIndex({
   params: Promise<{ roles: string }>;
 }) {
   const { roles } = await params;
-  redirect(`/roles/${roles}/dashboard`);
+  if (!isAppRole(roles)) {
+    redirect("/login");
+  }
+
+  redirect(getDashboardRoute(roles));
 }

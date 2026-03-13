@@ -14,6 +14,7 @@ import type { Role } from "./data";
 import { roles } from "./data";
 import dynamic from "next/dynamic";
 import { DEV_ROLES, DEV_EMAIL, DEV_SENHA } from "@/lib/devCredentials";
+import { getDashboardRoute, isAppRole, type AppRole } from "@/lib/roles";
 
 const Modal = dynamic(() => import("@/components/Modal"), { ssr: false });
 
@@ -77,15 +78,11 @@ export default function LoginForm() {
 
       // Redirecionar rapidamente (0.5s) para não confundir o usuário
       setTimeout(() => {
-        const serverRole = data?.role as
-          | "patient"
-          | "doctor"
-          | "admin"
-          | undefined;
-        if (serverRole) {
-          router.replace(`/roles/${serverRole}/dashboard`);
+        const serverRole = data?.role;
+        if (typeof serverRole === "string" && isAppRole(serverRole)) {
+          router.replace(getDashboardRoute(serverRole));
         } else {
-          router.replace(`/roles/${role}`);
+          router.replace(getDashboardRoute(role as AppRole));
         }
       }, 500);
     } catch {

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { verifyToken } from "@/lib/auth";
+import { getDashboardRoute, isAppRole } from "@/lib/roles";
 import type { ReactNode } from "react";
 
 export default async function RoleLayout({
@@ -22,10 +23,9 @@ export default async function RoleLayout({
     redirect("/login");
   }
 
-  // impede acesso roles com token de paciente
-
-  if (payload.role !== roles) {
-    redirect(`/roles/${payload.role}/dashboard`);
+  // A URL publica segue o contrato canônico do auth (patient|doctor|admin).
+  if (!isAppRole(roles) || payload.role !== roles) {
+    redirect(getDashboardRoute(payload.role));
   }
 
   return <>{children}</>;
