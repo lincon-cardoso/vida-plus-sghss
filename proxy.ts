@@ -63,12 +63,13 @@ function generateCSP(nonce: string): string {
     // Manifests: self (PWA)
     "manifest-src 'self'",
 
-    // Força HTTPS em requisições
-    "upgrade-insecure-requests",
-
     // Reportar violações CSP (opcional, configure endpoint se necessário)
     // "report-uri /api/csp-report",
   ];
+
+  if (!isDev) {
+    directives.push("upgrade-insecure-requests");
+  }
 
   return directives.join("; ");
 }
@@ -120,6 +121,18 @@ const securityHeaders: Record<string, string> = {
   "Origin-Agent-Cluster": "?1",
 };
 
+function getSecurityHeaders() {
+  const isDev = process.env.NODE_ENV === "development";
+
+  if (isDev) {
+    const headers = { ...securityHeaders };
+    delete headers["Strict-Transport-Security"];
+    return headers;
+  }
+
+  return securityHeaders;
+}
+
 /**
  * Função principal do proxy/middleware.
  * Aplica CSP com nonce dinâmico e headers de segurança.
@@ -146,10 +159,11 @@ export function proxy(request: NextRequest) {
   const cspValue =
     generateCSP(nonce) +
     (enableTrustedTypes ? "; require-trusted-types-for 'script'" : "");
+  requestHeaders.set("Content-Security-Policy", cspValue);
   response.headers.set("Content-Security-Policy", cspValue);
 
   // Aplica headers de segurança
-  for (const [key, value] of Object.entries(securityHeaders)) {
+  for (const [key, value] of Object.entries(getSecurityHeaders())) {
     response.headers.set(key, value);
   }
 

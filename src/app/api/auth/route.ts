@@ -2,6 +2,71 @@ import { NextResponse } from "next/server";
 import { signToken } from "@/lib/auth";
 import { isAppRole } from "@/lib/roles";
 
+const CORS_METHODS = "POST, OPTIONS";
+const CORS_HEADERS = "Content-Type, Authorization";
+
+function getAllowedOrigins() {
+  const allowedOrigins = (process.env.ALLOWED_API_ORIGINS ?? "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (siteOrigin) {
+    allowedOrigins.push(siteOrigin);
+  }
+
+  return [...new Set(allowedOrigins)];
+}
+
+function getCorsHeaders(request: Request) {
+  const origin = request.headers.get("origin");
+  if (!origin) {
+    return null;
+  }
+
+  const allowedOrigins = getAllowedOrigins();
+  if (!allowedOrigins.includes(origin)) {
+    return null;
+  }
+
+  return {
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": CORS_METHODS,
+    "Access-Control-Allow-Headers": CORS_HEADERS,
+    "Access-Control-Allow-Credentials": "true",
+    Vary: "Origin",
+  };
+}
+
+function withCors(response: NextResponse, request: Request) {
+  const corsHeaders = getCorsHeaders(request);
+  if (!corsHeaders) {
+    return response;
+  }
+
+  for (const [key, value] of Object.entries(corsHeaders)) {
+    response.headers.set(key, value);
+  }
+
+  return response;
+}
+
+export async function OPTIONS(request: Request) {
+  const corsHeaders = getCorsHeaders(request);
+  if (!corsHeaders) {
+    return NextResponse.json(
+      { message: "Origem não permitida" },
+      { status: 403 },
+    );
+  }
+
+  return new NextResponse(null, {
+    status: 204,
+    headers: corsHeaders,
+  });
+}
+
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const { email, senha, role } = body ?? {};
@@ -14,7 +79,10 @@ export async function POST(request: Request) {
     typeof role !== "string" ||
     !isAppRole(role)
   ) {
-    return NextResponse.json({ message: "Dados inválidos" }, { status: 400 });
+    return withCors(
+      NextResponse.json({ message: "Dados inválidos" }, { status: 400 }),
+      request,
+    );
   }
 
   // DEV: credenciais centralizadas (substituir em prod)
@@ -24,9 +92,12 @@ export async function POST(request: Request) {
     isAppRole(role);
 
   if (!ok) {
-    return NextResponse.json(
-      { message: "Credenciais inválidas. Por favor, tente novamente." },
-      { status: 401 },
+    return withCors(
+      NextResponse.json(
+        { message: "Credenciais inválidas. Por favor, tente novamente." },
+        { status: 401 },
+      ),
+      request,
     );
   }
   // Gerar token JWT
@@ -50,5 +121,5 @@ export async function POST(request: Request) {
 
   response.cookies.set("token", token, cookieOptions);
 
-  return response;
+  return withCors(response, request);
 }

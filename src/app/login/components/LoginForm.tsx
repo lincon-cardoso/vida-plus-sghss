@@ -13,7 +13,6 @@ import { useState, useRef } from "react";
 import type { Role } from "./data";
 import { roles } from "./data";
 import dynamic from "next/dynamic";
-import { DEV_ROLES, DEV_EMAIL, DEV_SENHA } from "@/lib/devCredentials";
 import { getDashboardRoute, isAppRole, type AppRole } from "@/lib/roles";
 
 const Modal = dynamic(() => import("@/components/Modal"), { ssr: false });
@@ -340,13 +339,13 @@ export default function LoginForm() {
           </ul>
 
           <div className={style["devCredentials"]}>
-            <h4>Credenciais DEV (Temporário)</h4>
+            <h4>Acesso DEV (Temporário)</h4>
             <p className={style["devCredentialsLine"]}>
-              <code>Email:</code> <strong>{DEV_EMAIL}</strong> •{" "}
-              <code>Senha:</code> <strong>{DEV_SENHA}</strong>
+              As credenciais de desenvolvimento são validadas no servidor por
+              variáveis de ambiente e não são exibidas no cliente.
             </p>
             <p className={style["devCredentialsLineSecondary"]}>
-              <strong>Perfis:</strong> {DEV_ROLES.join(" • ")}
+              <strong>Perfis suportados:</strong> patient • doctor • admin
             </p>
           </div>
         </section>

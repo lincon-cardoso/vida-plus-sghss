@@ -67,17 +67,6 @@ const nextConfig: NextConfig = {
   // otimizam performance sem conflitos.
   async headers() {
     return [
-      // Preload de fontes para melhorar LCP (Google Fonts Inter)
-      {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "Link",
-            value:
-              "<https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap>; rel=preload",
-          },
-        ],
-      },
       // Assets versionados do Next.js (cache permanente)
       {
         source: "/_next/static/:path*",
@@ -102,46 +91,6 @@ const nextConfig: NextConfig = {
             key: "Cache-Control",
             value: "public, max-age=3600, stale-while-revalidate=86400",
           },
-        ],
-      },
-      // Service Worker (cache curto para atualizações)
-      {
-        source: "/sw.js",
-        headers: [
-          {
-            key: "Cache-Control",
-            value:
-              "public, max-age=0, s-maxage=0, must-revalidate, stale-while-revalidate=60",
-          },
-          {
-            key: "Content-Type",
-            value: "application/javascript; charset=utf-8",
-          },
-        ],
-      },
-      // === CORS para API Routes ===
-      // Permite chamadas Cross-Origin para endpoints de API a partir de origens confiáveis.
-      // Controlado via variável de ambiente ALLOWED_API_ORIGINS (ex.: https://vidaplus.devlincon.com.br).
-      // Se ALLOWED_API_ORIGINS estiver vazio, por segurança usamos a origem do site (NEXT_PUBLIC_SITE_URL) como default.
-      {
-        source: "/api/:path*",
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value:
-              process.env.ALLOWED_API_ORIGINS ||
-              process.env.NEXT_PUBLIC_SITE_URL ||
-              "*",
-          },
-          {
-            key: "Access-Control-Allow-Methods",
-            value: "GET, POST, PUT, DELETE, OPTIONS",
-          },
-          {
-            key: "Access-Control-Allow-Headers",
-            value: "Content-Type, Authorization",
-          },
-          { key: "Access-Control-Allow-Credentials", value: "true" },
         ],
       },
     ];

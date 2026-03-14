@@ -80,11 +80,11 @@ Abrir: http://localhost:3000
 ## 🔒 Notas de segurança e credenciais DEV
 
 - **Credenciais de desenvolvimento (DEV)** atualmente em uso para facilitar avaliação:
-  - Email: `usuario@gmail.com`
-  - Senha: `usuario123`
-  - Role: `patient` / `doctor` / `admin`
-- Estas credenciais são **temporárias** e devem ser removidas assim que a autenticação com DB estiver disponível.
+  - Configure `DEV_EMAIL` e `DEV_SENHA` no ambiente local.
+  - Roles aceitas pela API atual: `patient` / `doctor` / `admin`
+- Estas credenciais são **temporárias**, validadas no servidor e não devem ser expostas no cliente.
 - **JWT_SECRET** deve estar em `.env` (não comitar valores reais no repositório).
+- Para chamadas cross-origin com cookie, defina `ALLOWED_API_ORIGINS` com uma lista separada por vírgulas das origens permitidas.
 
 ---
 

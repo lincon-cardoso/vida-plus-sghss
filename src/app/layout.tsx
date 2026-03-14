@@ -1,6 +1,13 @@
 import "@/styles/globals.scss";
 import { getNonce } from "@/lib/nonce";
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
 
 // ─── Metadados SEO e Open Graph ───────────────────────────
 export const metadata: Metadata = {
@@ -102,7 +109,7 @@ export default async function RootLayout({
   const nonce = await getNonce();
 
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={inter.variable}>
       <head>
         {/* Nonce disponível para scripts inline se necessário */}
         <meta name="csp-nonce" content={nonce} />
