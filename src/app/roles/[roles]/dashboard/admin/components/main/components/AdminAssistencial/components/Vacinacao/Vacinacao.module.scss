@@ -1,11 +1,265 @@
 .root {
-  padding: 0.5rem 0;
+  --border: #dbe2ea;
+  --panel-bg: #ffffff;
+  --text: #132238;
+  --muted: #6d7c90;
+  --success-bg: #e8f6ec;
+  --success-fg: #33a65b;
+  --info-bg: #eaf1ff;
+  --info-fg: #2d72ec;
+  --danger-bg: #fdebea;
+  --danger-fg: #ff5036;
+  --shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.06);
+  padding: 1rem 0;
+  color: var(--text);
 }
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .title {
-  font-size: 1rem;
-  font-weight: 600;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
 }
-.content {
-  margin-top: 0.5rem;
-  color: #444;
+
+.subtitle {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: none;
+  border-radius: 12px;
+  background: #2d72ec;
+  color: #fff;
+  padding: 0.9rem 1.15rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(45, 114, 236, 0.18);
+}
+
+.primaryButton:hover {
+  filter: brightness(0.97);
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.summaryCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 104px;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow-soft);
+}
+
+.summaryIconBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex: 0 0 48px;
+}
+
+.success {
+  background: var(--success-bg);
+  color: var(--success-fg);
+}
+
+.info {
+  background: var(--info-bg);
+  color: var(--info-fg);
+}
+
+.danger {
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+}
+
+.summaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summaryValue {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.summaryLabel {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.panel {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow-soft);
+}
+
+.panelHeader {
+  padding: 1.5rem 1.5rem 0;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.recordsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.2rem 1.5rem 1.5rem;
+}
+
+.recordCard {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  padding: 1.15rem 1rem;
+}
+
+.recordHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.recordLead {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.recordIconBox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #edf4ff;
+  color: #2d72ec;
+  flex: 0 0 28px;
+}
+
+.recordTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.recordTitle {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 0.55rem;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.aplicada {
+  background: #e8f6ec;
+  color: #33a65b;
+}
+
+.agendada {
+  background: #e9f0ff;
+  color: #2d72ec;
+}
+
+.atrasada {
+  background: #fdebea;
+  color: #ff5036;
+}
+
+.metaList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.95rem;
+  padding-left: 2.75rem;
+}
+
+.metaRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.metaLabel {
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.metaValue {
+  font-size: 0.98rem;
+  color: #3f4d62;
+}
+
+@media (max-width: 960px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .primaryButton {
+    width: fit-content;
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.65rem;
+  }
+
+  .panelHeader,
+  .recordsList {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .metaList {
+    padding-left: 0;
+  }
 }

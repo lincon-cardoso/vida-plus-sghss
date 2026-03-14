@@ -1,0 +1,437 @@
+.root {
+  --border: #dbe2ea;
+  --panel-bg: #ffffff;
+  --surface: #f4f7fb;
+  --text: #132238;
+  --muted: #6d7c90;
+  --primary: #2d72ec;
+  --primary-bg: #eaf1ff;
+  --primary-fg: #2d72ec;
+  --success-bg: #e8f6ec;
+  --success-fg: #33a65b;
+  --warning-bg: #fff5df;
+  --warning-fg: #d99208;
+  --offline-bg: #6b7280;
+  padding: 1rem 0;
+  color: var(--text);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 44px;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  border: none;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(45, 114, 236, 0.18);
+}
+
+.addButton:hover {
+  filter: brightness(0.98);
+}
+
+.toolbarCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.searchWrap {
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #737f90;
+}
+
+.searchInput {
+  width: 100%;
+  min-height: 56px;
+  padding: 0.95rem 1rem 0.95rem 2.7rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.searchInput::placeholder {
+  color: #97a3b4;
+}
+
+.filtersGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.selectField,
+.filterButton {
+  min-height: 56px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.selectField {
+  min-width: 230px;
+  padding: 0 1rem;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.filterButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  color: #5d6878;
+  cursor: pointer;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.summaryCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 88px;
+  padding: 1.2rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--panel-bg);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.summaryValue {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.summarySuccess {
+  color: var(--success-fg);
+}
+
+.summaryWarning {
+  color: var(--warning-fg);
+}
+
+.summaryPrimary {
+  color: var(--primary-fg);
+}
+
+.summaryLabel {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.4rem;
+  margin-top: 1.5rem;
+}
+
+.professionalCard {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.cardTop {
+  position: relative;
+  min-height: 176px;
+  padding: 1.5rem 1.4rem 1.2rem;
+  background: linear-gradient(90deg, #1f7be6 0%, #1e9cd7 34%, #34b55a 100%);
+  color: #ffffff;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.statusBadge {
+  position: absolute;
+  top: 1.35rem;
+  right: 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.available {
+  background: #42bb51;
+}
+
+.busy {
+  background: #f5aa18;
+}
+
+.offline {
+  background: var(--offline-bg);
+}
+
+.identityBlock {
+  margin-top: 1.1rem;
+}
+
+.professionalName {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.professionalCrm {
+  margin: 0.55rem 0 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 1rem;
+}
+
+.cardBody {
+  padding: 1.35rem 1.4rem 1.4rem;
+}
+
+.infoRows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.infoLabel {
+  color: #526277;
+}
+
+.infoValue {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.ratingValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.ratingIcon {
+  color: #ffb11a;
+  fill: currentColor;
+}
+
+.contactsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #d8e0ea;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #506075;
+  font-size: 0.98rem;
+}
+
+.contactIcon {
+  color: #6b7280;
+  flex: 0 0 auto;
+}
+
+.actionsRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 40px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.primaryButton {
+  border: none;
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.secondaryButton {
+  border: 1px solid #d5dee9;
+  background: #ffffff;
+  color: #5f6b7c;
+}
+
+.emptyState {
+  margin-top: 1.5rem;
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #ffffff;
+  text-align: center;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.emptyText {
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 960px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbarCard {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtersGroup {
+    width: 100%;
+  }
+
+  .selectField {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .addButton {
+    width: fit-content;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.65rem;
+  }
+
+  .summaryGrid,
+  .actionsRow {
+    grid-template-columns: 1fr;
+  }
+
+  .filtersGroup {
+    flex-wrap: wrap;
+  }
+
+  .filterButton {
+    width: 100%;
+  }
+
+  .cardTop,
+  .cardBody,
+  .toolbarCard,
+  .emptyState {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

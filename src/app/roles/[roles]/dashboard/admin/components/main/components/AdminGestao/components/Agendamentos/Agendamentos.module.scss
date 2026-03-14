@@ -1,0 +1,289 @@
+.root {
+  --border: #dbe2ea;
+  --panel-bg: #ffffff;
+  --surface: #eef5ff;
+  --text: #132238;
+  --muted: #6d7c90;
+  --primary: #2d72ec;
+  --primary-soft: #eaf1ff;
+  --success-soft: #ecf7ef;
+  --success: #b9e8ca;
+  --danger-soft: #fff1f0;
+  --danger: #f9b9b2;
+  padding: 1rem 0;
+  color: var(--text);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+.addButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 44px;
+  padding: 0.85rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(45, 114, 236, 0.18);
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.summaryCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 100px;
+  padding: 1.35rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.summaryPrimary {
+  background: linear-gradient(180deg, #2f73eb 0%, #1f63d3 100%);
+  color: #ffffff;
+}
+
+.summaryIcon {
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.55;
+}
+
+.summaryPrimary .summaryIcon {
+  opacity: 0.28;
+}
+
+.summaryIconSuccess {
+  color: var(--success);
+}
+
+.summaryIconDanger {
+  color: var(--danger);
+}
+
+.summaryLabel {
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.summaryPrimary .summaryLabel {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.summaryValue {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.tabsBar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 1.55rem;
+  padding: 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.tabButton {
+  min-height: 42px;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #607086;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.tabActive {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.panel {
+  margin-top: 1.35rem;
+  min-height: 290px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+.emptyState {
+  display: flex;
+  min-height: 290px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.emptyIcon {
+  color: #c8ccd2;
+}
+
+.emptyTitle {
+  margin: 1rem 0 0;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.emptyText {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.emptyAction {
+  margin-top: 1.5rem;
+  min-height: 44px;
+  padding: 0.85rem 1.4rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.historyCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+.historyInfo {
+  min-width: 0;
+}
+
+.historyTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.historyProfessional {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.historyBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: var(--success-soft);
+  color: #2f8d4e;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.historyMeta {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+.historyDate {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+@media (max-width: 960px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .addButton {
+    width: fit-content;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .historyCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.65rem;
+  }
+
+  .tabsBar {
+    display: flex;
+    width: 100%;
+  }
+
+  .tabButton {
+    flex: 1 1 0;
+  }
+
+  .emptyTitle {
+    font-size: 1.45rem;
+  }
+}
