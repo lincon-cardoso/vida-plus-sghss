@@ -1,0 +1,149 @@
+.root {
+  --border: #dbe2ea;
+  --panel-bg: #ffffff;
+  --text: #132238;
+  --muted: #5f738e;
+  --primary: #2d72ec;
+  --success: #39ab50;
+  padding: 1rem 0;
+  color: var(--text);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.subtitle {
+  margin: 0;
+  color: #324b68;
+  font-size: 1.02rem;
+}
+
+.cardWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.card {
+  width: min(100%, 680px);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel-bg);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.heroIcon {
+  color: var(--primary);
+}
+
+.heroTitle {
+  margin: 1rem 0 0;
+  font-size: 1.9rem;
+  font-weight: 500;
+}
+
+.heroText {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.prompt {
+  margin: 2rem 0 0;
+  text-align: center;
+  color: #42546b;
+  font-size: 1.02rem;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.starButton {
+  border: none;
+  background: transparent;
+  color: #d4d9e1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.starActive {
+  color: #ffb21a;
+}
+
+.fieldLabel {
+  display: block;
+  margin-top: 2rem;
+  margin-bottom: 0.7rem;
+  font-size: 0.98rem;
+  color: #42546b;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 122px;
+  padding: 1rem;
+  border: 1px solid #cfd8e4;
+  border-radius: 14px;
+  resize: vertical;
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 46px;
+  margin-top: 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--success);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submitted {
+  margin-top: 1rem;
+  color: var(--success);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .title {
+    font-size: 1.65rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+
+  .heroTitle {
+    font-size: 1.45rem;
+  }
+}

@@ -10,6 +10,7 @@ import AdminReceptionCheckIn from "./components/AdminReceptionCheckIn";
 import AdminPatients from "./components/AdminPatients";
 import AdminAssistencial from "./components/AdminAssistencial";
 import AdminGestao from "./components/AdminGestao";
+import AdminQualidade from "./components/AdminQualidade";
 import {
   ADMIN_ACTIONS,
   ADMIN_DASHBOARD_ACTIVE_LABEL_KEY,
@@ -124,6 +125,9 @@ export default function AdminDashboardMain() {
           )}
           {activeLabel === "Gestão" && (
             <AdminGestao activeSubLabel={activeSubLabel} />
+          )}
+          {activeLabel === "Qualidade" && (
+            <AdminQualidade activeSubLabel={activeSubLabel} />
           )}
         </section>
       </div>

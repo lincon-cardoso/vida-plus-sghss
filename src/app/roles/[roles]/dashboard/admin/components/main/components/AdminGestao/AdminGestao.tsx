@@ -4,6 +4,7 @@ import EscalasPlantao from "./components/EscalasPlantao/EscalasPlantao";
 import EstoqueFarmacia from "./components/EstoqueFarmacia/EstoqueFarmacia";
 import GestaoFinanceira from "./components/GestaoFinanceira/GestaoFinanceira";
 import Profissionais from "./components/Profissionais/Profissionais";
+import RegrasNegocioAlertas from "./components/RegrasNegocioAlertas/RegrasNegocioAlertas";
 import RelatoriosFluxo from "./components/RelatoriosFluxo/RelatoriosFluxo";
 
 interface Props {
@@ -20,6 +21,10 @@ export default function AdminGestao({ activeSubLabel }: Props) {
         {activeSubLabel === "Estoque/Farmácia" && <EstoqueFarmacia />}
         {activeSubLabel === "Gestão Financeira" && <GestaoFinanceira />}
         {activeSubLabel === "Relatórios de Fluxo" && <RelatoriosFluxo />}
+        {activeSubLabel === "Regras de Fluxo" && <RegrasNegocioAlertas />}
+        {activeSubLabel === "Regras de Negócio e Alertas" && (
+          <RegrasNegocioAlertas />
+        )}
       </div>
     </div>
   );
