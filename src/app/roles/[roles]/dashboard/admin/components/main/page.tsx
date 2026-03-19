@@ -9,6 +9,7 @@ import AdminHome from "./components/AdminHome/AdminHome";
 import AdminReceptionCheckIn from "./components/AdminReceptionCheckIn";
 import AdminPatients from "./components/AdminPatients";
 import AdminAssistencial from "./components/AdminAssistencial";
+import AdminFaturamento from "./components/AdminFaturamento";
 import AdminGestao from "./components/AdminGestao";
 import AdminQualidade from "./components/AdminQualidade";
 import {
@@ -128,6 +129,9 @@ export default function AdminDashboardMain() {
           )}
           {activeLabel === "Qualidade" && (
             <AdminQualidade activeSubLabel={activeSubLabel} />
+          )}
+          {activeLabel === "Faturamento" && (
+            <AdminFaturamento activeSubLabel={activeSubLabel} />
           )}
         </section>
       </div>
