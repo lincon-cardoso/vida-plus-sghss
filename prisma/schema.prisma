@@ -1,0 +1,248 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../.prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+enum AppRole {
+    patient
+    doctor
+    admin
+}
+
+enum Gender {
+    female
+    male
+    other
+    prefer_not_to_inform
+}
+
+enum BloodType {
+    a_plus
+    a_minus
+    b_plus
+    b_minus
+    ab_plus
+    ab_minus
+    o_plus
+    o_minus
+}
+
+enum AppointmentStatus {
+    scheduled
+    checked_in
+    in_service
+    completed
+    cancelled
+}
+
+enum ClinicalRecordEntryKind {
+    consultation
+    exam
+    medication
+    procedure
+}
+
+model User {
+    id           String    @id @default(uuid())
+    email        String    @unique
+    passwordHash String
+    role         AppRole
+    fullName     String?
+    avatarUrl    String?
+    phone        String?
+    isActive     Boolean   @default(true)
+    lastLoginAt  DateTime?
+    createdAt    DateTime  @default(now())
+    updatedAt    DateTime  @updatedAt
+
+    patientProfile       PatientProfile?
+    doctorProfile        DoctorProfile?
+    patientAppointments  Appointment[]         @relation("PatientAppointments")
+    doctorAppointments   Appointment[]         @relation("DoctorAppointments")
+    patientRecordEntries ClinicalRecordEntry[] @relation("PatientRecordEntries")
+    doctorRecordEntries  ClinicalRecordEntry[] @relation("DoctorRecordEntries")
+    sessions             UserSession[]
+    consents             ConsentLog[]
+    checkIns             CheckIn[]
+    shiftAssignments     ShiftAssignment[]
+
+    @@index([role])
+}
+
+model PatientProfile {
+    id                    String     @id @default(uuid())
+    userId                String     @unique
+    cpf                   String?    @unique
+    birthDate             DateTime?
+    gender                Gender?
+    bloodType             BloodType?
+    phone                 String?
+    address               String?
+    allergies             String?
+    chronicConditions     String?
+    emergencyContactName  String?
+    emergencyContactPhone String?
+    createdAt             DateTime   @default(now())
+    updatedAt             DateTime   @updatedAt
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DoctorProfile {
+    id           String   @id @default(uuid())
+    userId       String   @unique
+    crm          String?  @unique
+    specialtyId  String?
+    phone        String?
+    address      String?
+    biography    String?
+    registration String?
+    consultNotes String?
+    active       Boolean  @default(true)
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+    specialty Specialty? @relation(fields: [specialtyId], references: [id], onDelete: SetNull)
+
+    @@index([specialtyId])
+}
+
+model Specialty {
+    id          String   @id @default(uuid())
+    name        String   @unique
+    slug        String   @unique
+    description String?
+    isActive    Boolean  @default(true)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    doctors      DoctorProfile[]
+    appointments Appointment[]
+    shifts       ShiftAssignment[]
+}
+
+model Appointment {
+    id              String            @id @default(uuid())
+    patientId       String
+    doctorId        String
+    specialtyId     String?
+    scheduledAt     DateTime
+    durationMinutes Int?
+    status          AppointmentStatus @default(scheduled)
+    reason          String?
+    notes           String?
+    checkInAt       DateTime?
+    startedAt       DateTime?
+    completedAt     DateTime?
+    cancelledAt     DateTime?
+    createdAt       DateTime          @default(now())
+    updatedAt       DateTime          @updatedAt
+
+    patient       User                  @relation("PatientAppointments", fields: [patientId], references: [id], onDelete: Restrict)
+    doctor        User                  @relation("DoctorAppointments", fields: [doctorId], references: [id], onDelete: Restrict)
+    specialty     Specialty?            @relation(fields: [specialtyId], references: [id], onDelete: SetNull)
+    recordEntries ClinicalRecordEntry[]
+    checkIns      CheckIn[]
+
+    @@index([patientId, scheduledAt])
+    @@index([doctorId, scheduledAt])
+    @@index([status, scheduledAt])
+}
+
+model ClinicalRecordEntry {
+    id             String                  @id @default(uuid())
+    patientId      String
+    doctorId       String?
+    appointmentId  String?
+    kind           ClinicalRecordEntryKind
+    occurredAt     DateTime
+    title          String
+    summary        String
+    attachmentName String?
+    attachmentUrl  String?
+    metadata       Json?
+    createdAt      DateTime                @default(now())
+    updatedAt      DateTime                @updatedAt
+
+    patient     User         @relation("PatientRecordEntries", fields: [patientId], references: [id], onDelete: Restrict)
+    doctor      User?        @relation("DoctorRecordEntries", fields: [doctorId], references: [id], onDelete: SetNull)
+    appointment Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+
+    @@index([patientId, occurredAt])
+    @@index([doctorId, occurredAt])
+    @@index([appointmentId])
+}
+
+model UserSession {
+    id         String    @id @default(uuid())
+    userId     String
+    device     String
+    location   String?
+    ipAddress  String?
+    userAgent  String?
+    lastSeenAt DateTime  @default(now())
+    revokedAt  DateTime?
+    isCurrent  Boolean   @default(false)
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId, revokedAt])
+}
+
+model ConsentLog {
+    id            String    @id @default(uuid())
+    userId        String
+    consentType   String
+    policyVersion String
+    grantedAt     DateTime  @default(now())
+    revokedAt     DateTime?
+    source        String?
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId, consentType])
+}
+
+model CheckIn {
+    id            String   @id @default(uuid())
+    appointmentId String?  @unique
+    patientId     String
+    checkedInAt   DateTime @default(now())
+    status        String?
+    queueNumber   Int?
+    notes         String?
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+
+    appointment Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+    patient     User         @relation(fields: [patientId], references: [id], onDelete: Restrict)
+
+    @@index([checkedInAt])
+}
+
+model ShiftAssignment {
+    id          String   @id @default(uuid())
+    doctorId    String
+    specialtyId String?
+    startsAt    DateTime
+    endsAt      DateTime
+    location    String?
+    label       String?
+    status      String   @default("scheduled")
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    doctor    User       @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+    specialty Specialty? @relation(fields: [specialtyId], references: [id], onDelete: SetNull)
+
+    @@index([doctorId, startsAt])
+}
