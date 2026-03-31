@@ -16,7 +16,7 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset --force",
-    "db:seed": "node scripts/seed.js",
+    "db:seed": "ts-node --esm scripts/seed.ts",
     "db:studio": "prisma studio",
     "test:api": "node scripts/test-api.js",
     "test:auto-deploy": "node scripts/test-auto-deploy.js",

@@ -46,18 +46,28 @@ enum ClinicalRecordEntryKind {
     procedure
 }
 
+enum AuthAttemptOutcome {
+    success
+    failure
+    blocked
+    invalid_request
+}
+
 model User {
-    id           String    @id @default(uuid())
-    email        String    @unique
-    passwordHash String
-    role         AppRole
-    fullName     String?
-    avatarUrl    String?
-    phone        String?
-    isActive     Boolean   @default(true)
-    lastLoginAt  DateTime?
-    createdAt    DateTime  @default(now())
-    updatedAt    DateTime  @updatedAt
+    id                         String    @id @default(uuid())
+    email                      String    @unique
+    passwordHash               String
+    role                       AppRole
+    fullName                   String?
+    avatarUrl                  String?
+    phone                      String?
+    isActive                   Boolean   @default(true)
+    lastLoginAt                DateTime?
+    failedLoginCount           Int       @default(0)
+    failedLoginWindowStartedAt DateTime?
+    lockedUntil                DateTime?
+    createdAt                  DateTime  @default(now())
+    updatedAt                  DateTime  @updatedAt
 
     patientProfile       PatientProfile?
     doctorProfile        DoctorProfile?
@@ -69,8 +79,28 @@ model User {
     consents             ConsentLog[]
     checkIns             CheckIn[]
     shiftAssignments     ShiftAssignment[]
+    authAttemptLogs      AuthAttemptLog[]
 
     @@index([role])
+    @@index([lockedUntil])
+}
+
+model AuthAttemptLog {
+    id          String             @id @default(uuid())
+    userId      String?
+    email       String?
+    ipAddress   String?
+    userAgent   String?
+    outcome     AuthAttemptOutcome
+    reason      String?
+    attemptedAt DateTime           @default(now())
+
+    user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+    @@index([email, attemptedAt])
+    @@index([ipAddress, attemptedAt])
+    @@index([userId, attemptedAt])
+    @@index([outcome, attemptedAt])
 }
 
 model PatientProfile {

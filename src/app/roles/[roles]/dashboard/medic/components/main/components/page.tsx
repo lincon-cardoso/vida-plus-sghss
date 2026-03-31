@@ -61,13 +61,29 @@ export default function MedicDashboardMain() {
     undefined,
   );
 
-  function handleActionClick(action: {
+  async function handleActionClick(action: {
     itemKey: string;
     label: string;
     subKey?: string;
   }) {
     if (action.itemKey === "nav_logout" || action.label === "Sair") {
-      router.push("/login");
+      try {
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          cache: "no-store",
+        });
+      } catch {
+        // ignore
+      } finally {
+        try {
+          sessionStorage.removeItem("vida-plus:medic-dashboard:activeItem");
+        } catch {
+          // ignore
+        }
+
+        router.replace("/login");
+        router.refresh();
+      }
       return;
     }
 

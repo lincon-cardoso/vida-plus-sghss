@@ -130,13 +130,27 @@ export default function PatientDashboardMain() {
     }
   }, [activeItem]);
 
-  function handleActionClick(action: QuickAction) {
+  async function handleActionClick(action: QuickAction) {
     const label = action.label as PatientMenuItem;
 
     if (label === "Sair") {
-      // Obs.: o cookie de token é httpOnly; para logout real, crie um endpoint
-      // que limpe o cookie. Por enquanto, apenas redireciona para o login.
-      router.push("/login");
+      try {
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          cache: "no-store",
+        });
+      } catch {
+        // ignore
+      } finally {
+        try {
+          sessionStorage.removeItem("vida-plus:patient-dashboard:activeItem");
+        } catch {
+          // ignore
+        }
+
+        router.replace("/login");
+        router.refresh();
+      }
       return;
     }
 
