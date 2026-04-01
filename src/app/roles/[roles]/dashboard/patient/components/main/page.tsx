@@ -1,4 +1,11 @@
 "use client";
+
+// Página cliente do dashboard do paciente.
+// - Faz fetch periódico (a cada 5s) de /api/patient/dashboard-summary.
+// - Atualiza os InfoBoxes (próximas consultas, exames, prescrições).
+// - Controla navegação interna (Meu Dashboard, Meu Prontuário, etc.)
+// - Implementa logout, persistência de aba e atalhos de teclado.
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePatientMenuStore } from "@/lib/stores";
@@ -30,6 +37,7 @@ type DashboardSummary = {
   activePrescriptions: number;
 };
 
+// Dados padrão exibidos até a API responder.
 const INFO_BOXES: InfoBoxItem[] = [
   {
     itemKey: "upcoming_appointments",
@@ -109,6 +117,10 @@ export default function PatientDashboardMain() {
     [],
   );
 
+  // UseEffect de resumo do dashboard do paciente:
+  // - chamada inicial para preencher as InfoBoxes
+  // - repetição recorrer a cada 5 segundos para near-real-time
+  // - isMounted protege de atualizações após o componente desmontar.
   useEffect(() => {
     let isMounted = true;
 
@@ -170,7 +182,7 @@ export default function PatientDashboardMain() {
     };
   }, []);
 
-  // Fecha com Esc
+  // Fecha com Esc: atalho de teclado do menu lateral.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") closeMenu();
@@ -187,6 +199,7 @@ export default function PatientDashboardMain() {
   }, [isMenuOpen]);
 
   // Mantém a aba selecionada após refresh (F5)
+  // O estado activeItem é salvo no sessionStorage e recarregado na injeção inicial.
   useEffect(() => {
     try {
       sessionStorage.setItem(
@@ -198,6 +211,9 @@ export default function PatientDashboardMain() {
     }
   }, [activeItem]);
 
+  // Tratamento de clique nas ações rápidas do menu.
+  // - Sair: faz logout e redireciona para login.
+  // - Outras: apenas troca a aba ativa display.
   async function handleActionClick(action: QuickAction) {
     const label = action.label as PatientMenuItem;
 
@@ -225,6 +241,12 @@ export default function PatientDashboardMain() {
     setActiveItem(label);
   }
 
+  // Renderização condicional do painel principal de paciente.
+  // A partir de activeItem escolhe trecho a exibir:
+  // - Meu Dashboard
+  // - Meu Prontuário
+  // - Meus Agendamentos
+  // - Configurações
   return (
     <div className={styles.root}>
       <div className={styles.layout}>
