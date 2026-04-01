@@ -24,20 +24,26 @@ type PatientMenuItem =
   | "Configurações"
   | "Sair";
 
+type DashboardSummary = {
+  upcomingAppointments: number;
+  examResults: number;
+  activePrescriptions: number;
+};
+
 const INFO_BOXES: InfoBoxItem[] = [
   {
     itemKey: "upcoming_appointments",
-    count: 2,
+    count: "...",
     label: "Próximas Consultas",
   },
   {
     itemKey: "exam_results",
-    count: 3,
+    count: "...",
     label: "Resultados de Exames",
   },
   {
     itemKey: "active_prescription",
-    count: 1,
+    count: "...",
     label: "Prescrição Ativa",
   },
 ];
@@ -67,6 +73,7 @@ export default function PatientDashboardMain() {
   const closeMenu = usePatientMenuStore((s) => s.closeMenu);
 
   const menuRef = useRef<HTMLElement | null>(null);
+  const [infoBoxes, setInfoBoxes] = useState<InfoBoxItem[]>(() => INFO_BOXES);
 
   const [activeItem, setActiveItem] = useState<PatientMenuItem>(() => {
     try {
@@ -101,6 +108,67 @@ export default function PatientDashboardMain() {
     ],
     [],
   );
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadDashboardSummary() {
+      try {
+        const response = await fetch("/api/patient/dashboard-summary", {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          return;
+        }
+
+        const data: { summary?: DashboardSummary } = await response.json();
+
+        if (!data.summary || !isMounted) {
+          return;
+        }
+
+        setInfoBoxes((current) =>
+          current.map((item) => {
+            if (item.itemKey === "upcoming_appointments") {
+              return {
+                ...item,
+                count: data.summary?.upcomingAppointments ?? item.count,
+              };
+            }
+
+            if (item.itemKey === "exam_results") {
+              return {
+                ...item,
+                count: data.summary?.examResults ?? item.count,
+              };
+            }
+
+            if (item.itemKey === "active_prescription") {
+              return {
+                ...item,
+                count: data.summary?.activePrescriptions ?? item.count,
+              };
+            }
+
+            return item;
+          }),
+        );
+      } catch {
+        // ignore
+      }
+    }
+
+    void loadDashboardSummary();
+    const intervalId = window.setInterval(() => {
+      void loadDashboardSummary();
+    }, 5000);
+
+    return () => {
+      isMounted = false;
+      window.clearInterval(intervalId);
+    };
+  }, []);
 
   // Fecha com Esc
   useEffect(() => {
@@ -175,7 +243,7 @@ export default function PatientDashboardMain() {
                 title="Olá, João!"
                 subtitle="Bem-vinda ao seu portal do paciente."
               />
-              <InfoBoxes items={INFO_BOXES} />
+              <InfoBoxes items={infoBoxes} />
 
               <AppointmentsCard
                 title="Próximas Consultas"
