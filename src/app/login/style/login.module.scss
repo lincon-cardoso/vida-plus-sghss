@@ -1,8 +1,9 @@
-// Variáveis de cores
+// Cores base da tela de login.
 $primary-blue: #1a73e8;
 $secondary-blue: #1e88e5;
 $accent-green: #34a853;
 
+// Estrutura geral da pagina e ajuste do layout principal.
 .estiloLogin {
   display: flex;
   flex-direction: column;
@@ -11,7 +12,6 @@ $accent-green: #34a853;
   min-height: 100dvh;
   padding: 1rem;
   background-color: #f0f0f0;
-  /* diagonal gradient: topo-esquerdo -> meio -> baixo-direito */
   background: linear-gradient(
     135deg,
     $primary-blue 0%,
@@ -30,7 +30,7 @@ $accent-green: #34a853;
     gap: 1.5rem;
     align-items: stretch;
 
-    // Tablet
+    // Ajustes de empilhamento em telas de tablet.
     @media (max-width: 1024px) {
       flex-direction: column;
       min-height: auto;
@@ -43,7 +43,7 @@ $accent-green: #34a853;
     flex: 1;
   }
 
-  // Esconder texto de marketing em mobile para focar no form
+  // Em telas pequenas, o texto institucional sai de cena para priorizar o formulario.
   .textoLogin {
     @media (max-width: 768px) {
       display: none;

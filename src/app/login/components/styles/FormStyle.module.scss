@@ -9,12 +9,9 @@ $border-color: #e5e7eb;
 $border-focus: #93c5fd;
 $bg-white: #ffffff;
 $bg-hover: #f0f9ff;
-// Variáveis de cores: paleta utilizada no formulário de login
-// Este arquivo contém os estilos do card do formulário (lado direito da tela):
-// container branco, inputs, botões, seletor de perfis e o rodapé adicional.
 
+// Estrutura do card principal e dos blocos internos do formulario.
 .login-card {
-  // Estrutura do card de login — container principal e layout interno
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,7 +22,6 @@ $bg-hover: #f0f9ff;
   padding: 1rem;
 
   .login-card__container {
-    // Container interno (card branco) — contém header, formulário e footer do card
     flex: 1;
     width: 100%;
     height: 100%;
@@ -42,7 +38,6 @@ $bg-hover: #f0f9ff;
     .login-card__header,
     .login-card__form,
     .login-card__footer {
-      // Footer do card: informação e links relacionados ao cadastro/primeiro acesso
       width: 100%;
     }
 
@@ -110,9 +105,8 @@ $bg-hover: #f0f9ff;
     }
   }
 
+  // Informacoes complementares exibidas abaixo do card principal.
   .login-card__additional {
-    // Conteúdo adicional abaixo do card (fora do card branco). Geralmente exibido
-    // sobre o fundo colorido da tela — por isso o texto é branco para contraste.
     margin-top: 1.5rem;
     text-align: center;
     width: 100%;
@@ -146,9 +140,8 @@ $bg-hover: #f0f9ff;
     }
   }
 
-  // Campo de formulário
+  // Campos do formulario, incluindo perfil, email, senha e opcoes auxiliares.
   .field {
-    // Estilos para campos do formulário (label + input)
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -160,8 +153,8 @@ $bg-hover: #f0f9ff;
     }
   }
 
+  // Selecao de perfil em grade, usada antes do acesso.
   .role-grid {
-    // Grade para seleção de perfis/roles (3 colunas)
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
@@ -169,7 +162,6 @@ $bg-hover: #f0f9ff;
   }
 
   .role-btn {
-    // Botão de seleção de perfil — possui estado `.is-active` que altera cor
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -219,7 +211,6 @@ $bg-hover: #f0f9ff;
   }
 
   .input {
-    // Campos de input (estilos básicos e foco)
     width: 100%;
     padding: 0.875rem 1rem;
     border: 1px solid color.adjust($border-color, $lightness: -5%);
@@ -246,7 +237,6 @@ $bg-hover: #f0f9ff;
   }
 
   .input--email {
-    // Modificador: input com ícone de e-mail alinhado à direita
     padding-right: 3rem;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
@@ -255,6 +245,7 @@ $bg-hover: #f0f9ff;
   }
 
   .form-row {
+    // Linha com manter conectado e recuperar senha.
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -307,12 +298,11 @@ $bg-hover: #f0f9ff;
   }
 
   .link--muted {
-    // Variante de link menos proeminente (usar quando precisar de tom alternativo)
     color: $primary-color;
   }
 
   .btn {
-    // Estilos base para botões
+    // Botao principal e estados de interacao.
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -335,7 +325,6 @@ $bg-hover: #f0f9ff;
   }
 
   .btn--primary {
-    // Variante primária do botão — utilizado para ações principais (Acessar)
     background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
     color: $bg-white;
 

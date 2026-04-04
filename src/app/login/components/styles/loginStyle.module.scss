@@ -2,10 +2,9 @@ $text-white: #ffffff;
 $icon-blue: #217aff;
 $glass-bg: rgba(255, 255, 255, 0.2);
 $glass-bg-hover: rgba(255, 255, 255, 0.25);
-// Variáveis: paleta e cores usadas no marketing do login (texto/ícone/efeito glass)
 
+// Estrutura do painel institucional exibido ao lado do formulario.
 .container {
-  // Container principal do bloco de informação (lado esquerdo da tela de login)
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -19,13 +18,11 @@ $glass-bg-hover: rgba(255, 255, 255, 0.25);
     pointer-events: none;
   }
   .header {
-    // Cabeçalho: ícone + título/subtítulo do bloco de marketing
     display: flex;
     align-items: center;
     gap: 1rem;
 
     .iconWrapper {
-      // Caixa do ícone/logo — branco com sombra para contraste sobre o background
       width: 4rem;
       height: 4rem;
       background-color: $text-white;
@@ -46,7 +43,6 @@ $glass-bg-hover: rgba(255, 255, 255, 0.25);
     }
 
     .text {
-      // Texto: título e subtítulo do bloco de marketing
       color: $text-white;
 
       .title {
@@ -64,8 +60,8 @@ $glass-bg-hover: rgba(255, 255, 255, 0.25);
     }
   }
 
+  // Mensagem de valor principal e o texto de apoio da pagina.
   .taglineGroup {
-    // Mensagem principal (chamada/USP) e descrição de suporte
     margin-top: 0.5rem;
 
     .tagline {
@@ -96,7 +92,7 @@ $glass-bg-hover: rgba(255, 255, 255, 0.25);
   }
 
   .information {
-    // Lista de pontos/benefícios com efeito 'glass' (fundo semi-transparente + blur)
+    // Lista de diferenciais com efeito visual translúcido.
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -104,7 +100,6 @@ $glass-bg-hover: rgba(255, 255, 255, 0.25);
     gap: 0.75rem;
 
     .informationItem {
-      // Item individual: ícone + texto. Hover aplica destaque e ligeiro deslocamento
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -112,7 +107,9 @@ $glass-bg-hover: rgba(255, 255, 255, 0.25);
       padding: 1.25rem;
       background-color: $glass-bg;
       backdrop-filter: blur(10px);
-      transition: background-color 0.2s ease, transform 0.2s ease;
+      transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 
       &:hover {
         background-color: $glass-bg-hover;

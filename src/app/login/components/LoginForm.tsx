@@ -1,15 +1,7 @@
 "use client";
-/**
- * LoginForm — Client Component.
- * Justificativa: usa `useState`, `useRef` e `useRouter` (navegação client-side).
- * Responsabilidade: gerenciar formulário de login e interações do usuário.
- *
- * Observação: consome `roles` a partir de `./data` para evitar duplicação
- * e permitir testes/mocks centralizados.
- */
 import style from "./styles/FormStyle.module.scss";
 import { useRouter } from "next/navigation";
-import { useState, useRef } from "react";
+import { useState, useRef, type KeyboardEvent, type SubmitEvent } from "react";
 import type { Role } from "./data";
 import { roles } from "./data";
 import dynamic from "next/dynamic";
@@ -17,7 +9,9 @@ import { getDashboardRoute, isAppRole, type AppRole } from "@/lib/roles";
 
 const Modal = dynamic(() => import("@/components/Modal"), { ssr: false });
 
+// Componente client que controla entrada, feedback e redirecionamento do login.
 export default function LoginForm() {
+  // Estado local do formulario e dos retornos exibidos ao usuario.
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,11 +20,14 @@ export default function LoginForm() {
   const [success, setSuccess] = useState("");
   const errorRef = useRef<HTMLDivElement | null>(null);
 
+  // Controle do modal de ajuda apresentado na tela de acesso.
   const [isHelpOpen, setIsHelpOpen] = useState(true);
 
+  // Perfil selecionado para montar a experiencia e a rota de destino.
   const [role, setRole] = useState<Role["id"]>(roles[0].id);
 
-  const handleRoleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  // Permite trocar o perfil com o teclado sem depender do mouse.
+  const handleRoleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const order: Array<Role["id"]> = roles.map((r) => r.id);
     const index = order.indexOf(role);
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
@@ -43,52 +40,67 @@ export default function LoginForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // Envia as credenciais, valida a resposta da API e leva o usuario ao painel certo.
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (loading) return; // previne múltiplos envios
+    if (loading) return;
     setLoading(true);
     setError("");
     setSuccess("");
 
     try {
-      const res = await fetch("/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email.trim(), senha, role }),
-      });
-
+      const res = await fetch("/api/patient/pingPong");
       const data = await res.json().catch(() => null);
 
       if (!res.ok) {
-        setError(
-          data?.message || "Falha na autenticação. Verifique suas credenciais.",
-        );
-        errorRef.current?.focus();
-        setLoading(false); // libera só no erro
-        return;
+        throw new Error(data?.message ?? "Falha no pingPong");
       }
 
-      setSuccess("Login bem-sucedido! Redirecionando...");
-      // Mantém o botão desabilitado até o redirecionamento para evitar
-      // que o botão seja liberado momentaneamente antes da navegação.
-      // Observação: o componente será desmontado após o `router.replace`.
-
-      // Redirecionar rapidamente (0.5s) para não confundir o usuário
-      setTimeout(() => {
-        const serverRole = data?.role;
-        if (typeof serverRole === "string" && isAppRole(serverRole)) {
-          router.replace(getDashboardRoute(serverRole));
-        } else {
-          router.replace(getDashboardRoute(role as AppRole));
-        }
-      }, 500);
-    } catch {
-      setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
+      setSuccess(`PingPong recebido: ${data?.message ?? "pong"}`);
+      // se quiser redirecionar:
+      // router.replace(getDashboardRoute(role as AppRole));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro inesperado");
       errorRef.current?.focus();
+    } finally {
       setLoading(false);
     }
+
+    // try {
+    //   const res = await fetch("/api/auth", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ email: email.trim(), senha, role }),
+    //   });
+
+    //   const data = await res.json().catch(() => null);
+
+    //   if (!res.ok) {
+    //     setError(
+    //       data?.message || "Falha na autenticação. Verifique suas credenciais.",
+    //     );
+    //     errorRef.current?.focus();
+    //     setLoading(false);
+    //     return;
+    //   }
+
+    //   setSuccess("Login bem-sucedido! Redirecionando...");
+    //   // Pequena pausa para mostrar o retorno de sucesso antes da navegacao.
+    //   setTimeout(() => {
+    //     const serverRole = data?.role;
+    //     if (typeof serverRole === "string" && isAppRole(serverRole)) {
+    //       router.replace(getDashboardRoute(serverRole));
+    //     } else {
+    //       router.replace(getDashboardRoute(role as AppRole));
+    //     }
+    //   }, 500);
+    // } catch {
+    //   setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
+    //   errorRef.current?.focus();
+    //   setLoading(false);
+    // }
   };
 
   return (

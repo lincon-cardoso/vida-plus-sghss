@@ -1,12 +1,8 @@
-/**
- * LoginHeader — Server Component (padrão).
- * Componente estático de apresentação.
- * Motivo: não usa estado nem efeitos do browser; mantido como Server Component para performance.
- */
 import styles from "./styles/loginStyle.module.scss";
 import { Heart } from "lucide-react";
 import { features } from "./data";
 
+// Bloco visual fixo da pagina, responsavel pela identidade e proposta do sistema.
 export default function LoginHeader() {
   return (
     <div className={styles.container}>
@@ -34,6 +30,7 @@ export default function LoginHeader() {
           telemedicina e atendimento ao paciente.
         </p>
       </div>
+      {/* Lista dos principais diferenciais exibidos no topo da tela. */}
       <div
         className={styles.information}
         role="list"

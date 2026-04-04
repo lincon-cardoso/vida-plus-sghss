@@ -1,19 +1,21 @@
 import styles from "./style/login.module.scss";
-import LoginForm from "./components/LoginForm"; // componente client local
-import LoginHeader from "./components/LoginHeader"; // componente server local
+import LoginForm from "./components/LoginForm";
+import LoginHeader from "./components/LoginHeader";
 import type { Metadata } from "next";
 
+// Metadados da pagina de login para SEO e controle de indexacao.
 export const metadata: Metadata = {
   title: "Login - VidaPlus",
   description:
     "Acesse sua conta no VidaPlus - Sistema de Gestão Hospitalar. Login seguro para pacientes, médicos e administradores.",
   keywords: ["login", "acesso", "VidaPlus", "saúde", "hospital"],
   robots: {
-    index: false, // Não indexar página de login
+    index: false,
     follow: false,
   },
 };
 
+// Pagina que combina a apresentacao institucional com o formulario de acesso.
 export default async function login() {
   return (
     <div className={styles.estiloLogin}>

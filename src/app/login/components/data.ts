@@ -2,10 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import { User, Stethoscope, Shield, Calendar } from "lucide-react";
 import type { AppRole } from "@/lib/roles";
 
-/**
- * Dados estáticos e tipos para a área de login.
- * Mantido fora dos componentes para facilitar testes e reuso.
- */
+// Tipos usados para manter os perfis e os cards de destaque consistentes.
 export type Role = {
   id: AppRole;
   label: string;
@@ -13,6 +10,7 @@ export type Role = {
   description?: string;
 };
 
+// Perfis que o usuario pode selecionar antes de entrar no sistema.
 export const roles: Role[] = [
   { id: "patient", label: "Paciente", icon: User },
   { id: "doctor", label: "Profissional", icon: Stethoscope },
@@ -26,6 +24,7 @@ export type Feature = {
   icon: LucideIcon;
 };
 
+// Beneficios mostrados no cabeçalho para resumir o valor da plataforma.
 export const features: Feature[] = [
   {
     id: "telemedicina",
