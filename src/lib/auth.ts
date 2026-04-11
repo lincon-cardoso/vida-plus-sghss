@@ -8,6 +8,7 @@ const DEFAULT_EXPIRES_IN = "1d";
 export type TokenPayload = {
   email: string;
   role: AppRole;
+  jti?: string;
   iat?: number;
   exp?: number;
 };

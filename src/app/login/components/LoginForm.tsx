@@ -5,7 +5,7 @@ import { useState, useRef, type KeyboardEvent, type SubmitEvent } from "react";
 import type { Role } from "./data";
 import { roles } from "./data";
 import dynamic from "next/dynamic";
-import { getDashboardRoute, isAppRole, type AppRole } from "@/lib/roles";
+import { getDashboardRoute, isAppRole } from "@/lib/roles";
 
 const Modal = dynamic(() => import("@/components/Modal"), { ssr: false });
 
@@ -49,58 +49,40 @@ export default function LoginForm() {
     setSuccess("");
 
     try {
-      const res = await fetch("/api/patient/pingPong");
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email.trim(), senha, role }),
+        cache: "no-store",
+        credentials: "same-origin",
+      });
+
       const data = await res.json().catch(() => null);
 
       if (!res.ok) {
-        throw new Error(data?.message ?? "Falha no pingPong");
+        throw new Error(
+          data?.message ?? "Falha na autenticação. Verifique suas credenciais.",
+        );
       }
 
-      setSuccess(`PingPong recebido: ${data?.message ?? "pong"}`);
-      // se quiser redirecionar:
-      // router.replace(getDashboardRoute(role as AppRole));
+      setSuccess("Login bem-sucedido! Redirecionando...");
+
+      const serverRole = data?.role;
+      const nextRole =
+        typeof serverRole === "string" && isAppRole(serverRole)
+          ? serverRole
+          : role;
+
+      router.replace(getDashboardRoute(nextRole));
+      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro inesperado");
       errorRef.current?.focus();
     } finally {
       setLoading(false);
     }
-
-    // try {
-    //   const res = await fetch("/api/auth", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ email: email.trim(), senha, role }),
-    //   });
-
-    //   const data = await res.json().catch(() => null);
-
-    //   if (!res.ok) {
-    //     setError(
-    //       data?.message || "Falha na autenticação. Verifique suas credenciais.",
-    //     );
-    //     errorRef.current?.focus();
-    //     setLoading(false);
-    //     return;
-    //   }
-
-    //   setSuccess("Login bem-sucedido! Redirecionando...");
-    //   // Pequena pausa para mostrar o retorno de sucesso antes da navegacao.
-    //   setTimeout(() => {
-    //     const serverRole = data?.role;
-    //     if (typeof serverRole === "string" && isAppRole(serverRole)) {
-    //       router.replace(getDashboardRoute(serverRole));
-    //     } else {
-    //       router.replace(getDashboardRoute(role as AppRole));
-    //     }
-    //   }, 500);
-    // } catch {
-    //   setError("Ocorreu um erro inesperado. Tente novamente mais tarde.");
-    //   errorRef.current?.focus();
-    //   setLoading(false);
-    // }
   };
 
   return (
@@ -279,29 +261,28 @@ export default function LoginForm() {
         <section className={style["helpModalContent"]}>
           <p>
             <strong>Resumo do Projeto:</strong> Protótipo do SGHSS Vida Plus,
-            sistema de gestão hospitalar em Next.js 16 + TypeScript. Foco em
-            dashboards acessíveis por perfis (paciente, médico, admin), com
-            autenticação DEV e UI funcional. Persistência e APIs pendentes para
-            integração completa.
+            sistema de gestão hospitalar em Next.js 16 + TypeScript. O login já
+            usa autenticação no servidor, cria sessão persistida e protege as
+            áreas por perfil (paciente, médico, admin).
           </p>
 
           <h3>✅ Implementado</h3>
           <ul>
             <li>
-              UI de login com seleção de perfil (patient/doctor/admin) e
-              validação.
+              UI de login com seleção de perfil (patient/doctor/admin),
+              validação e redirecionamento por role.
             </li>
             <li>
-              API `/api/auth` (DEV): valida credenciais hardcoded, gera JWT,
-              seta cookie httpOnly.
+              API `/api/auth`: valida credenciais no banco, gera JWT, seta
+              cookie httpOnly e registra `UserSession`.
             </li>
             <li>
               Dashboards por perfil: componentes UI (agendamentos, prontuário,
-              navegação), acessíveis (WCAG, teclado).
+              navegação), acessíveis (WCAG, teclado) e protegidos no servidor.
             </li>
             <li>
-              Helpers: JWT (sign/verify), nonce (CSP), stores (Zustand),
-              devCredentials.
+              Helpers: JWT (sign/verify), sessão, nonce (CSP) e stores
+              (Zustand).
             </li>
             <li>
               Qualidade: SCSS Modules, Server Components padrão, lint/typecheck
@@ -312,18 +293,18 @@ export default function LoginForm() {
           <h3>❌ Pendências (Prioridade)</h3>
           <ul>
             <li>
-              <strong>Alta:</strong> Schema Prisma vazio → modelos (User, Role,
-              Appointment, MedicalRecord), migrations, auth contra DB (argon2),
-              seeds.
+              <strong>Alta:</strong> expandir o schema Prisma com os domínios de
+              negócio restantes (Appointment, MedicalRecord, etc.), migrations e
+              seeds completas.
             </li>
             <li>
               <strong>Média:</strong> APIs de domínio (CRUD
-              agendamentos/prontuário), validação (Zod), autorização
-              (middleware/roles).
+              agendamentos/prontuário), validação (Zod) e demais fluxos de
+              negócio.
             </li>
             <li>
-              <strong>Média:</strong> Integração front-API (ex.: agendamento
-              persistente), testes (unit/integration/E2E, Jest).
+              <strong>Média:</strong> Integração front-API persistente e testes
+              (unit/integration/E2E, Jest).
             </li>
             <li>
               <strong>Baixa:</strong> CI/CD, documentação (diagramas UML, plano
@@ -333,9 +314,9 @@ export default function LoginForm() {
 
           <h3>Critérios de Aceitação</h3>
           <ol>
-            <li>Login DEV → redireciona dashboard, cookie `token` criado.</li>
+            <li>Login → redireciona dashboard, cookie `token` criado.</li>
             <li>Cookies limpos → rotas protegidas redirecionam login.</li>
-            <li>Prisma implementado → criar usuário DB, auth com argon2.</li>
+            <li>Prisma ativo → criar usuário DB, auth com argon2.</li>
             <li>Agendamento UI → persiste via API criada.</li>
             <li>Testes cobrem login e agendamento (80% cobertura).</li>
           </ol>
@@ -343,9 +324,9 @@ export default function LoginForm() {
           <h3>Checklist Atual</h3>
           <ul>
             <li>✅ UI Login/Dashboards</li>
-            <li>✅ Auth DEV</li>
-            <li>❌ Schema Prisma/Migrations</li>
-            <li>❌ Auth DB</li>
+            <li>✅ Auth servidor</li>
+            <li>⚠️ Schema Prisma/Migrations em evolução</li>
+            <li>✅ Sessão e logout</li>
             <li>❌ APIs Domínio</li>
             <li>❌ Testes/Seeds</li>
           </ul>
@@ -353,8 +334,8 @@ export default function LoginForm() {
           <div className={style["devCredentials"]}>
             <h4>Acesso DEV (Temporário)</h4>
             <p className={style["devCredentialsLine"]}>
-              As credenciais de desenvolvimento são validadas no servidor por
-              variáveis de ambiente e não são exibidas no cliente.
+              As credenciais de desenvolvimento são validadas no servidor e não
+              são exibidas no cliente.
             </p>
             <p className={style["devCredentialsLineSecondary"]}>
               <strong>Perfis suportados:</strong> patient • doctor • admin

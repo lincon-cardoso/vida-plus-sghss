@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import {
   getDashboardImplementation,
   getDashboardRoute,
   isAppRole,
 } from "@/lib/roles";
+import { AUTH_COOKIE_NAME, getActiveSessionFromToken } from "@/lib/session";
 import PatientDashboard from "./patient/PatientDashboard";
 import MedicDashboard from "./medic/MedicDashboard";
 import AdminDashboard from "./admin/AdminDashboard";
@@ -17,34 +17,31 @@ export default async function DashboardPage({
 }) {
   const { roles } = await params;
 
-  const token = (await cookies()).get("token")?.value;
-  if (!token) redirect("/login");
+  const token = (await cookies()).get(AUTH_COOKIE_NAME)?.value;
+  const session = await getActiveSessionFromToken(token);
 
-  let payload;
-  try {
-    payload = verifyToken(token);
-
-    // Mantemos aqui a mesma validação do layout para redundância.
-    if (!isAppRole(roles) || payload.role !== roles) {
-      redirect(getDashboardRoute(payload.role));
-    }
-  } catch {
+  if (!session) {
     redirect("/login");
   }
 
-  const dashboardImplementation = getDashboardImplementation(payload.role);
+  // Mantemos aqui a mesma validação do layout para redundância.
+  if (!isAppRole(roles) || session.user.role !== roles) {
+    redirect(getDashboardRoute(session.user.role));
+  }
+
+  const dashboardImplementation = getDashboardImplementation(session.user.role);
 
   if (dashboardImplementation === "patient") {
-    return <PatientDashboard payload={payload} />;
+    return <PatientDashboard payload={session.token} />;
   }
 
   if (dashboardImplementation === "medic") {
-    return <MedicDashboard payload={payload} />;
+    return <MedicDashboard payload={session.token} />;
   }
 
   if (dashboardImplementation === "admin") {
-    return <AdminDashboard payload={payload} />;
+    return <AdminDashboard payload={session.token} />;
   }
 
-  redirect(getDashboardRoute(payload.role));
+  redirect(getDashboardRoute(session.user.role));
 }

@@ -16,10 +16,11 @@
 ## ✅ Estado atual — O que já foi implementado
 
 - Tela de **login** com seleção de perfil (Paciente / Profissional / Gestor). (`src/app/login`)
-- Rota de **autenticação (DEV)**: `POST /api/auth` — gera JWT e seta cookie `token` (httpOnly). (`src/app/api/auth/route.ts`)
-- **Proteção de rotas** e redirecionamento para dashboards por role (`src/app/roles/[roles]/dashboard/*`).
+- Rota de **autenticação**: `POST /api/auth` — valida credenciais no banco, gera JWT, seta cookie `token` (httpOnly) e registra `UserSession`. (`src/app/api/auth/route.ts`)
+- **Proteção de rotas** e redirecionamento para dashboards por role com validação de sessão ativa e inatividade. (`src/app/roles/[roles]/dashboard/*`)
+- **Logout** server-side com revogação da sessão e limpeza do cookie. (`src/app/api/auth/logout/route.ts`)
 - Dashboards com componentes de interface: prontuário, diálogo de agendamento, notificações e cards.
-- Helpers essenciais: `src/lib/auth.ts` (sign/verify JWT) e `src/lib/nonce.ts` (CSP nonce).
+- Helpers essenciais: `src/lib/auth.ts` (sign/verify JWT), `src/lib/session.ts` (sessão, heartbeat e revogação) e `src/lib/nonce.ts` (CSP nonce).
 - Componentes acessíveis (ex.: `Modal` com trap de foco, ESC e clique no overlay).
 
 ---
@@ -29,13 +30,12 @@
 Prioridade alta
 
 - Definir e implementar **Prisma schema** (Users, Roles, Appointments, MedicalRecords) e **migrations**.
-- Substituir autenticação hardcoded por **autenticação contra DB** com senhas hasheadas (argon2).
 
 Prioridade média
 
 - Implementar **API Routes** para agendamento, prontuário, preferências e exportações.
 - Adicionar **testes** (unit, integration e E2E) para fluxos críticos (login, agendamento).
-- Implementar **autorização no servidor** (middleware, checagens de role).
+- Expandir a proteção por sessão para as demais rotas e fluxos de domínio que forem sendo criados.
 
 Baixa prioridade / melhorias
 
@@ -91,7 +91,6 @@ Abrir: http://localhost:3000
 ## ✅ Checklist rápida de próximas tarefas
 
 - [ ] Criar `schema.prisma` e seeds iniciais (User, Role, Appointment, MedicalRecord)
-- [ ] Implementar login contra DB e remover credenciais hardcoded
 - [ ] Criar endpoints para agendamento e prontuário
 - [ ] Adicionar testes automatizados (unit/integration/E2E)
 - [ ] Documentar passos de avaliação e critérios de aceitação

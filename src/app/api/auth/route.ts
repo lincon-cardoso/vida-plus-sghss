@@ -5,6 +5,11 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
 import { signToken } from "@/lib/auth";
+import {
+  AUTH_COOKIE_NAME,
+  AUTH_TOKEN_EXPIRATION,
+  setAuthCookie,
+} from "@/lib/session";
 
 // Dependencias do endpoint:
 // - NextResponse para devolver JSON, status e cookies.
@@ -16,9 +21,6 @@ import { signToken } from "@/lib/auth";
 // Aqui ficam os valores que nao devem mudar no meio do fluxo.
 const CORS_METHODS = "POST, OPTIONS";
 const CORS_HEADERS = "Content-Type, Authorization";
-const AUTH_COOKIE_NAME = "token";
-const AUTH_TOKEN_EXPIRATION = "8h";
-const AUTH_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 8;
 const INVALID_CREDENTIALS_MESSAGE =
   "Credenciais inválidas. Por favor, tente novamente.";
 const INTERNAL_AUTH_ERROR_MESSAGE = "Falha ao autenticar. Tente novamente.";
@@ -239,20 +241,6 @@ function buildInvalidCredentialsResponse(request: Request) {
     401,
     request,
   );
-}
-
-// Etapa 12 do fluxo: criar o cookie de autenticacao com as mesmas regras sempre.
-// Isso concentra o contrato da sessao em um unico lugar.
-function setAuthCookie(response: NextResponse, token: string) {
-  response.cookies.set(AUTH_COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: AUTH_COOKIE_MAX_AGE_SECONDS,
-  });
-
-  return response;
 }
 
 // Coleta os dados do pedido que ajudam na auditoria e na protecao contra abuso.
@@ -590,6 +578,8 @@ export async function POST(request: Request) {
 
     // Passo 10: atualizar o estado da conta e registrar a auditoria do sucesso.
     // O estado fica limpo e pronto para a proxima sessao legitima.
+    const sessionId = randomUUID();
+
     await prisma.$transaction(async (tx) => {
       await tx.user.update({
         where: { id: user.id },
@@ -622,6 +612,7 @@ export async function POST(request: Request) {
 
       await tx.userSession.create({
         data: {
+          id: sessionId,
           userId: user.id,
           device: sessionDevice,
           location: null,
@@ -637,7 +628,7 @@ export async function POST(request: Request) {
     // O token so carrega o que o restante da aplicacao realmente precisa.
     const token = signToken(
       { email: user.email, role: user.role },
-      { expiresIn: AUTH_TOKEN_EXPIRATION, jwtid: randomUUID() },
+      { expiresIn: AUTH_TOKEN_EXPIRATION, jwtid: sessionId },
     );
 
     // Passo 12: montar a resposta de sucesso que vai para o front.
